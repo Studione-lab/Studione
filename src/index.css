@@ -1,0 +1,424 @@
+@import "tailwindcss";
+
+/* ─── Google Fonts Import ────────────────────────────────────── */
+/* Inter Tight (nav links) + Inter (body/cards) */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ─── Britti Sans Trial: add your font files to /public/fonts/ ── */
+@font-face {
+  font-family: 'Britti Sans Trial';
+  src: url('/fonts/BrittiSansTrial-Regular.woff2') format('woff2'),
+       url('/fonts/BrittiSansTrial-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Britti Sans Trial';
+  src: url('/fonts/BrittiSansTrial-Light.woff2') format('woff2'),
+       url('/fonts/BrittiSansTrial-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Design Tokens ──────────────────────────────────────────── */
+@theme {
+  /* Fonts */
+  --font-sans:   'Inter Tight', 'Inter', system-ui, sans-serif;
+  --font-britti: 'Britti Sans Trial', 'Inter Tight', system-ui, sans-serif;
+  --font-inter:  'Inter', system-ui, sans-serif;
+  --font-mono:   ui-monospace, 'Cascadia Code', monospace;
+
+  /* Brand Colors — exact from design spec */
+  --color-studio-bg:     #1B1B1B;   /* page background */
+  --color-studio-card:   #232222;   /* image card background */
+  --color-studio-nav:    rgba(43, 43, 43, 0.5); /* nav pill bg */
+  --color-studio-muted:  #C0C0C0;   /* card body text */
+  --color-studio-white:  #FFFFFF;   /* headings */
+  --color-studio-tag:    rgba(43, 43, 43, 0.5); /* tag chip */
+
+  /* Legacy — kept for Footer/Contact pages */
+  --color-brand-black: #0a0a0a;
+  --color-brand-dark: #1B1B1B;
+  --color-brand-card: #232222;
+  --color-brand-border: #2b2b2b;
+  --color-brand-muted: #2b2b2b;
+  --color-brand-text: #C0C0C0;
+  --color-brand-white: #FFFFFF;
+  --color-brand-accent: #d4f57a;
+  --color-brand-accent-warm: #e8d5b0;
+  --color-brand-orange: #e8601a;
+  --color-brand-purple: #9747ff;
+
+  /* Spacing */
+  --spacing-section: 7rem;
+  --spacing-section-sm: 4rem;
+
+  /* Border Radius */
+  --radius-card: 1.25rem;
+  --radius-pill: 999px;
+
+  /* Transitions */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ─── Base Reset ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-studio-bg);
+  color: var(--color-studio-white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ─── Font Utility Classes ───────────────────────────────────── */
+.font-britti {
+  font-family: var(--font-britti);
+}
+.font-inter-tight {
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+}
+.font-inter {
+  font-family: var(--font-inter);
+}
+
+/* ─── Project Card Tags ──────────────────────────────────────── */
+.work-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  background: rgba(43, 43, 43, 0.5);
+  font-family: var(--font-inter);
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #C0C0C0;
+  white-space: nowrap;
+}
+
+/* ─── Section Heading Utility ────────────────────────────────── */
+.heading-hero {
+  font-family: var(--font-britti);
+  font-weight: 400;
+  font-size: clamp(48px, 7vw, 85px);
+  line-height: 100%;
+  letter-spacing: -1px;
+  text-transform: capitalize;
+  color: #FFFFFF;
+}
+
+.heading-section {
+  font-family: var(--font-britti);
+  font-weight: 400;
+  font-size: 32px;
+  line-height: 140%;
+  color: #FFFFFF;
+}
+
+.heading-card {
+  font-family: var(--font-britti);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 0.01em;
+  color: #FFFFFF;
+}
+
+.text-muted-studio {
+  font-family: var(--font-inter);
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 140%;
+  letter-spacing: -0.02em;
+  color: #C0C0C0;
+}
+
+/* ─── Custom Scrollbar ───────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-brand-black);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-border);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-brand-text);
+}
+
+/* ─── Typography Utilities ───────────────────────────────────── */
+.text-gradient-accent {
+  background: linear-gradient(135deg, var(--color-brand-accent) 0%, #a8e840 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-warm {
+  background: linear-gradient(135deg, var(--color-brand-accent-warm) 0%, #d4a96a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Glassmorphism Utility ──────────────────────────────────── */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.glass-dark {
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* ─── Button Utilities ───────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background-color: var(--color-brand-accent);
+  color: var(--color-brand-black);
+  font-weight: 700;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s var(--ease-smooth);
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(212, 245, 122, 0.3);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.875rem 1.75rem;
+  background: transparent;
+  color: var(--color-brand-white);
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.01em;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-brand-border);
+  cursor: pointer;
+  transition: all 0.25s var(--ease-smooth);
+}
+.btn-outline:hover {
+  border-color: var(--color-brand-accent);
+  color: var(--color-brand-accent);
+  background: rgba(212, 245, 122, 0.05);
+}
+
+/* ─── Card Utilities ─────────────────────────────────────────── */
+.card-hover {
+  transition: transform 0.35s var(--ease-smooth), box-shadow 0.35s var(--ease-smooth);
+}
+.card-hover:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
+}
+
+/* ─── Noise Texture Overlay ──────────────────────────────────── */
+.noise-overlay::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Section Spacing ────────────────────────────────────────── */
+.section-padding {
+  padding-top: var(--spacing-section);
+  padding-bottom: var(--spacing-section);
+}
+
+.section-padding-sm {
+  padding-top: var(--spacing-section-sm);
+  padding-bottom: var(--spacing-section-sm);
+}
+
+/* ─── Container ──────────────────────────────────────────────── */
+.container-custom {
+  width: 100%;
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .container-custom {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .container-custom {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+}
+
+/* ─── Marquee / Ticker Animation ─────────────────────────────── */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  animation: marquee 25s linear infinite;
+  display: flex;
+  white-space: nowrap;
+}
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* ─── Fade In Animation ──────────────────────────────────────── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s var(--ease-smooth) forwards;
+}
+
+/* ─── Ping Dot ───────────────────────────────────────────────── */
+@keyframes ping-slow {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.5); opacity: 0; }
+}
+.animate-ping-slow {
+  animation: ping-slow 2.5s ease-in-out infinite;
+}
+
+/* ─── Selection Color ────────────────────────────────────────── */
+::selection {
+  background-color: var(--color-brand-accent);
+  color: var(--color-brand-black);
+}
+
+/* ─── Home Page Responsive Rules ────────────────────────────── */
+
+/* Tablet (≤1024px): slightly reduce paddings */
+@media (max-width: 1024px) {
+  #navbar,
+  #hero,
+  #about,
+  #work,
+  #brand { padding-left: 28px !important; padding-right: 28px !important; }
+
+  #see-more-work { right: 28px !important; }
+  #brand-gallery  { left: 160px !important; }
+}
+
+/* Mobile (≤768px): stack everything, reset left offsets */
+@media (max-width: 768px) {
+  #navbar {
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    height: 72px !important;
+  }
+
+  /* Hamburger visible, desktop nav hidden — handled by md:hidden class */
+
+  #hero {
+    padding: 96px 20px 0px !important;
+    gap: 40px !important;
+    min-height: auto !important;
+  }
+
+  .heading-hero {
+    font-size: clamp(36px, 11vw, 60px) !important;
+  }
+
+  /* Hero images stack vertically on mobile */
+  #hero-image-card {
+    flex-direction: column !important;
+  }
+  #hero-image-card > * {
+    width: 100% !important;
+    height: clamp(240px, 60vw, 380px) !important;
+  }
+
+  #about {
+    padding: 72px 20px 0px !important;
+    gap: 48px !important;
+  }
+
+  #work {
+    padding: 72px 20px 160px !important;
+  }
+
+  /* Work cards stack on mobile */
+  #work-image-card-grid {
+    flex-direction: column !important;
+    gap: 48px !important;
+  }
+  #work-image-card-grid > article {
+    flex: 1 1 100% !important;
+    width: 100% !important;
+  }
+
+  .work-tag {
+    font-size: 14px !important;
+    padding: 6px 10px !important;
+  }
+
+  #see-more-work {
+    right: 20px !important;
+    bottom: 60px !important;
+  }
+
+  /* Brand section: let gallery scroll horizontally */
+  #brand {
+    min-height: 480px !important;
+    overflow-x: auto !important;
+  }
+  #brand-gallery {
+    left: 20px !important;
+    top: 140px !important;
+    position: relative !important;
+    padding: 0 20px !important;
+  }
+  .heading-section[style*="position: absolute"] {
+    left: 20px !important;
+  }
+}
+
