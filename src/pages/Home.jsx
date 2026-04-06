@@ -402,45 +402,64 @@ export default function Home() {
           {/* Section heading */}
           <SectionHeading>Selected Works</SectionHeading>
 
-          {/* ── Image Card grid ───────────────────────── */}
-          {/*
-            Spec layout (row-wrap flex):
-              Row 1: card-1 (623px) · card-2 (488px)   gap 89px → ~55% / 40%
-              Row 2: card-3 (793px wide) → full-ish row
-            We translate to percentage-based flex for responsiveness.
-          */}
+          {/* ── Work card grid: two explicit rows ──────────────────
+               Row 1: Card-1 (52%) + Card-2 (fills rest),  gap 89px
+               Row 2: Card-3 at exactly 65%, no grow        gap 80px
+               Using explicit rows prevents flex-grow from stretching
+               card-3 to 100% when it wraps alone.
+          ────────────────────────────────────────────────────────── */}
           <div
             id="work-image-card-grid"
             style={{
-              display: 'flex',
-              flexDirection: 'row',
-              flexWrap: 'wrap',
-              alignItems: 'flex-start',
-              alignContent: 'flex-start',
-              gap: '80px 89px',
-              width: '100%',
+              display:       'flex',
+              flexDirection: 'column',
+              gap:           '80px',
+              width:         '100%',
             }}
           >
-            {/* Card 1 — 623px / ~52% */}
-            <WorkCard
-              card={WORK_CARDS[0]}
-              imageHeight="clamp(220px, 37vw, 463px)"
-              style={{ flex: '1 1 clamp(280px, 47%, 623px)', minWidth: 0 }}
-            />
+            {/* ── ROW 1: Card-1 + Card-2 ────────────────────────── */}
+            <div
+              id="work-row-1"
+              style={{
+                display:    'flex',
+                flexDirection:'row',
+                alignItems: 'flex-start',
+                gap:        '89px',
+                width:      '100%',
+              }}
+              className="work-row"
+            >
+              {/* Card-1 — 623px → 52% of container */}
+              <WorkCard
+                card={WORK_CARDS[0]}
+                imageHeight="clamp(220px, 37vw, 463px)"
+                style={{ flex: '0 0 52%', width: '52%', minWidth: 0 }}
+              />
+              {/* Card-2 — 488px → fills remaining space after card-1 + gap */}
+              <WorkCard
+                card={WORK_CARDS[1]}
+                imageHeight="clamp(220px, 37vw, 463px)"
+                style={{ flex: '1 1 auto', minWidth: 0 }}
+              />
+            </div>
 
-            {/* Card 2 — 488px / ~40% */}
-            <WorkCard
-              card={WORK_CARDS[1]}
-              imageHeight="clamp(220px, 37vw, 463px)"
-              style={{ flex: '1 1 clamp(260px, 38%, 488px)', minWidth: 0 }}
-            />
-
-            {/* Card 3 — 793px / ~65% (wider, but wraps alone on row 2) */}
-            <WorkCard
-              card={WORK_CARDS[2]}
-              imageHeight="clamp(220px, 37vw, 463px)"
-              style={{ flex: '1 1 clamp(280px, 62%, 793px)', minWidth: 0 }}
-            />
+            {/* ── ROW 2: Card-3 only, pinned at 65% — NO flex-grow ─ */}
+            <div
+              id="work-row-2"
+              style={{
+                display:    'flex',
+                flexDirection:'row',
+                width:      '100%',
+              }}
+              className="work-row"
+            >
+              {/* Card-3 — 793px → 65% of container, never grows to 100% */}
+              <WorkCard
+                card={WORK_CARDS[2]}
+                imageHeight="clamp(220px, 37vw, 463px)"
+                style={{ flex: '0 0 65%', width: '65%', minWidth: 0 }}
+              />
+            </div>
           </div>
         </div>
 

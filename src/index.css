@@ -386,13 +386,16 @@ body {
     padding: 72px 20px 160px !important;
   }
 
-  /* Work cards stack on mobile */
+  /* Work rows: stack vertically on mobile, cards go full-width */
   #work-image-card-grid {
-    flex-direction: column !important;
     gap: 48px !important;
   }
-  #work-image-card-grid > article {
-    flex: 1 1 100% !important;
+  .work-row {
+    flex-direction: column !important;
+    gap: 40px !important;
+  }
+  .work-row > article {
+    flex: 0 0 100% !important;
     width: 100% !important;
   }
 

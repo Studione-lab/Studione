@@ -1,19 +1,20 @@
 import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
+import logo from '../../assets/Logo.svg'
 
 // ── Design-spec nav links: Work · Studio · Contact ──────────────
 const NAV_LINKS = [
-  { label: 'Work',    to: '/work' },
-  { label: 'Studio',  to: '/about' },
+  { label: 'Work', to: '/work' },
+  { label: 'Studio', to: '/about' },
   { label: 'Contact', to: '/contact' },
 ]
 
-// ── Shared link text style (Inter Tight, 18px, 400, 1px tracking)
+// ── Shared nav link style (Inter Tight, 18px, 400, 1px tracking) ─
 const linkTextStyle = {
   fontFamily: "'Inter Tight', 'Inter', system-ui, sans-serif",
-  fontStyle:  'normal',
+  fontStyle: 'normal',
   fontWeight: 400,
-  fontSize:   '18px',
+  fontSize: '16px',
   lineHeight: '20px',
   letterSpacing: '1px',
   color: '#FFFFFF',
@@ -21,6 +22,8 @@ const linkTextStyle = {
   display: 'flex',
   alignItems: 'center',
   textAlign: 'center',
+  flex: 'none',
+  flexGrow: 0,
 }
 
 export default function Navbar() {
@@ -32,7 +35,29 @@ export default function Navbar() {
 
   return (
     <>
-      {/* ── Desktop / Tablet Navbar ──────────────────────────────── */}
+      {/*
+        ── Responsive visibility is controlled entirely via the <style>
+           block below — NO Tailwind responsive classes used, because
+           inline `display` on the button/nav overrides them.
+
+        Desktop  (≥768px): #desktop-nav visible, #mobile-menu-btn hidden
+        Mobile   (<768px) : #desktop-nav hidden,  #mobile-menu-btn visible
+      */}
+      <style>{`
+        /* Desktop: show pill nav, hide hamburger + drawer */
+        @media (min-width: 768px) {
+          #desktop-nav    { display: flex   !important; }
+          #mobile-menu-btn { display: none  !important; }
+          #mobile-menu    { display: none   !important; }
+        }
+        /* Mobile: hide pill nav, show hamburger */
+        @media (max-width: 767px) {
+          #desktop-nav    { display: none   !important; }
+          #mobile-menu-btn { display: flex  !important; }
+        }
+      `}</style>
+
+      {/* ── Fixed Navbar bar ──────────────────────────────────────── */}
       <header
         id="navbar"
         style={{
@@ -46,14 +71,16 @@ export default function Navbar() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingLeft:  '40px',
+          paddingLeft: '40px',
           paddingRight: '40px',
-          paddingTop:   '24px',
-          paddingBottom:'24px',
+          paddingTop: '24px',
+          paddingBottom: '24px',
           boxSizing: 'border-box',
         }}
       >
-        {/* ── Logo: 128×24, text only ─────────────────────────────── */}
+        {/* ── Logo: 128×24 SVG ────────────────────────────────────────
+             Place your SVG file at: /public/logo.svg
+             The img renders at the exact 128×24 spec dimensions.      */}
         <Link
           to="/"
           id="logo"
@@ -66,24 +93,25 @@ export default function Navbar() {
             flexShrink: 0,
           }}
         >
-          <span style={{
-            fontFamily: "'Inter Tight', 'Inter', system-ui, sans-serif",
-            fontWeight: 700,
-            fontSize:   '20px',
-            lineHeight: '24px',
-            letterSpacing: '-0.5px',
-            color: '#FFFFFF',
-            whiteSpace: 'nowrap',
-          }}>
-            Studione
-          </span>
+          <img
+            src={logo}
+            alt="Studione"
+            width={128}
+            height={24}
+            style={{
+              width: '128px',
+              height: '24px',
+              display: 'block',
+              objectFit: 'contain',
+            }}
+          />
         </Link>
 
-        {/* ── Desktop nav pill: [Work · Studio · Contact] ─────────── */}
+        {/* ── Desktop nav pill: Work · Studio · Contact ───────────── */}
+        {/*    display toggled by the <style> above                    */}
         <nav
           id="desktop-nav"
           style={{
-            display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
             padding: '12px 16px',
@@ -93,8 +121,9 @@ export default function Navbar() {
             backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(10px)',
             borderRadius: '8px',
+            /* initial value overridden by the media query above */
+            display: 'flex',
           }}
-          className="hidden md:flex"
         >
           {NAV_LINKS.map((link, i) => (
             <NavLink
@@ -104,9 +133,7 @@ export default function Navbar() {
               style={({ isActive }) => ({
                 ...linkTextStyle,
                 opacity: isActive ? 1 : 0.85,
-                flex: 'none',
                 order: i,
-                flexGrow: 0,
               })}
             >
               {link.label}
@@ -114,20 +141,20 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* ── Mobile hamburger ────────────────────────────────────── */}
+        {/* ── Hamburger — mobile only, hidden on desktop by <style> ── */}
         <button
           id="mobile-menu-btn"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
-          className="md:hidden"
           style={{
+            /* initial: hidden — overridden to flex on mobile via the <style> above */
+            display: 'none',
             width: '40px',
             height: '40px',
             background: 'rgba(43,43,43,0.5)',
             border: 'none',
             borderRadius: '8px',
             cursor: 'pointer',
-            display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
@@ -146,8 +173,8 @@ export default function Navbar() {
                 display: 'block',
                 transition: 'transform 0.3s ease, opacity 0.3s ease',
                 transform:
-                  i === 0 && menuOpen ? 'translateY(6.5px) rotate(45deg)'  :
-                  i === 2 && menuOpen ? 'translateY(-6.5px) rotate(-45deg)': 'none',
+                  i === 0 && menuOpen ? 'translateY(6.5px) rotate(45deg)' :
+                    i === 2 && menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none',
                 opacity: i === 1 && menuOpen ? 0 : 1,
               }}
             />
@@ -155,7 +182,8 @@ export default function Navbar() {
         </button>
       </header>
 
-      {/* ── Mobile Full-Screen Drawer ────────────────────────────── */}
+      {/* ── Mobile Full-Screen Drawer ───────────────────────────────
+           display: none on desktop is enforced by the <style> above  */}
       <div
         id="mobile-menu"
         style={{
@@ -163,13 +191,14 @@ export default function Navbar() {
           inset: 0,
           zIndex: 999,
           background: '#1B1B1B',
-          display: 'flex',
           flexDirection: 'column',
           padding: '6rem 2.5rem 3rem',
           transition: 'opacity 0.35s ease, transform 0.35s cubic-bezier(0.4,0,0.2,1)',
           opacity: menuOpen ? 1 : 0,
           transform: menuOpen ? 'translateY(0)' : 'translateY(-12px)',
           pointerEvents: menuOpen ? 'all' : 'none',
+          /* initial hidden: overridden by mobile media query */
+          display: 'none',
         }}
       >
         <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
