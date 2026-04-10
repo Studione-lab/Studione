@@ -2,88 +2,78 @@ import { useState, useEffect } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import logo from '../../assets/Logo.svg'
 
-// ── Design-spec nav links: Work · Studio · Contact ──────────────
+// ── Design-spec nav links (same as V2 but points to /studio) ────
 const NAV_LINKS = [
   { label: 'Work',    to: '/work'    },
   { label: 'Studio',  to: '/studio'  },
   { label: 'Contact', to: '/contact' },
 ]
 
-// ── Shared nav link style (Inter Tight, 18px, 400, 1px tracking) ─
-const linkTextStyle = {
+// ── Shared nav link style — Inter Tight 400, 16px, 1px tracking ─
+const linkStyle = {
   fontFamily: "'Inter Tight', 'Inter', system-ui, sans-serif",
-  fontStyle: 'normal',
-  fontWeight: 300,
-  fontSize: '16px',
+  fontStyle:  'normal',
+  fontWeight: 400,
+  fontSize:   '16px',
   lineHeight: '20px',
+  display:    'flex',
+  alignItems: 'center',
+  textAlign:  'center',
   letterSpacing: '1px',
   color: '#FFFFFF',
   textDecoration: 'none',
-  display: 'flex',
-  alignItems: 'center',
-  textAlign: 'center',
-  flex: 'none',
+  flex:     'none',
   flexGrow: 0,
 }
 
-export default function Navbar() {
+export default function NavbarV1() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { pathname } = useLocation()
 
-  // Close mobile menu on route change
+  // Close drawer on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
   return (
     <>
       {/*
-        ── Responsive visibility is controlled entirely via the <style>
-           block below — NO Tailwind responsive classes used, because
-           inline `display` on the button/nav overrides them.
-
-        Desktop  (≥768px): #desktop-nav visible, #mobile-menu-btn hidden
-        Mobile   (<768px) : #desktop-nav hidden,  #mobile-menu-btn visible
+        ── Responsive visibility via <style> block (same pattern as V2)
+        Desktop (≥768px): #nav-v1-desktop visible, #nav-v1-mob-btn hidden
+        Mobile  (<768px): #nav-v1-desktop hidden,  #nav-v1-mob-btn visible
       */}
       <style>{`
-        /* Desktop: show pill nav, hide hamburger + drawer */
         @media (min-width: 768px) {
-          #desktop-nav    { display: flex   !important; }
-          #mobile-menu-btn { display: none  !important; }
-          #mobile-menu    { display: none   !important; }
+          #nav-v1-desktop  { display: flex !important; }
+          #nav-v1-mob-btn  { display: none !important; }
+          #nav-v1-mob-menu { display: none !important; }
         }
-        /* Mobile: hide pill nav, show hamburger */
         @media (max-width: 767px) {
-          #desktop-nav    { display: none   !important; }
-          #mobile-menu-btn { display: flex  !important; }
+          #nav-v1-desktop  { display: none !important; }
+          #nav-v1-mob-btn  { display: flex !important; }
         }
       `}</style>
 
-      {/* ── Fixed Navbar bar ──────────────────────────────────────── */}
+      {/* ── Fixed navbar bar ─────────────────────────────────────── */}
       <header
-        id="navbar"
+        id="navbar-v1"
         style={{
           position: 'fixed',
-          width: '100%',
+          width:  '100%',
           height: '92px',
           left: 0,
-          top: 0,
+          top:  0,
           zIndex: 1000,
           background: '#1B1B1B',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingLeft: '40px',
-          paddingRight: '40px',
-          paddingTop: '24px',
-          paddingBottom: '24px',
+          padding: '24px 40px',
           boxSizing: 'border-box',
         }}
       >
-        {/* ── Logo: 128×24 SVG ────────────────────────────────────────
-             Place your SVG file at: /public/logo.svg
-             The img renders at the exact 128×24 spec dimensions.      */}
+        {/* ── Logo 128×24 ────────────────────────────────────────── */}
         <Link
           to="/"
-          id="logo"
+          id="nav-v1-logo"
           style={{
             width: '128px',
             height: '24px',
@@ -98,29 +88,18 @@ export default function Navbar() {
             alt="Studione"
             width={128}
             height={24}
-            style={{
-              width: '128px',
-              height: '24px',
-              display: 'block',
-              objectFit: 'contain',
-            }}
+            style={{ width: '128px', height: '24px', display: 'block', objectFit: 'contain' }}
           />
         </Link>
 
-        {/* ── Desktop nav pill: Work · Studio · Contact ───────────── */}
-        {/*    display toggled by the <style> above                    */}
+        {/* ── Desktop links — NO pill background, gap 72px ───────── */}
         <nav
-          id="desktop-nav"
+          id="nav-v1-desktop"
           style={{
             flexDirection: 'row',
             alignItems: 'center',
             padding: '12px 16px',
-            gap: '48px',
-            height: '44px',
-            background: 'rgba(43, 43, 43, 0.5)',
-            backdropFilter: 'blur(10px)',
-            WebkitBackdropFilter: 'blur(10px)',
-            borderRadius: '8px',
+            gap: '72px',
             /* initial value overridden by the media query above */
             display: 'flex',
           }}
@@ -129,9 +108,9 @@ export default function Navbar() {
             <NavLink
               key={link.to}
               to={link.to}
-              id={`nav-${link.label.toLowerCase()}`}
+              id={`nav-v1-${link.label.toLowerCase()}`}
               style={({ isActive }) => ({
-                ...linkTextStyle,
+                ...linkStyle,
                 opacity: isActive ? 1 : 0.85,
                 order: i,
               })}
@@ -141,13 +120,12 @@ export default function Navbar() {
           ))}
         </nav>
 
-        {/* ── Hamburger — mobile only, hidden on desktop by <style> ── */}
+        {/* ── Hamburger — mobile only ─────────────────────────────── */}
         <button
-          id="mobile-menu-btn"
+          id="nav-v1-mob-btn"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Toggle menu"
           style={{
-            /* initial: hidden — overridden to flex on mobile via the <style> above */
             display: 'none',
             width: '40px',
             height: '40px',
@@ -173,8 +151,8 @@ export default function Navbar() {
                 display: 'block',
                 transition: 'transform 0.3s ease, opacity 0.3s ease',
                 transform:
-                  i === 0 && menuOpen ? 'translateY(6.5px) rotate(45deg)' :
-                    i === 2 && menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none',
+                  i === 0 && menuOpen ? 'translateY(6.5px) rotate(45deg)'  :
+                  i === 2 && menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none',
                 opacity: i === 1 && menuOpen ? 0 : 1,
               }}
             />
@@ -182,10 +160,10 @@ export default function Navbar() {
         </button>
       </header>
 
-      {/* ── Mobile Full-Screen Drawer ───────────────────────────────
-           display: none on desktop is enforced by the <style> above  */}
+      {/* ── Mobile full-screen drawer ───────────────────────────────
+           display: none on desktop is enforced by the <style> above */}
       <div
-        id="mobile-menu"
+        id="nav-v1-mob-menu"
         style={{
           position: 'fixed',
           inset: 0,
@@ -194,10 +172,9 @@ export default function Navbar() {
           flexDirection: 'column',
           padding: '6rem 2.5rem 3rem',
           transition: 'opacity 0.35s ease, transform 0.35s cubic-bezier(0.4,0,0.2,1)',
-          opacity: menuOpen ? 1 : 0,
-          transform: menuOpen ? 'translateY(0)' : 'translateY(-12px)',
+          opacity:     menuOpen ? 1 : 0,
+          transform:   menuOpen ? 'translateY(0)' : 'translateY(-12px)',
           pointerEvents: menuOpen ? 'all' : 'none',
-          /* initial hidden: overridden by mobile media query */
           display: 'none',
         }}
       >
@@ -217,7 +194,7 @@ export default function Navbar() {
                 borderBottom: '1px solid rgba(255,255,255,0.08)',
                 transition: 'opacity 0.25s ease',
                 transitionDelay: menuOpen ? `${i * 60}ms` : '0ms',
-                opacity: menuOpen ? 1 : 0,
+                opacity:   menuOpen ? 1 : 0,
                 transform: menuOpen ? 'translateX(0)' : 'translateX(-20px)',
               })}
             >

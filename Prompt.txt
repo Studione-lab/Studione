@@ -1,0 +1,91 @@
+If you look into this document clearly you'll see this is a design agency portfolio site which follows precision, responsiveness and functionality. It follows all instructions it was given to it. What we have currently is the desktop version of the site which is correctly done with precision across each section of the home.jsx, yeah! we have other pages too. Its responsiveness is across all platform from desktop version to tablet version to moblie version without any defects. The structure of the project follows a DRY technique as you can see from the code base. it uses react and tailwindCSS v4 with other external dependencies installed like animation extensions GSAP which tells you that there will be some certain part of the site where there will be animation strictly followed by my given instructions. There are places you might have seen dummy image placeholder that how it should be followed, I want that so as to insert my preferreable image in the future or when I want to. I'll be giving snapshot and guide on whatever I want to build, kindly follow precisely what I prompt you to do.
+
+For animations ensure it follows modern standards: 
+React Integration: For React projects, use the useGSAP() hook for automatic cleanup and memory leak prevention.
+Scoping Selectors: use useRef to scope GSAP selectors, preventing it from searching the entire DOM.
+Accessibility: implement prefers-reduced-motion checks automatically to ensure your animations are inclusive. 
+
+
+
+Let me explore the project structure to get a thorough understanding of the codebase before you start giving me specific instructions.
+
+Listed directory Studione
+Listed directory src
+Viewed package.json:1-31
+Viewed Prompt.txt:1-6
+Listed directory components
+Listed directory pages
+Listed directory assets
+Listed directory layout
+Viewed App.jsx:1-28
+Viewed Home.jsx:1-622
+Viewed Navbar.jsx:1-232
+Viewed Footer.jsx:1-206
+Viewed index.css:1-428
+Viewed About.jsx:1-139
+Viewed Services.jsx:1-161
+Viewed Work.jsx:1-102
+Viewed Contact.jsx:1-209
+Viewed Layout.jsx:1-29
+
+I've now done a thorough read of the entire codebase. Here's my complete understanding of the **Studione** project:
+
+---
+
+## ✅ Codebase Overview — Studione Design Agency Portfolio
+
+### Stack
+| Layer | Tech |
+|---|---|
+| Framework | React 19 + Vite 5 |
+| Styling | TailwindCSS v4 (`@theme` tokens, utility classes) |
+| Routing | React Router DOM v7 |
+| Animation | GSAP (noted — not yet installed, `gsap` not in `package.json`) |
+| Fonts | Britti Sans Trial (local `woff2`), Inter Tight, Inter (Google Fonts) |
+
+> **Note:** I can see GSAP is mentioned in your prompt but it's not yet in `package.json`. When you give animation instructions, I'll install `gsap` and `@gsap/react` before implementing.
+
+---
+
+### Architecture
+```
+src/
+├── App.jsx                     ← Routes: /, /about, /work, /services, /contact
+├── index.css                   ← Design tokens (@theme), base reset, utility classes
+├── main.jsx
+├── assets/                     ← Logo.svg, hero.png
+├── components/layout/
+│   ├── Layout.jsx              ← Fixed Navbar + Outlet + Footer wrapper
+│   ├── Navbar.jsx              ← Fixed header, desktop pill nav, mobile drawer
+│   └── Footer.jsx              ← Tagline, email, social links, copyright
+└── pages/
+    ├── Home.jsx                ← Hero, About, Work, Brand, CTA sections
+    ├── About.jsx               ← Page hero, philosophy/values, team cards
+    ├── Work.jsx                ← Portfolio hero, filter tabs, project grid
+    ├── Services.jsx            ← Hero, services list, process steps
+    ├── Contact.jsx             ← Hero, contact form + sidebar info
+    └── NotFound.jsx
+```
+
+### Key Patterns I've Noted
+- **DRY primitive components** in `Home.jsx`: `WorkTag`, `SectionHeading`, `CardTitle`, `CardDescription`, `ImagePlaceholder`, `WorkCard`
+- **Image placeholders** (`ImagePlaceholder`) — dark `#232222` tile with SVG icon, ready to swap in real `src` paths
+- **Inline style** approach throughout (not Tailwind utility classes in JSX) with shared style objects for DRY compliance
+- **Responsive overrides** via `<style>` tags scoped with IDs, and global media queries in `index.css`
+- **Design tokens**: `#1B1B1B` bg, `#232222` card, `rgba(43,43,43,0.5)` nav/tag, `#C0C0C0` muted text, `#FFFFFF` headings — all consistent
+- **Navbar**: Fixed 92px height, transparent/blurred pill, mobile drawer with hamburger
+
+### Animation Rules (Stored for All Future Work)
+When you instruct animations I will always:
+1. Use `useGSAP()` hook from `@gsap/react` for auto-cleanup
+2. Use `useRef` to scope selectors to the component's DOM tree
+3. Wrap GSAP calls in `prefersReducedMotion` checks via `window.matchMedia('(prefers-reduced-motion: reduce)')`
+
+---
+
+I'm fully oriented and ready. Send me your snapshot and instruction whenever you're ready to build! 🎯
+
+
+First of all, rename About.jsx to Studio.jsx which will serve as the link when user clicks on the studio link at the navbar, it takes them to the Studio.jsx page. 
+
+We'll start with the desktop version of the Studio page; Although make it responsive across all platform including tablet version but we'll work on the mobile version very well later. 

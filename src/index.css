@@ -1,10 +1,7 @@
 @import "tailwindcss";
 
-/* ─── Google Fonts Import ────────────────────────────────────── */
-/* Inter Tight (nav links) + Inter (body/cards) */
-@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
-/* ─── Britti Sans Trial: add your font files to /public/fonts/ ── */
+/* ─── Britti Sans Trial: drop .woff2/.woff files into /public/fonts/ ─── */
+/* See /public/fonts/README.md for download steps (noistype.com)           */
 @font-face {
   font-family: 'Britti Sans Trial';
   src: url('/fonts/BrittiSansTrial-Regular.woff2') format('woff2'),
@@ -26,7 +23,9 @@
 @theme {
   /* Fonts */
   --font-sans:   'Inter Tight', 'Inter', system-ui, sans-serif;
-  --font-britti: 'Britti Sans Trial', 'Inter Tight', system-ui, sans-serif;
+  /* Britti Sans Trial → place .woff2/.woff files in /public/fonts/ to activate */
+  /* DM Sans + Plus Jakarta Sans bridge the gap as closest Google Fonts matches   */
+  --font-britti: 'Britti Sans Trial', 'DM Sans', 'Plus Jakarta Sans', 'Inter Tight', system-ui, sans-serif;
   --font-inter:  'Inter', system-ui, sans-serif;
   --font-mono:   ui-monospace, 'Cascadia Code', monospace;
 

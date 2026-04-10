@@ -117,9 +117,9 @@ function ImagePlaceholder({ width, height, src, alt = '', style = {}, className 
       className={className}
     >
       <svg width="40" height="40" viewBox="0 0 40 40" fill="none" opacity="0.25">
-        <rect x="4" y="4" width="32" height="32" rx="4" stroke="#FFF" strokeWidth="1.5"/>
-        <circle cx="14" cy="14" r="3" stroke="#FFF" strokeWidth="1.5"/>
-        <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+        <rect x="4" y="4" width="32" height="32" rx="4" stroke="#FFF" strokeWidth="1.5" />
+        <circle cx="14" cy="14" r="3" stroke="#FFF" strokeWidth="1.5" />
+        <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     </div>
   )
@@ -249,7 +249,7 @@ export default function Home() {
           flexDirection: 'column',
           justifyContent: 'flex-end',
           alignItems: 'flex-start',
-          padding: '130px 40px 0px',
+          padding: '214px 40px 0px',
           gap: '64px',
           width: '100%',
           minHeight: '100vh',
@@ -411,21 +411,21 @@ export default function Home() {
           <div
             id="work-image-card-grid"
             style={{
-              display:       'flex',
+              display: 'flex',
               flexDirection: 'column',
-              gap:           '80px',
-              width:         '100%',
+              gap: '80px',
+              width: '100%',
             }}
           >
             {/* ── ROW 1: Card-1 + Card-2 ────────────────────────── */}
             <div
               id="work-row-1"
               style={{
-                display:    'flex',
-                flexDirection:'row',
+                display: 'flex',
+                flexDirection: 'row',
                 alignItems: 'flex-start',
-                gap:        '89px',
-                width:      '100%',
+                gap: '89px',
+                width: '100%',
               }}
               className="work-row"
             >
@@ -447,9 +447,9 @@ export default function Home() {
             <div
               id="work-row-2"
               style={{
-                display:    'flex',
-                flexDirection:'row',
-                width:      '100%',
+                display: 'flex',
+                flexDirection: 'row',
+                width: '100%',
               }}
               className="work-row"
             >
@@ -495,7 +495,7 @@ export default function Home() {
             See More Work
             {/* Arrow-right-down icon matching solar:arrow-right-down-linear */}
             <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <path d="M8 8h16v16M8 24L24 8" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M8 8h16v16M8 24L24 8" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </Link>
         </div>
