@@ -255,7 +255,7 @@ export default function Home() {
           minHeight: '100vh',
           background: '#1B1B1B',
           boxSizing: 'border-box',
-          paddingTop: '130px',   // accounts for 92px navbar
+          paddingTop: '214px',   // 130px accounts for 92px navbar
         }}
       >
         {/* Headline block — Britti Sans Trial 85px */}

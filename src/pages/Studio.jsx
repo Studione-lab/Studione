@@ -63,6 +63,54 @@ const TESTIMONIALS = [
 ]
 
 // ─────────────────────────────────────────────────────────────────
+// SERVICES DATA — list items + card content
+// ─────────────────────────────────────────────────────────────────
+const SERVICES = [
+  {
+    id: 'svc-1',
+    label: 'Discovery',
+    desc: 'We partner with ambitious teams to shape meaningful brands and digital experiences.',
+    // image: '/images/services-discovery.png',
+  },
+  {
+    id: 'svc-2',
+    label: 'Research & Positioning',
+    desc: 'Deep market analysis and competitive research to carve out a distinct, ownable position for your brand.',
+    // image: '/images/services-research.png',
+  },
+  {
+    id: 'svc-3',
+    label: 'Strategy & Briefing',
+    desc: 'Translating insights into clear creative briefs that align your team and guide every design decision.',
+    // image: '/images/services-strategy.png',
+  },
+  {
+    id: 'svc-4',
+    label: 'Visual Direction',
+    desc: 'Defining the aesthetic language — typography, colour, motion — that makes your brand instantly recognisable.',
+    // image: '/images/services-visual.png',
+  },
+  {
+    id: 'svc-5',
+    label: 'Concept Development',
+    desc: 'Generating bold creative concepts that push past the expected and bring your vision to life.',
+    // image: '/images/services-concept.png',
+  },
+  {
+    id: 'svc-6',
+    label: 'Refinement',
+    desc: 'Iterative craft — pixel-perfect execution from first draft to production-ready asset.',
+    // image: '/images/services-refinement.png',
+  },
+  {
+    id: 'svc-7',
+    label: 'Production',
+    desc: 'Final delivery across every format and platform, ready to launch with confidence.',
+    // image: '/images/services-production.png',
+  },
+]
+
+// ─────────────────────────────────────────────────────────────────
 // ABOUT PROJECTS — auto-cycling content
 // ─────────────────────────────────────────────────────────────────
 const ABOUT_PROJECTS = [
@@ -235,6 +283,356 @@ function TestimonialCard({ card }) {
         </div>
       </div>
     </article>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────
+// SERVICES SECTION — circular-shift carousel
+//
+// Behaviour:
+//  • Exactly 7 items, each absolutely positioned inside an overflow:hidden clip.
+//  • Active item is ALWAYS at slot 0 (top, white). Others are muted below.
+//  • On advance: every item slides UP one UNIT. Outgoing (top) item wraps
+//    invisibly to the bottom, creating the "Discovery disappears top,
+//    reappears last" effect the user described.
+//  • Backward: every item slides DOWN one UNIT. Bottom item snaps above
+//    the clip and slides in.
+//  • Triggers: auto-cycle (10 s), mouse-wheel over the list, hover on an item.
+//  • All logic lives in one stable useEffect — no stale-closure issues.
+//  • Card (left) stays static at top:328 px; content cross-fades.
+// ─────────────────────────────────────────────────────────────────
+function ServicesSection() {
+  const [activeIdx, setActiveIdx] = useState(0)   // drives card content render
+
+  // ── Refs ─────────────────────────────────────────────────────────
+  const cardImgRef  = useRef(null)
+  const cardDescRef = useRef(null)
+  const clipRef     = useRef(null)     // overflow:hidden window + wheel target
+  const itemEls     = useRef([])       // itemEls[serviceIdx] = DOM element
+  const hoverRef    = useRef(null)     // onMouseEnter: pause cycle + show card
+  const hoverEndRef = useRef(null)     // onMouseLeave: restore card + resume cycle
+  const intervalRef = useRef(null)
+  const isAnimRef   = useRef(false)
+  const activeRef   = useRef(0)        // service index currently at slot 0
+
+  // ── Physical constants ────────────────────────────────────────────
+  const N    = SERVICES.length         // 7
+  const UNIT = 80                      // px per slot (64 px font + 16 px gap)
+
+  // ── Set initial absolute y positions before first paint ───────────
+  useLayoutEffect(() => {
+    for (let slot = 0; slot < N; slot++) {
+      const el = itemEls.current[slot]   // initially slot i holds service i
+      if (el) gsap.set(el, { y: slot * UNIT })
+    }
+  }, [N, UNIT])
+
+  // ── All carousel logic in one stable effect ───────────────────────
+  useEffect(() => {
+    // slotOrder[slot] = serviceIdx currently at that visual slot
+    // Mutated in place — no React re-render needed for list positions
+    let slotOrder = [0, 1, 2, 3, 4, 5, 6]
+
+    // ── Color helpers ───────────────────────────────────────────────
+    const setColors = (activeSvcIdx) => {
+      itemEls.current.forEach((el, i) => {
+        if (!el) return
+        gsap.to(el, {
+          color: i === activeSvcIdx ? '#FFFFFF' : '#272626',
+          duration: 0.40,
+          ease: 'power2.out',
+        })
+      })
+    }
+
+    // ── Card cross-fade ─────────────────────────────────────────────
+    const fadeCard = (idx) => {
+      if (idx === activeRef.current) return
+      activeRef.current = idx
+      setActiveIdx(idx)
+      const img  = cardImgRef.current
+      const desc = cardDescRef.current
+      if (!img || !desc) return
+      gsap.timeline()
+        .to([img, desc], { opacity: 0, y: -8, duration: 0.25, ease: 'power2.in',  stagger: 0.04 })
+        .set([img, desc], { y: 12 })
+        .to([img, desc], { opacity: 1, y: 0,  duration: 0.38, ease: 'power2.out', stagger: 0.04 })
+    }
+
+    // ── Restart auto-cycle from zero ────────────────────────────────
+    const restartCycle = () => {
+      clearInterval(intervalRef.current)
+      intervalRef.current = setInterval(advanceFwd, 10000)
+    }
+
+    // ── FORWARD: slide all items UP one UNIT, top wraps to bottom ───
+    function advanceFwd() {
+      if (isAnimRef.current) return
+      isAnimRef.current = true
+
+      const outSvcIdx = slotOrder[0]   // currently active → wraps to bottom
+      const inSvcIdx  = slotOrder[1]   // next in line → becomes active
+      const DUR  = 0.70
+      const EASE = 'power3.inOut'
+
+      // 1. Slide every item up by one UNIT
+      slotOrder.forEach(svcIdx => {
+        gsap.to(itemEls.current[svcIdx], { y: `-=${UNIT}`, duration: DUR, ease: EASE })
+      })
+
+      // 2. At 45 % of the way: wrap outgoing from -UNIT to N*UNIT (off-screen bottom)
+      //    then animate it into the last slot — completes simultaneously with others.
+      gsap.delayedCall(DUR * 0.45, () => {
+        gsap.set(itemEls.current[outSvcIdx], { y: N * UNIT })
+        gsap.to(itemEls.current[outSvcIdx], {
+          y: (N - 1) * UNIT,
+          duration: DUR * 0.55,
+          ease: 'power2.out',
+        })
+      })
+
+      // 3. Update active state immediately (colour + card)
+      setColors(inSvcIdx)
+      fadeCard(inSvcIdx)
+
+      // 4. Rotate order: [1,2,3,4,5,6,0]
+      slotOrder = [...slotOrder.slice(1), slotOrder[0]]
+
+      // 5. Unlock after full duration
+      gsap.delayedCall(DUR, () => { isAnimRef.current = false })
+    }
+
+    // ── BACKWARD: slide all items DOWN one UNIT, bottom wraps to top ─
+    function advanceBwd() {
+      if (isAnimRef.current) return
+      isAnimRef.current = true
+
+      const inSvcIdx = slotOrder[N - 1]   // last item → wraps to top (active)
+      const DUR  = 0.70
+      const EASE = 'power3.inOut'
+
+      // 1. Snap incoming item from its slot (6*UNIT) to just above clip (-UNIT)
+      gsap.set(itemEls.current[inSvcIdx], { y: -UNIT })
+
+      // 2. Slide every item DOWN by one UNIT
+      //    • Incoming goes from -UNIT → 0 (enters from top, becomes active)
+      //    • Old active goes from 0 → UNIT (drops to slot 1)
+      //    • Others cascade down
+      slotOrder.forEach(svcIdx => {
+        gsap.to(itemEls.current[svcIdx], { y: `+=${UNIT}`, duration: DUR, ease: EASE })
+      })
+
+      setColors(inSvcIdx)
+      fadeCard(inSvcIdx)
+
+      // Rotate order: [6,0,1,2,3,4,5]
+      slotOrder = [slotOrder[N - 1], ...slotOrder.slice(0, N - 1)]
+
+      gsap.delayedCall(DUR, () => {
+        isAnimRef.current = false
+        restartCycle()
+      })
+    }
+
+    // ── HOVER: pause cycle + show that item's card (no list movement) ─
+    function onHoverItem(svcIdx) {
+      clearInterval(intervalRef.current)   // pause auto-cycle
+      setColors(svcIdx)                    // highlight hovered item
+      fadeCard(svcIdx)                     // cross-fade card content
+    }
+
+    // ── HOVER END: restore to true active + resume cycle ────────────
+    function onHoverEnd() {
+      const activeSvcIdx = slotOrder[0]    // actual item at slot 0
+      setColors(activeSvcIdx)
+      fadeCard(activeSvcIdx)
+      restartCycle()
+    }
+
+    hoverRef.current    = onHoverItem
+    hoverEndRef.current = onHoverEnd
+
+    // ── Auto-cycle ─────────────────────────────────────────────────
+    intervalRef.current = setInterval(advanceFwd, 10000)
+
+    // ── Wheel handler ──────────────────────────────────────────────
+    // Mouse-wheel over the list advances items (no physical scroll).
+    // passive:false lets us call preventDefault to block page scroll.
+    let wheelCooldown = false
+    const onWheel = (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      if (wheelCooldown) return
+      wheelCooldown = true
+      setTimeout(() => { wheelCooldown = false }, 150)   // throttle rapid spin
+
+      if (e.deltaY > 0) { advanceFwd(); restartCycle() }
+      else              { advanceBwd() }
+    }
+
+    const clip = clipRef.current
+    if (clip) clip.addEventListener('wheel', onWheel, { passive: false })
+
+    return () => {
+      clearInterval(intervalRef.current)
+      if (clip) clip.removeEventListener('wheel', onWheel)
+    }
+  }, [])  // stable — all refs, nothing to re-capture
+
+  const svc = SERVICES[activeIdx]
+
+  return (
+    <section
+      id="studio-services"
+      style={{
+        width: '100%',
+        background: '#1B1B1B',
+        position: 'relative',
+        boxSizing: 'border-box',
+        minHeight: '949px',
+        overflow: 'hidden',
+      }}
+    >
+      {/* ── Section title ─────────────────────────────────────── */}
+      <p
+        id="studio-services-title"
+        style={{
+          position: 'absolute',
+          left: '40px',
+          top: '96px',
+          width: 'clamp(220px, 55vw, 793px)',
+          fontFamily: 'var(--font-britti)',
+          fontWeight: 400,
+          fontSize: '32px',
+          lineHeight: '120%',
+          color: '#FFFFFF',
+          margin: 0,
+        }}
+      >
+        <span style={{ color: '#FFFFFF' }}>
+          From concept to craft, our dedicated team transforms emotion into expression,{' '}
+        </span>
+        <span style={{ color: '#6B6B6B' }}>
+          distilling bold ideas into standout strategies that elevate brands to new heights.
+        </span>
+      </p>
+
+      {/* ── Card — left column, static ───────────────────────── */}
+      <div
+        id="studio-services-card"
+        style={{
+          position: 'absolute',
+          left: '40px',
+          top: '328px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'flex-start',
+          gap: '20px',
+          width: '387px',
+        }}
+      >
+        <div
+          ref={cardImgRef}
+          style={{ width: '387px', height: '260px', overflow: 'hidden', flexShrink: 0 }}
+        >
+          {svc.image ? (
+            <img
+              src={svc.image}
+              alt={svc.label}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          ) : (
+            <div
+              style={{
+                width: '100%', height: '100%',
+                background: '#232222',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+              }}
+            >
+              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" opacity="0.25">
+                <rect x="4" y="4" width="32" height="32" rx="4" stroke="#FFF" strokeWidth="1.5" />
+                <circle cx="14" cy="14" r="3" stroke="#FFF" strokeWidth="1.5" />
+                <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </div>
+          )}
+        </div>
+
+        <div
+          ref={cardDescRef}
+          style={{
+            display: 'flex', flexDirection: 'column',
+            alignItems: 'flex-start', gap: '16px',
+            width: '100%', maxWidth: '387px',
+          }}
+        >
+          <p
+            style={{
+              fontFamily: "'Inter', system-ui, sans-serif",
+              fontWeight: 400, fontSize: '18px',
+              lineHeight: '140%', letterSpacing: '-0.02em',
+              color: '#C0C0C0', margin: 0,
+            }}
+          >
+            {svc.desc}
+          </p>
+        </div>
+      </div>
+
+      {/* ── Service list — right column ──────────────────────── */}
+      {/*
+          Clip window: overflow:hidden hides items sliding in/out of the
+          top and bottom. Height = (N-1)*UNIT + 64 = 6*80 + 64 = 544 px.
+          Items are absolutely positioned inside; GSAP controls their y.
+          Mouse-wheel here changes the active item without page scroll.
+      */}
+      <div
+        ref={clipRef}
+        id="studio-services-list-clip"
+        style={{
+          position: 'absolute',
+          right: '40px',
+          top: '341px',
+          width: 'clamp(280px, 43vw, 623px)',
+          height: `${(N - 1) * UNIT + 64}px`,   /* 544 px — shows all N items exactly */
+          overflow: 'hidden',
+        }}
+      >
+        {/*
+            Inner container — position:relative so absolute children
+            are scoped here. Height = N * UNIT (560 px).
+        */}
+        <div style={{ position: 'relative', height: `${N * UNIT}px`, width: '100%' }}>
+          {SERVICES.map((s, i) => (
+            <div
+              key={s.id}
+              ref={el => (itemEls.current[i] = el)}
+              onMouseEnter={() => hoverRef.current?.(i)}
+              onMouseLeave={() => hoverEndRef.current?.()}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '64px',
+                fontFamily: 'var(--font-britti)',
+                fontWeight: 300,
+                fontSize: 'clamp(28px, 4.4vw, 64px)',
+                lineHeight: '64px',       /* exact item height — no extra gap from line-height */
+                textAlign: 'right',
+                textTransform: 'capitalize',
+                color: i === 0 ? '#FFFFFF' : '#272626',
+                userSelect: 'none',
+                cursor: 'default',
+                willChange: 'transform',
+              }}
+            >
+              {s.label}
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -918,6 +1316,11 @@ export default function Studio() {
         </div>
       </section>
 
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* 4. SERVICES SECTION                                       */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      <ServicesSection />
+
       {/* ── Responsive overrides ─────────────────────────────────── */}
       <style>{`
         /* Tablet */
@@ -927,6 +1330,9 @@ export default function Studio() {
           #studio-testimonial-marquee   { padding-left: 28px !important; }
           #studio-about-intro           { left: 28px !important; width: 42vw !important; }
           #studio-about-right           { right: 28px !important; width: 50vw !important; }
+          #studio-services-title        { left: 28px !important; }
+          #studio-services-card         { left: 28px !important; width: 320px !important; }
+          #studio-services-list         { right: 28px !important; }
         }
 
         /* Mobile */
@@ -952,6 +1358,26 @@ export default function Studio() {
           }
           #studio-about-intro  { position: static !important; width: 100% !important; }
           #studio-about-right  { position: static !important; width: 100% !important; }
+
+          /* Services: stack vertically */
+          #studio-services {
+            min-height: auto !important;
+            display: flex !important;
+            flex-direction: column !important;
+            padding: 64px 20px !important;
+            gap: 48px !important;
+          }
+          #studio-services-title { position: static !important; width: 100% !important; }
+          #studio-services-card  {
+            position: static !important;
+            width: 100% !important;
+          }
+          #studio-services-card > div:first-child { width: 100% !important; }
+          #studio-services-list  {
+            position: static !important;
+            width: 100% !important;
+            align-items: flex-start !important;
+          }
         }
       `}</style>
     </div>
