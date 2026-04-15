@@ -28,10 +28,23 @@ const linkStyle = {
 
 export default function NavbarV1() {
   const [menuOpen, setMenuOpen] = useState(false)
+  const [isScrolledPastHero, setIsScrolledPastHero] = useState(false)
   const { pathname } = useLocation()
 
   // Close drawer on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
+
+  // ── Scroll listener: detect if past hero (100vh) ─────────────
+  useEffect(() => {
+    const handleScroll = () => {
+      // Threshold is 100vh minus navbar height to feel snappier,
+      // or just pure 100vh. We'll use window.innerHeight.
+      setIsScrolledPastHero(window.scrollY > window.innerHeight - 92)
+    }
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    handleScroll() // check initially
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
     <>
@@ -62,7 +75,8 @@ export default function NavbarV1() {
           left: 0,
           top:  0,
           zIndex: 1000,
-          background: '#1B1B1B',
+          background: isScrolledPastHero ? 'transparent' : '#1B1B1B',
+          transition: 'background 0.4s ease',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',

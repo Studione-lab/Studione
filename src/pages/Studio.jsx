@@ -1,6 +1,8 @@
 import { useRef, useState, useEffect, useCallback, useLayoutEffect } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+gsap.registerPlugin(ScrollTrigger)
 
 // ─────────────────────────────────────────────────────────────────
 // TESTIMONIAL DATA — all cards equal 320×320px
@@ -287,7 +289,7 @@ function TestimonialCard({ card }) {
 }
 
 // ─────────────────────────────────────────────────────────────────
-// SERVICES SECTION — circular-shift carousel
+// DESIGN PROCESS SECTION — circular-shift carousel
 //
 // Behaviour:
 //  • Exactly 7 items, each absolutely positioned inside an overflow:hidden clip.
@@ -301,7 +303,7 @@ function TestimonialCard({ card }) {
 //  • All logic lives in one stable useEffect — no stale-closure issues.
 //  • Card (left) stays static at top:328 px; content cross-fades.
 // ─────────────────────────────────────────────────────────────────
-function ServicesSection() {
+function DesignProcessSection() {
   const [activeIdx, setActiveIdx] = useState(0)   // drives card content render
 
   // ── Refs ─────────────────────────────────────────────────────────
@@ -483,7 +485,7 @@ function ServicesSection() {
 
   return (
     <section
-      id="studio-services"
+      id="studio-design-process"
       style={{
         width: '100%',
         background: '#1B1B1B',
@@ -631,6 +633,312 @@ function ServicesSection() {
             </div>
           ))}
         </div>
+      </div>
+    </section>
+  )
+}
+
+// ─────────────────────────────────────────────────────────────────
+// SERVICES DATA — stacked card accordion
+// ─────────────────────────────────────────────────────────────────
+const SERVICES_CARDS = [
+  {
+    id: 'sc-1',
+    num: '01',
+    title: 'Visual identities',
+    desc: 'Building the visual language that defines your brand — typography, colour, and form — across every touchpoint.',
+    bg: '#EAEEED',
+  },
+  {
+    id: 'sc-2',
+    num: '02',
+    title: 'Brand narratives',
+    desc: 'Crafting the stories that give your brand purpose, voice, and enduring resonance with the audiences that matter.',
+    bg: '#5EDDE6',
+  },
+  {
+    id: 'sc-3',
+    num: '03',
+    title: 'Digital products',
+    desc: 'Designing functional, beautiful digital experiences that solve real problems and feel effortless to use at any scale.',
+    bg: '#EAEEED',
+  },
+  {
+    id: 'sc-4',
+    num: '04',
+    title: 'Websites',
+    desc: 'Creating websites that communicate brand clarity, inspire confidence, and drive meaningful user engagement.',
+    bg: '#FA4A47',
+  },
+  {
+    id: 'sc-5',
+    num: '05',
+    title: 'Prototypes',
+    desc: 'Developing interactive models to test and validate how the brand behaves in real use before it ever ships.',
+    bg: '#F7D066',
+  },
+]
+
+// ─────────────────────────────────────────────────────────────────
+// SERVICES SECTION — stacked card accordion with scroll reveal
+//
+// Behaviour:
+//  • 5 cards, absolutely positioned, z-indexed (card 5 on top).
+//  • Cards 2-5 start translateY(+1050px) — hidden below section.
+//  • ScrollTrigger pins the section; as user scrolls, each card
+//    slides up to its final stacked position, one by one.
+//  • Final state: accordion stack with 69px tabs visible per card.
+//  • Hover: the hovered card lifts up by 28px ("pull from stack").
+//  • Mouse leave: smooth return to stacked position.
+// ─────────────────────────────────────────────────────────────────
+function ServicesSection() {
+  const sectionRef   = useRef(null)
+  const cardsWrapRef = useRef(null)
+  const cardRefs     = useRef([])
+  const tlRef        = useRef(null)
+
+  const CARD_H  = 556    // px — full card height
+  const TAB_H   = 69     // px — visible strip per collapsed card
+  const TOP_0   = 189    // px — first card top offset within section
+  const N       = SERVICES_CARDS.length   // 5
+
+  // ── Initial: hide cards 2-5 below the section fold ───────────────
+  useLayoutEffect(() => {
+    for (let i = 1; i < N; i++) {
+      const el = cardRefs.current[i]
+      if (el) gsap.set(el, { y: 1050 })
+    }
+  }, [N])
+
+  // ── Scroll-driven reveal ──────────────────────────────────────────
+  useEffect(() => {
+    const section = sectionRef.current
+    const cardsWrap = cardsWrapRef.current
+    if (!section || !cardsWrap || cardRefs.current.some(c => !c)) return
+
+    // ── Timeline for card stacking ─────────────────────────────────
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: cardsWrap,
+        pin: true,
+        start: 'top 80px',
+        end: `+=${(N - 1) * 320}`,   // 4 × 320 = 1280 px of virtual scroll
+        scrub: 1.2,
+      },
+    })
+    tlRef.current = tl
+
+    // Cards 2-5 slide up into their stacked positions, one by one
+    for (let i = 1; i < N; i++) {
+      tl.to(
+        cardRefs.current[i],
+        { y: 0, duration: 1, ease: 'power2.inOut' },
+        i - 1
+      )
+    }
+
+    // ── Immersive: Hide Global Navbar while section is being scrolled pass ──
+    ScrollTrigger.create({
+      trigger: section,
+      start: 'top 10%',
+      end:   'bottom 10%',
+      onEnter:      () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
+      onLeave:      () => gsap.to('#navbar-v1', { opacity: 1, pointerEvents: 'all',  duration: 0.4 }),
+      onEnterBack:  () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
+      onLeaveBack:  () => gsap.to('#navbar-v1', { opacity: 1, pointerEvents: 'all',  duration: 0.4 }),
+    })
+
+    return () => {
+      ScrollTrigger.getAll().filter(st => st.trigger === cardsWrap || st.trigger === section).forEach(st => st.kill())
+      tl.kill()
+    }
+  }, [N])
+
+  // ── Hover: lift card like pulling from a stack ────────────────────
+  // We capture the card's live y on mouseEnter and restore it on leave.
+  const baseY = useRef(new Array(N).fill(0))
+
+  const handleEnter = (i) => {
+    const el = cardRefs.current[i]
+    if (!el) return
+    baseY.current[i] = gsap.getProperty(el, 'y')
+    gsap.to(el, {
+      y: baseY.current[i] - 28,
+      duration: 0.35,
+      ease: 'power2.out',
+      overwrite: 'auto',
+    })
+  }
+
+  const handleLeave = (i) => {
+    const el = cardRefs.current[i]
+    if (!el) return
+    gsap.to(el, {
+      y: baseY.current[i],
+      duration: 0.55,
+      ease: 'power2.inOut',
+      overwrite: 'auto',
+    })
+  }
+
+  return (
+    <section
+      ref={sectionRef}
+      id="studio-services"
+      style={{
+        width: '100%',
+        background: '#1B1B1B',
+        position: 'relative',
+        boxSizing: 'border-box',
+        paddingBottom: '200px', // extra space for scroll
+      }}
+    >
+      {/* ── "What we offer" title — natural flow, scrolls away ───── */}
+      <p
+        style={{
+          padding: '128px 0 100px 40px',
+          fontFamily: 'var(--font-britti)',
+          fontWeight: 400,
+          fontSize: '32px',
+          lineHeight: '140%',
+          color: '#FFFFFF',
+          margin: 0,
+        }}
+      >
+        What we offer
+      </p>
+
+      {/* ── Stacked cards wrap — this Pins at 80px ────────────────── */}
+      <div
+        ref={cardsWrapRef}
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '900px', // height of the full-open stack
+        }}
+      >
+        {SERVICES_CARDS.map((card, i) => (
+          <div
+            key={card.id}
+            ref={el => (cardRefs.current[i] = el)}
+            onMouseEnter={() => handleEnter(i)}
+            onMouseLeave={() => handleLeave(i)}
+            style={{
+              position: 'absolute',
+              left: '40px',
+              top: i * TAB_H,
+              width: 'calc(100% - 80px)',
+              height: CARD_H,
+              background: card.bg,
+              zIndex: i + 1,
+              willChange: 'transform',
+              cursor: 'default',
+              overflow: 'hidden',
+            }}
+          >
+          {/* Content row: pinned at left:285px top:36px */}
+          <div
+            style={{
+              position: 'absolute',
+              left: '325px',
+              top: '36px',
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'flex-start',
+              gap: '51px',
+              width: '581px',
+            }}
+          >
+            {/* Number */}
+            <span
+              style={{
+                fontFamily: 'var(--font-britti)',
+                fontWeight: 400,
+                fontSize: '24px',
+                lineHeight: '40px',
+                color: '#1B1B1B',
+                flexShrink: 0,
+                width: '27px',
+              }}
+            >
+              {card.num}
+            </span>
+
+            {/* Right column: title + image + desc */}
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'flex-start',
+                gap: '48px',
+                width: '508px',
+              }}
+            >
+              {/* Service title */}
+              <h3
+                style={{
+                  fontFamily: 'var(--font-britti)',
+                  fontWeight: 400,
+                  fontSize: '55.3px',
+                  lineHeight: '56px',
+                  color: '#1B1B1B',
+                  margin: 0,
+                  width: '100%',
+                }}
+              >
+                {card.title}
+              </h3>
+
+              {/* Image + description */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '32px',
+                  width: '100%',
+                }}
+              >
+                {/* Image placeholder */}
+                <div
+                  style={{
+                    width: '100%',
+                    height: '248px',
+                    background: '#D0D0D0',
+                    borderRadius: '16px',
+                    overflow: 'hidden',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    flexShrink: 0,
+                  }}
+                >
+                  <svg width="44" height="44" viewBox="0 0 40 40" fill="none" opacity="0.35">
+                    <rect x="4" y="4" width="32" height="32" rx="4" stroke="#666" strokeWidth="1.5" />
+                    <circle cx="14" cy="14" r="3" stroke="#666" strokeWidth="1.5" />
+                    <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+
+                {/* Description */}
+                <p
+                  style={{
+                    fontFamily: "'Inter Tight', 'Inter', system-ui, sans-serif",
+                    fontWeight: 400,
+                    fontSize: '18px',
+                    lineHeight: '140%',
+                    letterSpacing: '1px',
+                    color: '#595959',
+                    margin: 0,
+                    width: '100%',
+                  }}
+                >
+                  {card.desc}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      ))}
       </div>
     </section>
   )
@@ -1317,7 +1625,12 @@ export default function Studio() {
       </section>
 
       {/* ══════════════════════════════════════════════════════════ */}
-      {/* 4. SERVICES SECTION                                       */}
+      {/* 4. DESIGN PROCESS SECTION                                 */}
+      {/* ══════════════════════════════════════════════════════════ */}
+      <DesignProcessSection />
+
+      {/* ══════════════════════════════════════════════════════════ */}
+      {/* 5. SERVICES SECTION                                       */}
       {/* ══════════════════════════════════════════════════════════ */}
       <ServicesSection />
 
