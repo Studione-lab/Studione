@@ -89,3 +89,20 @@ I'm fully oriented and ready. Send me your snapshot and instruction whenever you
 First of all, rename About.jsx to Studio.jsx which will serve as the link when user clicks on the studio link at the navbar, it takes them to the Studio.jsx page. 
 
 We'll start with the desktop version of the Studio page; Although make it responsive across all platform including tablet version but we'll work on the mobile version very well later. 
+
+
+
+
+
+1Add to the head section of web page.<link href="https://db.onlinewebfonts.com/c/0c5cf33ae9df16a2997f564c68034660?family=Britti+Sans+Trial" rel="stylesheet">or
+Using @import CSS directive, put the following line in add to your css file.(http | https)@import url(https://db.onlinewebfonts.com/c/0c5cf33ae9df16a2997f564c68034660?family=Britti+Sans+Trial);orUse font-face declaration Fonts.(http | https)
+@font-face {
+    font-family: "Britti Sans Trial";
+    src: url("https://db.onlinewebfonts.com/t/0c5cf33ae9df16a2997f564c68034660.eot");
+    src: url("https://db.onlinewebfonts.com/t/0c5cf33ae9df16a2997f564c68034660.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/0c5cf33ae9df16a2997f564c68034660.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/0c5cf33ae9df16a2997f564c68034660.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/0c5cf33ae9df16a2997f564c68034660.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/0c5cf33ae9df16a2997f564c68034660.svg#Britti Sans Trial")format("svg");
+}
+2CSS rules to specify fontsfont-family: "Britti Sans Trial";

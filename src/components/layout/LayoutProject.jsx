@@ -1,9 +1,10 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import NavbarV1 from './NavbarV1'
-import FooterV1 from './FooterV1'
+import Footer from './Footer'
 
-export default function Layout() {
+// Layout that wraps project template pages — NavbarV1 + Footer (V2)
+export default function LayoutProject() {
   const { pathname } = useLocation()
 
   // Scroll to top on route change
@@ -12,17 +13,12 @@ export default function Layout() {
   }, [pathname])
 
   return (
-    /*
-      The Navbar is position:fixed and overlays the page.
-      <main> starts at top:0 — each page section handles its own
-      top-padding to clear the 92px navbar height.
-    */
     <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <NavbarV1 />
+      <NavbarV1 noBackground />
       <main style={{ flex: 1, position: 'relative' }}>
         <Outlet />
       </main>
-      <FooterV1 />
+      <Footer />
     </div>
   )
 }

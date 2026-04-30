@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/Logo.svg'
 
-// ── Design-spec nav links (same as V2 but points to /studio) ────
+// ── Design-spec nav links (Contact handled separately) ────────────
 const NAV_LINKS = [
-  { label: 'Work',    to: '/work'    },
-  { label: 'Studio',  to: '/studio'  },
-  { label: 'Contact', to: '/contact' },
+  { label: 'Work',   to: '/work'   },
+  { label: 'Studio', to: '/studio' },
 ]
 
 // ── Shared nav link style — Inter Tight 400, 16px, 1px tracking ─
@@ -26,13 +25,31 @@ const linkStyle = {
   flexGrow: 0,
 }
 
-export default function NavbarV1() {
+export default function NavbarV1({ noBackground = false }) {
   const [menuOpen, setMenuOpen] = useState(false)
   const [isScrolledPastHero, setIsScrolledPastHero] = useState(false)
   const { pathname } = useLocation()
+  const navigate = useNavigate()
 
   // Close drawer on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
+
+  // Scroll to footer — works from any page
+  const handleContact = useCallback((e) => {
+    e.preventDefault()
+    setMenuOpen(false)
+    const scrollToFooter = () => {
+      const footer = document.getElementById('footer') || document.getElementById('footer-v1')
+      if (footer) footer.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+    const footer = document.getElementById('footer') || document.getElementById('footer-v1')
+    if (footer) {
+      scrollToFooter()
+    } else {
+      navigate('/')
+      setTimeout(scrollToFooter, 300)
+    }
+  }, [navigate])
 
   // ── Scroll listener: detect if past hero (100vh) ─────────────
   useEffect(() => {
@@ -75,7 +92,7 @@ export default function NavbarV1() {
           left: 0,
           top:  0,
           zIndex: 1000,
-          background: isScrolledPastHero ? 'transparent' : '#1B1B1B',
+          background: noBackground ? 'transparent' : (isScrolledPastHero ? 'transparent' : '#1B1B1B'),
           transition: 'background 0.4s ease',
           display: 'flex',
           alignItems: 'center',
@@ -88,6 +105,11 @@ export default function NavbarV1() {
         <Link
           to="/"
           id="nav-v1-logo"
+          onClick={() => {
+            if (pathname === '/') {
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }
+          }}
           style={{
             width: '128px',
             height: '24px',
@@ -132,6 +154,22 @@ export default function NavbarV1() {
               {link.label}
             </NavLink>
           ))}
+          {/* Contact — scrolls to footer */}
+          <button
+            id="nav-v1-contact"
+            onClick={handleContact}
+            style={{
+              ...linkStyle,
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0,
+              order: NAV_LINKS.length,
+              opacity: 0.85,
+            }}
+          >
+            Contact
+          </button>
         </nav>
 
         {/* ── Hamburger — mobile only ─────────────────────────────── */}
@@ -215,6 +253,30 @@ export default function NavbarV1() {
               {link.label}
             </NavLink>
           ))}
+          {/* Contact — scroll to footer */}
+          <button
+            onClick={handleContact}
+            style={{
+              padding: '1rem 0',
+              fontSize: '2rem',
+              fontFamily: "'Inter Tight', system-ui, sans-serif",
+              fontWeight: 400,
+              letterSpacing: '1px',
+              color: '#FFFFFF',
+              background: 'none',
+              border: 'none',
+              borderBottom: '1px solid rgba(255,255,255,0.08)',
+              cursor: 'pointer',
+              textAlign: 'left',
+              width: '100%',
+              transition: 'opacity 0.25s ease',
+              transitionDelay: menuOpen ? `${NAV_LINKS.length * 60}ms` : '0ms',
+              opacity:   menuOpen ? 1 : 0,
+              transform: menuOpen ? 'translateX(0)' : 'translateX(-20px)',
+            }}
+          >
+            Contact
+          </button>
         </nav>
       </div>
     </>

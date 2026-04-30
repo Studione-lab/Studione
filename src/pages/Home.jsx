@@ -1,4 +1,10 @@
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
+import { useGSAP } from '@gsap/react'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+gsap.registerPlugin(ScrollTrigger)
 
 // ─────────────────────────────────────────────────────────────────
 // Shared primitive components (DRY)
@@ -78,6 +84,8 @@ const BRAND_ITEMS = [
   { id: 'brand-1', /* image: '/images/brand-1.png' */ },
   { id: 'brand-2', /* image: '/images/brand-2.png' */ },
   { id: 'brand-3', /* image: '/images/brand-3.png' */ },
+  { id: 'brand-4', /* image: '/images/brand-4.png' */ },
+  { id: 'brand-5', /* image: '/images/brand-5.png' */ },
 ]
 
 // ─────────────────────────────────────────────────────────────────
@@ -236,6 +244,40 @@ function WorkCard({ card, imageWidth, imageHeight, style = {} }) {
 // HOME PAGE
 // ─────────────────────────────────────────────────────────────────
 export default function Home() {
+  const brandSectionRef = useRef(null)
+  const brandGalleryRef = useRef(null)
+
+  useGSAP(() => {
+    if (!brandSectionRef.current || !brandGalleryRef.current) return
+
+    // Calculate how far to translate the gallery
+    const getDistance = () => {
+      const galleryWidth = brandGalleryRef.current.scrollWidth
+      const viewportWidth = window.innerWidth
+      // 262px is the left offset of the gallery.
+      // We want the last card's right edge to hit the viewport's right edge (with 40px padding)
+      return Math.max(0, galleryWidth + 262 - viewportWidth + 40)
+    }
+
+    // Use a context so it recalculates on resize (ScrollTrigger handles this gracefully if set up)
+    const distance = getDistance()
+    
+    if (distance > 0) {
+      gsap.to(brandGalleryRef.current, {
+        x: -distance,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: brandSectionRef.current,
+          start: 'center center',
+          end: () => `+=${distance}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true, // Recalculates on resize
+        }
+      })
+    }
+  }, { scope: brandSectionRef })
+
   return (
     <div style={{ background: '#1B1B1B' }}>
 
@@ -506,6 +548,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════ */}
       <section
         id="brand"
+        ref={brandSectionRef}
         style={{
           position: 'relative',
           width: '100%',
@@ -532,6 +575,7 @@ export default function Home() {
         */}
         <div
           id="brand-gallery"
+          ref={brandGalleryRef}
           style={{
             display: 'flex',
             flexDirection: 'row',

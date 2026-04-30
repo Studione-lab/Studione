@@ -1,12 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout        from './components/layout/Layout'
 import LayoutStudio  from './components/layout/LayoutStudio'
+import LayoutProject from './components/layout/LayoutProject'
 import Home          from './pages/Home'
 import Studio        from './pages/Studio'
 import Work          from './pages/Work'
+import ProjectTemplate from './pages/ProjectTemplate'
 import Services      from './pages/Services'
-import Contact       from './pages/Contact'
-import NotFound      from './pages/NotFound'
+
 
 function App() {
   return (
@@ -17,8 +18,12 @@ function App() {
           <Route index        element={<Home />}     />
           <Route path="work"     element={<Work />}     />
           <Route path="services" element={<Services />} />
-          <Route path="contact"  element={<Contact />}  />
-          <Route path="*"        element={<NotFound />} />
+
+        </Route>
+
+        {/* ── Project template layout (V1 Navbar + V2 Footer) ──── */}
+        <Route path="/work" element={<LayoutProject />}>
+          <Route path=":slug" element={<ProjectTemplate />} />
         </Route>
 
         {/* ── Studio layout (V1 Navbar + V1 Footer) ───────────── */}

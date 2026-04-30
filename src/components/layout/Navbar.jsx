@@ -1,12 +1,11 @@
-import { useState, useEffect } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { useState, useEffect, useCallback } from 'react'
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/Logo.svg'
 
-// ── Design-spec nav links: Work · Studio · Contact ──────────────
+// ── Design-spec nav links: Work · Studio (Contact handled separately) ─
 const NAV_LINKS = [
-  { label: 'Work',    to: '/work'    },
-  { label: 'Studio',  to: '/studio'  },
-  { label: 'Contact', to: '/contact' },
+  { label: 'Work',   to: '/work'   },
+  { label: 'Studio', to: '/studio' },
 ]
 
 // ── Shared nav link style (Inter Tight, 18px, 400, 1px tracking) ─
@@ -29,9 +28,32 @@ const linkTextStyle = {
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false)
   const { pathname } = useLocation()
+  const navigate = useNavigate()
 
   // Close mobile menu on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
+
+  // Scroll to footer — works from any page
+  const handleContact = useCallback((e) => {
+    e.preventDefault()
+    setMenuOpen(false)
+    const scrollToFooter = () => {
+      const footer = document.getElementById('footer') || document.getElementById('footer-v1')
+      if (footer) {
+        footer.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      }
+    }
+    // If already on a page that has the footer, just scroll
+    // Otherwise navigate first, then scroll after paint
+    const footer = document.getElementById('footer') || document.getElementById('footer-v1')
+    if (footer) {
+      scrollToFooter()
+    } else {
+      navigate('/')
+      // Wait for new page to mount, then scroll
+      setTimeout(scrollToFooter, 300)
+    }
+  }, [navigate])
 
   return (
     <>
@@ -84,6 +106,11 @@ export default function Navbar() {
         <Link
           to="/"
           id="logo"
+          onClick={() => {
+            if (pathname === '/') {
+              window.scrollTo({ top: 0, behavior: 'smooth' })
+            }
+          }}
           style={{
             width: '128px',
             height: '24px',
@@ -139,6 +166,21 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
+          {/* Contact — always scrolls to footer */}
+          <button
+            id="nav-contact"
+            onClick={handleContact}
+            style={{
+              ...linkTextStyle,
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0,
+              order: NAV_LINKS.length,
+            }}
+          >
+            Contact
+          </button>
         </nav>
 
         {/* ── Hamburger — mobile only, hidden on desktop by <style> ── */}
@@ -224,6 +266,31 @@ export default function Navbar() {
               {link.label}
             </NavLink>
           ))}
+          {/* Contact — scroll to footer */}
+          <button
+            onClick={handleContact}
+            style={{
+              padding: '1rem 0',
+              fontSize: '2rem',
+              fontFamily: "'Inter Tight', system-ui, sans-serif",
+              fontWeight: 400,
+              letterSpacing: '1px',
+              color: '#FFFFFF',
+              textDecoration: 'none',
+              background: 'none',
+              border: 'none',
+              borderBottom: '1px solid rgba(255,255,255,0.08)',
+              cursor: 'pointer',
+              textAlign: 'left',
+              transition: 'opacity 0.25s ease',
+              transitionDelay: menuOpen ? `${NAV_LINKS.length * 60}ms` : '0ms',
+              opacity: menuOpen ? 1 : 0,
+              transform: menuOpen ? 'translateX(0)' : 'translateX(-20px)',
+              width: '100%',
+            }}
+          >
+            Contact
+          </button>
         </nav>
       </div>
     </>
