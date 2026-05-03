@@ -118,7 +118,7 @@ function ProjectCard({ project }) {
             gap: '10px',
             width: '135px',
             height: '44px',
-            background: '#1B1B1B',
+            background: '#020202',
             borderRadius: '32px',
             boxSizing: 'border-box',
             opacity: hovered ? 1 : 0,
@@ -301,7 +301,7 @@ export default function Work() {
           gap: '20px',
           width: '100%',
           boxSizing: 'border-box',
-          background: '#1B1B1B',
+          background: '#020202',
         }}
       >
         <p
@@ -348,7 +348,7 @@ export default function Work() {
           position: 'relative',
           width: '100%',
           height: '704px',
-          background: '#1B1B1B',
+          background: '#020202',
           overflow: 'hidden',
         }}
       >
@@ -390,7 +390,7 @@ export default function Work() {
           gap: '100px',
           width: '100%',
           boxSizing: 'border-box',
-          background: '#1B1B1B',
+          background: '#020202',
         }}
       >
         {/* ── Header: "All Work" left + filter column right ───── */}
@@ -481,7 +481,7 @@ export default function Work() {
             padding: 0,
             gap: '120px 105px',
             width: '1200px',
-            background: '#1B1B1B',
+            background: '#020202',
           }}
         >
           {filtered.map((project) => (

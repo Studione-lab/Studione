@@ -298,7 +298,7 @@ export default function ProjectTemplate() {
   }
 
   return (
-    <div style={{ background: '#1B1B1B', position: 'relative' }}>
+    <div style={{ background: '#020202', position: 'relative' }}>
 
       {/* ════════════════════════════════════════════════════════════ */}
       {/* 1. HERO SECTION — pinned full-width image                  */}
@@ -337,7 +337,7 @@ export default function ProjectTemplate() {
           padding: '64px 40px 296px',
           gap: '184px',
           width: '100%',
-          background: '#1B1B1B',
+          background: '#020202',
           boxSizing: 'border-box',
         }}
       >
@@ -350,7 +350,7 @@ export default function ProjectTemplate() {
             padding: 0,
             gap: '186px',
             width: '100%',
-            background: '#1B1B1B',
+            background: '#020202',
           }}
           className="project-main-content"
         >
@@ -804,7 +804,7 @@ export default function ProjectTemplate() {
           padding: '0 40px 328px',
           gap: '36px',
           width: '100%',
-          background: '#1B1B1B',
+          background: '#020202',
           boxSizing: 'border-box',
         }}
       >

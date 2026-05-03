@@ -33,7 +33,7 @@ export default function Footer() {
         padding: '120px 40px 32px',
         gap: '220px',
         width: '100%',
-        background: '#1B1B1B',
+        background: '#020202',
         boxSizing: 'border-box',
       }}
     >

@@ -93,7 +93,7 @@ export default function NavbarV1({ noBackground = false }) {
           left: 0,
           top:  0,
           zIndex: 1000,
-          background: noBackground ? 'transparent' : (isScrolledPastHero ? 'transparent' : '#1B1B1B'),
+          background: noBackground ? 'transparent' : (isScrolledPastHero ? 'transparent' : '#020202'),
           transition: 'background 0.4s ease',
           display: 'flex',
           alignItems: 'center',

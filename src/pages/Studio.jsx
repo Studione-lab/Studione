@@ -494,7 +494,7 @@ function DesignProcessSection() {
       id="studio-design-process"
       style={{
         width: '100%',
-        background: '#1B1B1B',
+        background: '#020202',
         position: 'relative',
         boxSizing: 'border-box',
         minHeight: '949px',
@@ -792,7 +792,7 @@ function ServicesSection() {
       id="studio-services"
       style={{
         width: '100%',
-        background: '#1B1B1B',
+        background: '#020202',
         position: 'relative',
         boxSizing: 'border-box',
         paddingBottom: '200px', // extra space for scroll
@@ -1278,7 +1278,7 @@ export default function Studio() {
   // RENDER
   // ────────────────────────────────────────────────────────────────
   return (
-    <div ref={studioRef} style={{ background: '#1B1B1B' }}>
+    <div ref={studioRef} style={{ background: '#020202' }}>
 
       {/* ══════════════════════════════════════════════════════════ */}
       {/* 1. HERO SECTION                                           */}
@@ -1292,7 +1292,7 @@ export default function Studio() {
           padding: '214px 40px 0px',
           gap: '120px',   /* ← 195px → 120px per spec */
           width: '100%',
-          background: '#1B1B1B',
+          background: '#020202',
           boxSizing: 'border-box',
         }}
       >
@@ -1333,7 +1333,7 @@ export default function Studio() {
         id="studio-testimonial"
         style={{
           width: '100%',
-          background: '#1B1B1B',
+          background: '#020202',
           position: 'relative',
           boxSizing: 'border-box',
           paddingTop: '120px',
@@ -1469,7 +1469,7 @@ export default function Studio() {
         id="studio-about"
         style={{
           width: '100%',
-          background: '#1B1B1B',
+          background: '#020202',
           position: 'relative',
           boxSizing: 'border-box',
           minHeight: '1120px',

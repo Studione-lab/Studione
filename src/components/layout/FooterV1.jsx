@@ -28,7 +28,7 @@ export default function FooterV1() {
         style={{
           position:   'relative',
           width:      '100%',
-          background: '#1B1B1B',
+          background: '#020202',
           boxSizing:  'border-box',
           display:    'flex',
           flexDirection: 'column',

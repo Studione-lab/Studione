@@ -300,7 +300,7 @@ export default function Home() {
   }, { scope: brandSectionRef })
 
   return (
-    <div style={{ background: '#1B1B1B' }}>
+    <div style={{ background: '#020202' }}>
       <style>{`
         /* ── Responsive Architecture ── */
         .home-section { padding-left: 40px; padding-right: 40px; }
@@ -398,7 +398,7 @@ export default function Home() {
           gap: '64px',
           width: '100%',
           minHeight: '100vh',
-          background: '#1B1B1B',
+          background: '#020202',
           boxSizing: 'border-box',
         }}
       >
@@ -477,7 +477,7 @@ export default function Home() {
           padding: '120px 40px 0px',
           gap: '120px',
           width: '100%',
-          background: '#1B1B1B',
+          background: '#020202',
           boxSizing: 'border-box',
         }}
       >
@@ -532,7 +532,7 @@ export default function Home() {
         className="work-section home-section"
         style={{
           width: '100%',
-          background: '#1B1B1B',
+          background: '#020202',
           padding: '126px 40px 275px',
           boxSizing: 'border-box',
           position: 'relative',
@@ -651,7 +651,7 @@ export default function Home() {
           position: 'relative',
           width: '100%',
           minHeight: '758px',
-          background: '#1B1B1B',
+          background: '#020202',
           overflow: 'hidden',
         }}
       >
@@ -716,7 +716,7 @@ export default function Home() {
           padding: '1px 0px',
           gap: '80px',
           width: '100%',
-          background: '#1B1B1B',
+          background: '#020202',
           boxSizing: 'border-box',
         }}
       >
