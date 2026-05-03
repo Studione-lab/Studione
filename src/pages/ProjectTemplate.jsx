@@ -277,15 +277,18 @@ export default function ProjectTemplate() {
   useGSAP(() => {
     if (!heroRef.current || !contentRef.current) return
 
-    // Pin the hero in place; content slides up and covers it
-    ScrollTrigger.create({
-      trigger: heroRef.current,
-      start: 'top top',
-      // pin until the content section's top reaches the top of viewport
-      endTrigger: contentRef.current,
-      end: 'top top',
-      pin: true,
-      pinSpacing: false,
+    let mm = gsap.matchMedia()
+    mm.add('(min-width: 768px)', () => {
+      // Pin the hero in place; content slides up and covers it
+      ScrollTrigger.create({
+        trigger: heroRef.current,
+        start: 'top top',
+        // pin until the content section's top reaches the top of viewport
+        endTrigger: contentRef.current,
+        end: 'top top',
+        pin: true,
+        pinSpacing: false,
+      })
     })
   }, { dependencies: [slug] })
 

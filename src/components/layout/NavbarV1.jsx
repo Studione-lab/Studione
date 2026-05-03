@@ -79,6 +79,7 @@ export default function NavbarV1({ noBackground = false }) {
         @media (max-width: 767px) {
           #nav-v1-desktop  { display: none !important; }
           #nav-v1-mob-btn  { display: flex !important; }
+          #navbar-v1       { padding-left: 16px !important; padding-right: 16px !important; }
         }
       `}</style>
 

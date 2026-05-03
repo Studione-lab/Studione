@@ -76,6 +76,7 @@ export default function Navbar() {
         @media (max-width: 767px) {
           #desktop-nav    { display: none   !important; }
           #mobile-menu-btn { display: flex  !important; }
+          #navbar         { padding-left: 16px !important; padding-right: 16px !important; }
         }
       `}</style>
 

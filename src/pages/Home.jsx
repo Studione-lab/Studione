@@ -140,6 +140,7 @@ function WorkCard({ card, imageWidth, imageHeight, style = {} }) {
   return (
     <article
       id={card.id}
+      className="work-card"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -156,6 +157,7 @@ function WorkCard({ card, imageWidth, imageHeight, style = {} }) {
           height={imageHeight}
           src={card.image}
           alt={card.title}
+          className="work-card-img"
         />
         {/* Category badge — hidden by default, shown on hover via CSS */}
         <div
@@ -201,25 +203,31 @@ function WorkCard({ card, imageWidth, imageHeight, style = {} }) {
         }}
       >
         {/* Card header row: title + tags */}
-        <div style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-          padding: 0,
-          gap: '16px',
-          width: '100%',
-        }}>
+        <div 
+          className="work-card-header"
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            padding: 0,
+            gap: '16px',
+            width: '100%',
+          }}
+        >
           <CardTitle>{card.title}</CardTitle>
 
           {/* Tag chips row */}
-          <div style={{
-            display: 'flex',
-            flexDirection: 'row',
-            alignItems: 'center',
-            gap: '16px',
-            flexShrink: 0,
-          }}>
+          <div 
+            className="work-tag-row"
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: '16px',
+              flexShrink: 0,
+            }}
+          >
             {card.tags.map((tag) => (
               <WorkTag key={tag}>{tag}</WorkTag>
             ))}
@@ -250,13 +258,18 @@ export default function Home() {
   useGSAP(() => {
     if (!brandSectionRef.current || !brandGalleryRef.current) return
 
+    // We use useGSAP without matchMedia constraints because we want this animation 
+    // to run on both mobile and desktop. 
     // Calculate how far to translate the gallery
     const getDistance = () => {
       const galleryWidth = brandGalleryRef.current.scrollWidth
       const viewportWidth = window.innerWidth
-      // 262px is the left offset of the gallery.
-      // We want the last card's right edge to hit the viewport's right edge (with 40px padding)
-      return Math.max(0, galleryWidth + 262 - viewportWidth + 40)
+      // 262px is the left offset of the gallery on desktop. On mobile, it's 16px.
+      const leftOffset = viewportWidth < 768 ? 16 : 262
+      const paddingRight = viewportWidth < 768 ? 16 : 40
+      
+      // We want the last card's right edge to hit the viewport's right edge
+      return Math.max(0, galleryWidth + leftOffset - viewportWidth + paddingRight)
     }
 
     // Use a context so it recalculates on resize (ScrollTrigger handles this gracefully if set up)
@@ -280,12 +293,94 @@ export default function Home() {
 
   return (
     <div style={{ background: '#1B1B1B' }}>
+      <style>{`
+        /* ── Responsive Architecture ── */
+        .home-section { padding-left: 40px; padding-right: 40px; }
+        .hero-section { padding-top: 214px; }
+        
+        /* Desktop base styles */
+        .see-more-link {
+          position: absolute;
+          right: 40px;
+          bottom: 126px;
+        }
+        .see-more-text {
+          font-family: var(--font-britti);
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 140%;
+          text-decoration: underline;
+          text-transform: capitalize;
+          color: #FFFFFF;
+          display: flex;
+          align-items: center;
+          gap: 15px;
+        }
+        .brand-gallery::-webkit-scrollbar {
+          display: none;
+        }
+        .brand-gallery {
+          -ms-overflow-style: none;  /* IE and Edge */
+          scrollbar-width: none;  /* Firefox */
+        }
+
+        @media (max-width: 1024px) {
+          .home-section { padding-left: 24px; padding-right: 24px; }
+          .see-more-link { position: static !important; margin-top: 40px; }
+        }
+        
+        @media (max-width: 767px) {
+          .home-section { padding-left: 16px !important; padding-right: 16px !important; }
+          
+          /* Hero Section */
+          .hero-section { padding-top: 152px !important; padding-bottom: 40px !important; gap: 40px !important; }
+          .heading-hero { font-size: 36px !important; }
+          .hero-image-card { flex-direction: column !important; }
+          .hero-img-desktop-only { display: none !important; }
+          .hero-img-mobile { width: 100% !important; height: 250px !important; }
+
+          /* About Section */
+          .about-section { padding-top: 72px !important; padding-bottom: 64px !important; gap: 48px !important; align-items: center !important; }
+          .about-text { font-size: 22px !important; align-self: center !important; text-align: left; }
+          .about-image { width: 100% !important; height: 220px !important; }
+
+          /* Work Section */
+          .work-section { padding-top: 64px !important; padding-bottom: 64px !important; display: flex !important; flex-direction: column !important; align-items: flex-start !important; gap: 48px !important; }
+          .work-container { gap: 40px !important; }
+          .heading-section { font-size: 24px !important; }
+          .work-grid { flex-direction: column !important; gap: 32px !important; }
+          .work-row { flex-direction: column !important; gap: 32px !important; }
+          .work-card { width: 100% !important; flex: none !important; }
+          .work-card-img { height: 250px !important; }
+          .heading-card { font-size: 18px !important; }
+          .text-muted-studio { font-size: 16px !important; }
+          .work-tag-row { gap: 3px !important; flex-wrap: wrap; }
+          .work-tag { padding: 4px 10px !important; font-size: 14px !important; height: 28px !important; }
+          .work-card-header { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+          .see-more-link { position: static !important; margin-top: 0; }
+          .see-more-text { font-size: 20px !important; align-items: center !important; height: 32px !important; gap: 12px !important; }
+          .see-more-text svg { width: 32px !important; height: 32px !important; }
+
+          /* Brand Section */
+          .brand-section { padding-top: 96px !important; padding-bottom: 120px !important; min-height: auto !important; display: flex !important; flex-direction: column !important; gap: 40px !important; }
+          .brand-heading { position: relative !important; left: 0 !important; top: 0 !important; font-size: 20px !important; }
+          .brand-gallery { position: relative !important; left: 0 !important; top: 0 !important; }
+          .brand-img { width: 144px !important; height: 144px !important; }
+
+          /* CTA Section */
+          .cta-section { padding: 0 !important; gap: 0 !important; }
+          .cta-text { padding: 0px 16px 40px !important; gap: 10px !important; width: 100% !important; max-width: 100% !important; }
+          .cta-heading { font-size: 30.5px !important; line-height: 120% !important; width: 290px !important; }
+          .cta-img { height: 250.12px !important; width: 100% !important; }
+        }
+      `}</style>
 
       {/* ══════════════════════════════════════════════════════════ */}
       {/* 1. HERO SECTION                                           */}
       {/* ══════════════════════════════════════════════════════════ */}
       <section
         id="hero"
+        className="hero-section home-section"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -297,7 +392,6 @@ export default function Home() {
           minHeight: '100vh',
           background: '#1B1B1B',
           boxSizing: 'border-box',
-          paddingTop: '214px',   // 130px accounts for 92px navbar
         }}
       >
         {/* Headline block — Britti Sans Trial 85px */}
@@ -332,6 +426,7 @@ export default function Home() {
         {/* Hero image card row: two equal images, gap 12px */}
         <div
           id="hero-image-card"
+          className="hero-image-card"
           style={{
             display: 'flex',
             flexDirection: 'row',
@@ -347,6 +442,7 @@ export default function Home() {
             src={undefined /* '/images/hero-1.png' */}
             alt="Project showcase left"
             style={{ flexShrink: 1, minWidth: 0 }}
+            className="hero-img-mobile"
           />
           <ImagePlaceholder
             width="50%"
@@ -354,6 +450,7 @@ export default function Home() {
             src={undefined /* '/images/hero-2.png' */}
             alt="Project showcase right"
             style={{ flexShrink: 1, minWidth: 0 }}
+            className="hero-img-desktop-only hero-img-mobile"
           />
         </div>
       </section>
@@ -363,6 +460,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════ */}
       <section
         id="about"
+        className="about-section home-section"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -378,6 +476,7 @@ export default function Home() {
         {/* Studio description — Britti Sans 32px 300 weight, right-end aligned */}
         <p
           id="studio-description"
+          className="about-text"
           style={{
             maxWidth: '791px',
             fontFamily: 'var(--font-britti)',
@@ -413,6 +512,7 @@ export default function Home() {
           src={undefined /* '/images/about-main.png' */}
           alt="About Studione"
           style={{ alignSelf: 'stretch' }}
+          className="about-image"
         />
       </section>
 
@@ -421,6 +521,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════ */}
       <section
         id="work"
+        className="work-section home-section"
         style={{
           width: '100%',
           background: '#1B1B1B',
@@ -432,6 +533,7 @@ export default function Home() {
         {/* ── Container ─────────────────────────────── */}
         <div
           id="work-container"
+          className="work-container"
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -452,6 +554,7 @@ export default function Home() {
           ────────────────────────────────────────────────────────── */}
           <div
             id="work-image-card-grid"
+            className="work-grid"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -505,34 +608,20 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── "See More Work ↘" bottom-right link ─── */}
+        {/* ── "See More Work ↘" bottom-right link (Desktop absolute, Mobile inline) ─── */}
         <div
           id="see-more-work"
+          className="see-more-link"
           style={{
-            position: 'absolute',
-            right: '40px',
-            bottom: '126px',
             display: 'flex',
             flexDirection: 'row',
-            alignItems: 'flex-start',
-            gap: '15px',
+            alignItems: 'center',
+            gap: '12px',
           }}
         >
           <Link
             to="/work"
-            style={{
-              fontFamily: 'var(--font-britti)',
-              fontWeight: 400,
-              fontSize: '24px',
-              lineHeight: '140%',
-              textDecorationLine: 'underline',
-              textTransform: 'capitalize',
-              color: '#FFFFFF',
-              textDecoration: 'underline',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '15px',
-            }}
+            className="see-more-text"
           >
             See More Work
             {/* Arrow-right-down icon matching solar:arrow-right-down-linear */}
@@ -549,6 +638,7 @@ export default function Home() {
       <section
         id="brand"
         ref={brandSectionRef}
+        className="brand-section home-section"
         style={{
           position: 'relative',
           width: '100%',
@@ -559,6 +649,7 @@ export default function Home() {
       >
         {/* Section label — top-left at left:39, top:85 */}
         <SectionHeading
+          className="brand-heading"
           style={{
             position: 'absolute',
             left: '39px',
@@ -576,6 +667,7 @@ export default function Home() {
         <div
           id="brand-gallery"
           ref={brandGalleryRef}
+          className="brand-gallery"
           style={{
             display: 'flex',
             flexDirection: 'row',
@@ -597,6 +689,7 @@ export default function Home() {
               src={item.image}
               alt={`Brand image ${i + 1}`}
               style={{ flexShrink: 0 }}
+              className="brand-img"
             />
           ))}
         </div>
@@ -607,6 +700,7 @@ export default function Home() {
       {/* ══════════════════════════════════════════════════════════ */}
       <section
         id="cta"
+        className="cta-section home-section"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -621,6 +715,7 @@ export default function Home() {
         {/* ── Heading block — centered, max-width 584px ─── */}
         <div
           id="cta-text"
+          className="cta-text"
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -632,6 +727,7 @@ export default function Home() {
           }}
         >
           <h2
+            className="cta-heading"
             style={{
               fontFamily: 'var(--font-britti)',
               fontStyle: 'normal',
@@ -657,6 +753,7 @@ export default function Home() {
           src={undefined /* '/images/cta-billboard.png' */}
           alt="Billboard showcase"
           style={{ flexShrink: 0 }}
+          className="cta-img"
         />
       </section>
 

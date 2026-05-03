@@ -323,162 +323,168 @@ function DesignProcessSection() {
 
   // ── Set initial absolute y positions before first paint ───────────
   useLayoutEffect(() => {
-    for (let slot = 0; slot < N; slot++) {
-      const el = itemEls.current[slot]   // initially slot i holds service i
-      if (el) gsap.set(el, { y: slot * UNIT })
-    }
+    let mm = gsap.matchMedia()
+    mm.add('(min-width: 768px)', () => {
+      for (let slot = 0; slot < N; slot++) {
+        const el = itemEls.current[slot]   // initially slot i holds service i
+        if (el) gsap.set(el, { y: slot * UNIT })
+      }
+    })
+    return () => mm.revert()
   }, [N, UNIT])
 
   // ── All carousel logic in one stable effect ───────────────────────
   useEffect(() => {
-    // slotOrder[slot] = serviceIdx currently at that visual slot
-    // Mutated in place — no React re-render needed for list positions
-    let slotOrder = [0, 1, 2, 3, 4, 5, 6]
+    let mm = gsap.matchMedia()
 
-    // ── Color helpers ───────────────────────────────────────────────
-    const setColors = (activeSvcIdx) => {
-      itemEls.current.forEach((el, i) => {
-        if (!el) return
-        gsap.to(el, {
-          color: i === activeSvcIdx ? '#FFFFFF' : '#272626',
-          duration: 0.40,
-          ease: 'power2.out',
+    mm.add('(min-width: 768px)', () => {
+      // slotOrder[slot] = serviceIdx currently at that visual slot
+      // Mutated in place — no React re-render needed for list positions
+      let slotOrder = [0, 1, 2, 3, 4, 5, 6]
+
+      // ── Color helpers ───────────────────────────────────────────────
+      const setColors = (activeSvcIdx) => {
+        itemEls.current.forEach((el, i) => {
+          if (!el) return
+          gsap.to(el, {
+            color: i === activeSvcIdx ? '#FFFFFF' : '#272626',
+            duration: 0.40,
+            ease: 'power2.out',
+          })
         })
-      })
-    }
+      }
 
-    // ── Card cross-fade ─────────────────────────────────────────────
-    const fadeCard = (idx) => {
-      if (idx === activeRef.current) return
-      activeRef.current = idx
-      setActiveIdx(idx)
-      const img  = cardImgRef.current
-      const desc = cardDescRef.current
-      if (!img || !desc) return
-      gsap.timeline()
-        .to([img, desc], { opacity: 0, y: -8, duration: 0.25, ease: 'power2.in',  stagger: 0.04 })
-        .set([img, desc], { y: 12 })
-        .to([img, desc], { opacity: 1, y: 0,  duration: 0.38, ease: 'power2.out', stagger: 0.04 })
-    }
+      // ── Card cross-fade ─────────────────────────────────────────────
+      const fadeCard = (idx) => {
+        if (idx === activeRef.current) return
+        activeRef.current = idx
+        setActiveIdx(idx)
+        const img  = cardImgRef.current
+        const desc = cardDescRef.current
+        if (!img || !desc) return
+        gsap.timeline()
+          .to([img, desc], { opacity: 0, y: -8, duration: 0.25, ease: 'power2.in',  stagger: 0.04 })
+          .set([img, desc], { y: 12 })
+          .to([img, desc], { opacity: 1, y: 0,  duration: 0.38, ease: 'power2.out', stagger: 0.04 })
+      }
 
-    // ── Restart auto-cycle from zero ────────────────────────────────
-    const restartCycle = () => {
-      clearInterval(intervalRef.current)
-      intervalRef.current = setInterval(advanceFwd, 10000)
-    }
+      // ── Restart auto-cycle from zero ────────────────────────────────
+      const restartCycle = () => {
+        clearInterval(intervalRef.current)
+        intervalRef.current = setInterval(advanceFwd, 10000)
+      }
 
-    // ── FORWARD: slide all items UP one UNIT, top wraps to bottom ───
-    function advanceFwd() {
-      if (isAnimRef.current) return
-      isAnimRef.current = true
+      // ── FORWARD: slide all items UP one UNIT, top wraps to bottom ───
+      function advanceFwd() {
+        if (isAnimRef.current) return
+        isAnimRef.current = true
 
-      const outSvcIdx = slotOrder[0]   // currently active → wraps to bottom
-      const inSvcIdx  = slotOrder[1]   // next in line → becomes active
-      const DUR  = 0.70
-      const EASE = 'power3.inOut'
+        const outSvcIdx = slotOrder[0]   // currently active → wraps to bottom
+        const inSvcIdx  = slotOrder[1]   // next in line → becomes active
+        const DUR  = 0.70
+        const EASE = 'power3.inOut'
 
-      // 1. Slide every item up by one UNIT
-      slotOrder.forEach(svcIdx => {
-        gsap.to(itemEls.current[svcIdx], { y: `-=${UNIT}`, duration: DUR, ease: EASE })
-      })
-
-      // 2. At 45 % of the way: wrap outgoing from -UNIT to N*UNIT (off-screen bottom)
-      //    then animate it into the last slot — completes simultaneously with others.
-      gsap.delayedCall(DUR * 0.45, () => {
-        gsap.set(itemEls.current[outSvcIdx], { y: N * UNIT })
-        gsap.to(itemEls.current[outSvcIdx], {
-          y: (N - 1) * UNIT,
-          duration: DUR * 0.55,
-          ease: 'power2.out',
+        // 1. Slide every item up by one UNIT
+        slotOrder.forEach(svcIdx => {
+          gsap.to(itemEls.current[svcIdx], { y: `-=${UNIT}`, duration: DUR, ease: EASE })
         })
-      })
 
-      // 3. Update active state immediately (colour + card)
-      setColors(inSvcIdx)
-      fadeCard(inSvcIdx)
+        // 2. At 45 % of the way: wrap outgoing from -UNIT to N*UNIT (off-screen bottom)
+        //    then animate it into the last slot — completes simultaneously with others.
+        gsap.delayedCall(DUR * 0.45, () => {
+          gsap.set(itemEls.current[outSvcIdx], { y: N * UNIT })
+          gsap.to(itemEls.current[outSvcIdx], {
+            y: (N - 1) * UNIT,
+            duration: DUR * 0.55,
+            ease: 'power2.out',
+          })
+        })
 
-      // 4. Rotate order: [1,2,3,4,5,6,0]
-      slotOrder = [...slotOrder.slice(1), slotOrder[0]]
+        // 3. Update active state immediately (colour + card)
+        setColors(inSvcIdx)
+        fadeCard(inSvcIdx)
 
-      // 5. Unlock after full duration
-      gsap.delayedCall(DUR, () => { isAnimRef.current = false })
-    }
+        // 4. Rotate order: [1,2,3,4,5,6,0]
+        slotOrder = [...slotOrder.slice(1), slotOrder[0]]
 
-    // ── BACKWARD: slide all items DOWN one UNIT, bottom wraps to top ─
-    function advanceBwd() {
-      if (isAnimRef.current) return
-      isAnimRef.current = true
+        // 5. Unlock after full duration
+        gsap.delayedCall(DUR, () => { isAnimRef.current = false })
+      }
 
-      const inSvcIdx = slotOrder[N - 1]   // last item → wraps to top (active)
-      const DUR  = 0.70
-      const EASE = 'power3.inOut'
+      // ── BACKWARD: slide all items DOWN one UNIT, bottom wraps to top ─
+      function advanceBwd() {
+        if (isAnimRef.current) return
+        isAnimRef.current = true
 
-      // 1. Snap incoming item from its slot (6*UNIT) to just above clip (-UNIT)
-      gsap.set(itemEls.current[inSvcIdx], { y: -UNIT })
+        const inSvcIdx = slotOrder[N - 1]   // last item → wraps to top (active)
+        const DUR  = 0.70
+        const EASE = 'power3.inOut'
 
-      // 2. Slide every item DOWN by one UNIT
-      //    • Incoming goes from -UNIT → 0 (enters from top, becomes active)
-      //    • Old active goes from 0 → UNIT (drops to slot 1)
-      //    • Others cascade down
-      slotOrder.forEach(svcIdx => {
-        gsap.to(itemEls.current[svcIdx], { y: `+=${UNIT}`, duration: DUR, ease: EASE })
-      })
+        // 1. Snap incoming item from its slot (6*UNIT) to just above clip (-UNIT)
+        gsap.set(itemEls.current[inSvcIdx], { y: -UNIT })
 
-      setColors(inSvcIdx)
-      fadeCard(inSvcIdx)
+        // 2. Slide every item DOWN by one UNIT
+        slotOrder.forEach(svcIdx => {
+          gsap.to(itemEls.current[svcIdx], { y: `+=${UNIT}`, duration: DUR, ease: EASE })
+        })
 
-      // Rotate order: [6,0,1,2,3,4,5]
-      slotOrder = [slotOrder[N - 1], ...slotOrder.slice(0, N - 1)]
+        setColors(inSvcIdx)
+        fadeCard(inSvcIdx)
 
-      gsap.delayedCall(DUR, () => {
-        isAnimRef.current = false
+        // Rotate order: [6,0,1,2,3,4,5]
+        slotOrder = [slotOrder[N - 1], ...slotOrder.slice(0, N - 1)]
+
+        gsap.delayedCall(DUR, () => {
+          isAnimRef.current = false
+          restartCycle()
+        })
+      }
+
+      // ── HOVER: pause cycle + show that item's card (no list movement) ─
+      function onHoverItem(svcIdx) {
+        clearInterval(intervalRef.current)   // pause auto-cycle
+        setColors(svcIdx)                    // highlight hovered item
+        fadeCard(svcIdx)                     // cross-fade card content
+      }
+
+      // ── HOVER END: restore to true active + resume cycle ────────────
+      function onHoverEnd() {
+        const activeSvcIdx = slotOrder[0]    // actual item at slot 0
+        setColors(activeSvcIdx)
+        fadeCard(activeSvcIdx)
         restartCycle()
-      })
-    }
+      }
 
-    // ── HOVER: pause cycle + show that item's card (no list movement) ─
-    function onHoverItem(svcIdx) {
-      clearInterval(intervalRef.current)   // pause auto-cycle
-      setColors(svcIdx)                    // highlight hovered item
-      fadeCard(svcIdx)                     // cross-fade card content
-    }
+      hoverRef.current    = onHoverItem
+      hoverEndRef.current = onHoverEnd
 
-    // ── HOVER END: restore to true active + resume cycle ────────────
-    function onHoverEnd() {
-      const activeSvcIdx = slotOrder[0]    // actual item at slot 0
-      setColors(activeSvcIdx)
-      fadeCard(activeSvcIdx)
-      restartCycle()
-    }
+      // ── Auto-cycle ─────────────────────────────────────────────────
+      intervalRef.current = setInterval(advanceFwd, 10000)
 
-    hoverRef.current    = onHoverItem
-    hoverEndRef.current = onHoverEnd
+      // ── Wheel handler ──────────────────────────────────────────────
+      let wheelCooldown = false
+      const onWheel = (e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        if (wheelCooldown) return
+        wheelCooldown = true
+        setTimeout(() => { wheelCooldown = false }, 150)   // throttle rapid spin
 
-    // ── Auto-cycle ─────────────────────────────────────────────────
-    intervalRef.current = setInterval(advanceFwd, 10000)
+        if (e.deltaY > 0) { advanceFwd(); restartCycle() }
+        else              { advanceBwd() }
+      }
 
-    // ── Wheel handler ──────────────────────────────────────────────
-    // Mouse-wheel over the list advances items (no physical scroll).
-    // passive:false lets us call preventDefault to block page scroll.
-    let wheelCooldown = false
-    const onWheel = (e) => {
-      e.preventDefault()
-      e.stopPropagation()
-      if (wheelCooldown) return
-      wheelCooldown = true
-      setTimeout(() => { wheelCooldown = false }, 150)   // throttle rapid spin
+      const clip = clipRef.current
+      if (clip) clip.addEventListener('wheel', onWheel, { passive: false })
 
-      if (e.deltaY > 0) { advanceFwd(); restartCycle() }
-      else              { advanceBwd() }
-    }
+      // Cleanup function to be run by matchMedia
+      return () => {
+        clearInterval(intervalRef.current)
+        if (clip) clip.removeEventListener('wheel', onWheel)
+      }
+    })
 
-    const clip = clipRef.current
-    if (clip) clip.addEventListener('wheel', onWheel, { passive: false })
-
-    return () => {
-      clearInterval(intervalRef.current)
-      if (clip) clip.removeEventListener('wheel', onWheel)
-    }
+    return () => mm.revert()
   }, [])  // stable — all refs, nothing to re-capture
 
   const svc = SERVICES[activeIdx]
@@ -702,56 +708,55 @@ function ServicesSection() {
   const TOP_0   = 189    // px — first card top offset within section
   const N       = SERVICES_CARDS.length   // 5
 
-  // ── Initial: hide cards 2-5 below the section fold ───────────────
+  // ── Initial setup & Scroll-driven reveal ────────────────────────
   useLayoutEffect(() => {
-    for (let i = 1; i < N; i++) {
-      const el = cardRefs.current[i]
-      if (el) gsap.set(el, { y: 1050 })
-    }
-  }, [N])
-
-  // ── Scroll-driven reveal ──────────────────────────────────────────
-  useEffect(() => {
     const section = sectionRef.current
     const cardsWrap = cardsWrapRef.current
     if (!section || !cardsWrap || cardRefs.current.some(c => !c)) return
 
-    // ── Timeline for card stacking ─────────────────────────────────
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: cardsWrap,
-        pin: true,
-        start: 'top 80px',
-        end: `+=${(N - 1) * 320}`,   // 4 × 320 = 1280 px of virtual scroll
-        scrub: 1.2,
-      },
+    let mm = gsap.matchMedia()
+
+    mm.add('(min-width: 768px)', () => {
+      // Hide cards 2-5 below the section fold
+      for (let i = 1; i < N; i++) {
+        const el = cardRefs.current[i]
+        if (el) gsap.set(el, { y: 1050 })
+      }
+
+      // ── Timeline for card stacking ─────────────────────────────────
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: cardsWrap,
+          pin: true,
+          start: 'top 80px',
+          end: `+=${(N - 1) * 320}`,   // 4 × 320 = 1280 px of virtual scroll
+          scrub: 1.2,
+        },
+      })
+      tlRef.current = tl
+
+      // Cards 2-5 slide up into their stacked positions, one by one
+      for (let i = 1; i < N; i++) {
+        tl.to(
+          cardRefs.current[i],
+          { y: 0, duration: 1, ease: 'power2.inOut' },
+          i - 1
+        )
+      }
+
+      // ── Immersive: Hide Global Navbar while section is being scrolled pass ──
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 10%',
+        end:   'bottom 10%',
+        onEnter:      () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
+        onLeave:      () => gsap.to('#navbar-v1', { opacity: 1, pointerEvents: 'all',  duration: 0.4 }),
+        onEnterBack:  () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
+        onLeaveBack:  () => gsap.to('#navbar-v1', { opacity: 1, pointerEvents: 'all',  duration: 0.4 }),
+      })
     })
-    tlRef.current = tl
 
-    // Cards 2-5 slide up into their stacked positions, one by one
-    for (let i = 1; i < N; i++) {
-      tl.to(
-        cardRefs.current[i],
-        { y: 0, duration: 1, ease: 'power2.inOut' },
-        i - 1
-      )
-    }
-
-    // ── Immersive: Hide Global Navbar while section is being scrolled pass ──
-    ScrollTrigger.create({
-      trigger: section,
-      start: 'top 10%',
-      end:   'bottom 10%',
-      onEnter:      () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
-      onLeave:      () => gsap.to('#navbar-v1', { opacity: 1, pointerEvents: 'all',  duration: 0.4 }),
-      onEnterBack:  () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
-      onLeaveBack:  () => gsap.to('#navbar-v1', { opacity: 1, pointerEvents: 'all',  duration: 0.4 }),
-    })
-
-    return () => {
-      ScrollTrigger.getAll().filter(st => st.trigger === cardsWrap || st.trigger === section).forEach(st => st.kill())
-      tl.kill()
-    }
+    return () => mm.revert()
   }, [N])
 
   // ── Hover: lift card like pulling from a stack ────────────────────
@@ -976,153 +981,157 @@ export default function Studio() {
     const container = marqueeRef.current
     if (!container) return
 
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let mm = gsap.matchMedia()
 
-    /*
-      Shared mutable state object – passed to the marqueeStateRef so that
-      arrow-button handlers outside this effect can interact with it.
-    */
-    const S = {
-      currentX: 0,          // current transform X in px
-      halfWidth: 0,          // scrollWidth / 2 (where the loop restarts)
-      // Auto-scroll
-      isAutoScrolling: !prefersReduced,
-      lastTimestamp: null,
-      SPEED: 40,         // px/second — slow enough to read naturally
-      // Drag
-      isDragging: false,
-      isDecelerating: false,
-      dragStartX: 0,          // pointer X on pointerdown
-      dragStartTranslateX: 0,        // currentX on pointerdown
-      lastPointerX: 0,
-      lastPointerTime: 0,
-      velX: 0,          // smoothed pointer velocity (px/ms)
-      frameVelocity: 0,          // velocity carried into decel phase (px/frame)
-      FRICTION: 0.90,       // momentum decay per frame
-    }
-    marqueeStateRef.current = S
+    mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+      /*
+        Shared mutable state object – passed to the marqueeStateRef so that
+        arrow-button handlers outside this effect can interact with it.
+      */
+      const S = {
+        currentX: 0,          // current transform X in px
+        halfWidth: 0,          // scrollWidth / 2 (where the loop restarts)
+        // Auto-scroll
+        isAutoScrolling: true,
+        lastTimestamp: null,
+        SPEED: 40,         // px/second — slow enough to read naturally
+        // Drag
+        isDragging: false,
+        isDecelerating: false,
+        dragStartX: 0,          // pointer X on pointerdown
+        dragStartTranslateX: 0,        // currentX on pointerdown
+        lastPointerX: 0,
+        lastPointerTime: 0,
+        velX: 0,          // smoothed pointer velocity (px/ms)
+        frameVelocity: 0,          // velocity carried into decel phase (px/frame)
+        FRICTION: 0.90,       // momentum decay per frame
+      }
+      marqueeStateRef.current = S
 
-    // ── Infinite wrap: keeps currentX in (-halfWidth, 0] ──────
-    const wrapX = (x) => {
-      if (!S.halfWidth) return 0
-      let w = x % S.halfWidth       // JS % keeps sign of dividend
-      if (w > 0) w -= S.halfWidth   // positive → bring into negative range
-      return w
-    }
-
-    // ── RAF IDs ───────────────────────────────────────────────
-    let rafId = null
-    let decelId = null
-    let initId = null
-
-    // ── Main animation tick ───────────────────────────────────
-    const tick = (timestamp) => {
-      if (S.lastTimestamp === null) S.lastTimestamp = timestamp
-      // Cap delta to 50ms so tab-hidden jumps don't teleport cards
-      const dt = Math.min(timestamp - S.lastTimestamp, 50)
-      S.lastTimestamp = timestamp
-
-      if (S.isAutoScrolling && !S.isDragging && !S.isDecelerating) {
-        S.currentX = wrapX(S.currentX - S.SPEED * dt / 1000)
-        gsap.set(container, { x: S.currentX })
+      // ── Infinite wrap: keeps currentX in (-halfWidth, 0] ──────
+      const wrapX = (x) => {
+        if (!S.halfWidth) return 0
+        let w = x % S.halfWidth       // JS % keeps sign of dividend
+        if (w > 0) w -= S.halfWidth   // positive → bring into negative range
+        return w
       }
 
-      rafId = requestAnimationFrame(tick)
-    }
+      // ── RAF IDs ───────────────────────────────────────────────
+      let rafId = null
+      let decelId = null
+      let initId = null
 
-    // ── Hover pause / resume ──────────────────────────────────
-    const onMouseEnter = () => {
-      if (!S.isDragging && !S.isDecelerating) S.isAutoScrolling = false
-    }
-    const onMouseLeave = () => {
-      if (!S.isDragging && !S.isDecelerating) S.isAutoScrolling = true
-    }
+      // ── Main animation tick ───────────────────────────────────
+      const tick = (timestamp) => {
+        if (S.lastTimestamp === null) S.lastTimestamp = timestamp
+        // Cap delta to 50ms so tab-hidden jumps don't teleport cards
+        const dt = Math.min(timestamp - S.lastTimestamp, 50)
+        S.lastTimestamp = timestamp
 
-    // ── Drag: start ───────────────────────────────────────────
-    const onPointerDown = (e) => {
-      if (S.isDecelerating) {
-        cancelAnimationFrame(decelId)
-        S.isDecelerating = false
-      }
-      S.isDragging = true
-      S.isAutoScrolling = false
-      S.dragStartX = e.clientX
-      S.dragStartTranslateX = S.currentX
-      S.lastPointerX = e.clientX
-      S.lastPointerTime = performance.now()
-      S.velX = 0
-      container.style.cursor = 'grabbing'
-      e.preventDefault()
-    }
+        if (S.isAutoScrolling && !S.isDragging && !S.isDecelerating) {
+          S.currentX = wrapX(S.currentX - S.SPEED * dt / 1000)
+          gsap.set(container, { x: S.currentX })
+        }
 
-    // ── Drag: move ────────────────────────────────────────────
-    const onPointerMove = (e) => {
-      if (!S.isDragging) return
-      const now = performance.now()
-      const dt = now - S.lastPointerTime
-      if (dt > 0) {
-        const rawVel = (e.clientX - S.lastPointerX) / dt   // px/ms
-        S.velX = S.velX * 0.65 + rawVel * 0.35             // low-pass smoothing
-      }
-      S.lastPointerX = e.clientX
-      S.lastPointerTime = now
-      S.currentX = wrapX(S.dragStartTranslateX + (e.clientX - S.dragStartX))
-      gsap.set(container, { x: S.currentX })
-    }
-
-    // ── Drag: end — apply momentum deceleration ───────────────
-    const onPointerUp = () => {
-      if (!S.isDragging) return
-      S.isDragging = false
-      container.style.cursor = 'grab'
-
-      // Convert px/ms → px/frame (≈16.67ms at 60fps)
-      S.frameVelocity = S.velX * 16.67
-
-      if (Math.abs(S.frameVelocity) < 0.5) {
-        S.isAutoScrolling = true
-        return
+        rafId = requestAnimationFrame(tick)
       }
 
-      S.isDecelerating = true
-      const decelerate = () => {
-        S.frameVelocity *= S.FRICTION
-        S.currentX = wrapX(S.currentX + S.frameVelocity)
-        gsap.set(container, { x: S.currentX })
-        if (Math.abs(S.frameVelocity) < 0.25) {
+      // ── Hover pause / resume ──────────────────────────────────
+      const onMouseEnter = () => {
+        if (!S.isDragging && !S.isDecelerating) S.isAutoScrolling = false
+      }
+      const onMouseLeave = () => {
+        if (!S.isDragging && !S.isDecelerating) S.isAutoScrolling = true
+      }
+
+      // ── Drag: start ───────────────────────────────────────────
+      const onPointerDown = (e) => {
+        if (S.isDecelerating) {
+          cancelAnimationFrame(decelId)
           S.isDecelerating = false
+        }
+        S.isDragging = true
+        S.isAutoScrolling = false
+        S.dragStartX = e.clientX
+        S.dragStartTranslateX = S.currentX
+        S.lastPointerX = e.clientX
+        S.lastPointerTime = performance.now()
+        S.velX = 0
+        container.style.cursor = 'grabbing'
+        e.preventDefault()
+      }
+
+      // ── Drag: move ────────────────────────────────────────────
+      const onPointerMove = (e) => {
+        if (!S.isDragging) return
+        const now = performance.now()
+        const dt = now - S.lastPointerTime
+        if (dt > 0) {
+          const rawVel = (e.clientX - S.lastPointerX) / dt   // px/ms
+          S.velX = S.velX * 0.65 + rawVel * 0.35             // low-pass smoothing
+        }
+        S.lastPointerX = e.clientX
+        S.lastPointerTime = now
+        S.currentX = wrapX(S.dragStartTranslateX + (e.clientX - S.dragStartX))
+        gsap.set(container, { x: S.currentX })
+      }
+
+      // ── Drag: end — apply momentum deceleration ───────────────
+      const onPointerUp = () => {
+        if (!S.isDragging) return
+        S.isDragging = false
+        container.style.cursor = 'grab'
+
+        // Convert px/ms → px/frame (≈16.67ms at 60fps)
+        S.frameVelocity = S.velX * 16.67
+
+        if (Math.abs(S.frameVelocity) < 0.5) {
           S.isAutoScrolling = true
           return
         }
+
+        S.isDecelerating = true
+        const decelerate = () => {
+          S.frameVelocity *= S.FRICTION
+          S.currentX = wrapX(S.currentX + S.frameVelocity)
+          gsap.set(container, { x: S.currentX })
+          if (Math.abs(S.frameVelocity) < 0.25) {
+            S.isDecelerating = false
+            S.isAutoScrolling = true
+            return
+          }
+          decelId = requestAnimationFrame(decelerate)
+        }
         decelId = requestAnimationFrame(decelerate)
       }
-      decelId = requestAnimationFrame(decelerate)
-    }
 
-    // ── Init: measure halfWidth after layout paints ───────────
-    initId = requestAnimationFrame(() => {
-      S.halfWidth = container.scrollWidth / 2
-      rafId = requestAnimationFrame(tick)
+      // ── Init: measure halfWidth after layout paints ───────────
+      initId = requestAnimationFrame(() => {
+        S.halfWidth = container.scrollWidth / 2
+        rafId = requestAnimationFrame(tick)
+      })
+
+      // ── Attach listeners ──────────────────────────────────────
+      container.addEventListener('mouseenter', onMouseEnter)
+      container.addEventListener('mouseleave', onMouseLeave)
+      container.addEventListener('pointerdown', onPointerDown, { passive: false })
+      window.addEventListener('pointermove', onPointerMove)
+      window.addEventListener('pointerup', onPointerUp)
+
+      return () => {
+        cancelAnimationFrame(initId)
+        if (rafId) cancelAnimationFrame(rafId)
+        if (decelId) cancelAnimationFrame(decelId)
+        container.removeEventListener('mouseenter', onMouseEnter)
+        container.removeEventListener('mouseleave', onMouseLeave)
+        container.removeEventListener('pointerdown', onPointerDown)
+        window.removeEventListener('pointermove', onPointerMove)
+        window.removeEventListener('pointerup', onPointerUp)
+        marqueeStateRef.current = null
+      }
     })
 
-    // ── Attach listeners ──────────────────────────────────────
-    container.addEventListener('mouseenter', onMouseEnter)
-    container.addEventListener('mouseleave', onMouseLeave)
-    container.addEventListener('pointerdown', onPointerDown, { passive: false })
-    window.addEventListener('pointermove', onPointerMove)
-    window.addEventListener('pointerup', onPointerUp)
-
-    return () => {
-      cancelAnimationFrame(initId)
-      if (rafId) cancelAnimationFrame(rafId)
-      if (decelId) cancelAnimationFrame(decelId)
-      container.removeEventListener('mouseenter', onMouseEnter)
-      container.removeEventListener('mouseleave', onMouseLeave)
-      container.removeEventListener('pointerdown', onPointerDown)
-      window.removeEventListener('pointermove', onPointerMove)
-      window.removeEventListener('pointerup', onPointerUp)
-      marqueeStateRef.current = null
-    }
+    return () => mm.revert()
   }, [])
 
   // ── Arrow buttons: smooth single-card seek ────────────────────
@@ -1164,32 +1173,36 @@ export default function Studio() {
   // CURSOR-FOLLOWING TAG over About image (useEffect — no cleanup clash)
   // ════════════════════════════════════════════════════════════════
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-
     const imgWrap = aboutImageWrapRef.current
     const tagEl = tagRef.current
     if (!imgWrap || !tagEl) return
 
-    const xTo = gsap.quickTo(tagEl, 'x', { duration: 0.3, ease: 'power2.out' })
-    const yTo = gsap.quickTo(tagEl, 'y', { duration: 0.3, ease: 'power2.out' })
+    let mm = gsap.matchMedia()
 
-    const onMove = (e) => {
-      const r = imgWrap.getBoundingClientRect()
-      xTo(e.clientX - r.left - tagEl.offsetWidth / 2)
-      yTo(e.clientY - r.top - tagEl.offsetHeight / 2)
-    }
-    const onEnter = () => gsap.to(tagEl, { opacity: 1, duration: 0.2 })
-    const onLeave = () => gsap.to(tagEl, { opacity: 0, duration: 0.2 })
+    mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+      const xTo = gsap.quickTo(tagEl, 'x', { duration: 0.3, ease: 'power2.out' })
+      const yTo = gsap.quickTo(tagEl, 'y', { duration: 0.3, ease: 'power2.out' })
 
-    imgWrap.addEventListener('mousemove', onMove)
-    imgWrap.addEventListener('mouseenter', onEnter)
-    imgWrap.addEventListener('mouseleave', onLeave)
+      const onMove = (e) => {
+        const r = imgWrap.getBoundingClientRect()
+        xTo(e.clientX - r.left - tagEl.offsetWidth / 2)
+        yTo(e.clientY - r.top - tagEl.offsetHeight / 2)
+      }
+      const onEnter = () => gsap.to(tagEl, { opacity: 1, duration: 0.2 })
+      const onLeave = () => gsap.to(tagEl, { opacity: 0, duration: 0.2 })
 
-    return () => {
-      imgWrap.removeEventListener('mousemove', onMove)
-      imgWrap.removeEventListener('mouseenter', onEnter)
-      imgWrap.removeEventListener('mouseleave', onLeave)
-    }
+      imgWrap.addEventListener('mousemove', onMove)
+      imgWrap.addEventListener('mouseenter', onEnter)
+      imgWrap.addEventListener('mouseleave', onLeave)
+
+      return () => {
+        imgWrap.removeEventListener('mousemove', onMove)
+        imgWrap.removeEventListener('mouseenter', onEnter)
+        imgWrap.removeEventListener('mouseleave', onLeave)
+      }
+    })
+
+    return () => mm.revert()
   }, [])
 
   // ════════════════════════════════════════════════════════════════

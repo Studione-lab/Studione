@@ -408,10 +408,10 @@ body {
     bottom: 60px !important;
   }
 
-  /* Brand section: let gallery scroll horizontally */
+  /* Brand section: GSAP handles translation, do not force overflow auto */
   #brand {
     min-height: 480px !important;
-    overflow-x: auto !important;
+    overflow-x: hidden !important;
   }
   #brand-gallery {
     left: 20px !important;

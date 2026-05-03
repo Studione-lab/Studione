@@ -24,6 +24,7 @@ export default function Footer() {
   return (
     <footer
       id="footer"
+      className="footer-container"
       style={{
         /* ── Spec: padding 120px 40px 32px, gap 220px ── */
         display: 'flex',
@@ -36,9 +37,23 @@ export default function Footer() {
         boxSizing: 'border-box',
       }}
     >
+      <style>{`
+        @media (max-width: 767px) {
+          .footer-container { padding: 148px 16px 24px !important; gap: 58px !important; }
+          .footer-contact { gap: 0 !important; height: 144px !important; width: 100% !important; }
+          .footer-tagline { font-size: 36px !important; height: 108px !important; }
+          .footer-email { font-size: 36px !important; height: 36px !important; line-height: 100% !important; }
+          .footer-bottom { flex-direction: column !important; align-items: flex-start !important; gap: 16px !important; }
+          .footer-social { gap: 8px !important; }
+          .footer-social-link { font-size: 14px !important; }
+          .footer-copyright { font-size: 14px !important; }
+        }
+      `}</style>
+
       {/* ══ Block 1: Contact Info ═══════════════════════════════════ */}
       <div
         id="footer-contact"
+        className="footer-contact"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -55,6 +70,7 @@ export default function Footer() {
         {/* Tagline — Britti 80px 300wt, white */}
         <p
           id="footer-tagline"
+          className="footer-tagline"
           style={{
             fontFamily: "'Britti Sans Trial', 'Inter Tight', system-ui, sans-serif",
             fontStyle:  'normal',
@@ -77,6 +93,7 @@ export default function Footer() {
         {/* Email address — Britti 80px 400wt, 50% white, underlined, 60px line-height */}
         <a
           id="footer-email"
+          className="footer-email"
           href="mailto:hello@studione.com"
           style={{
             fontFamily: "'Britti Sans Trial', 'Inter Tight', system-ui, sans-serif",
@@ -102,6 +119,7 @@ export default function Footer() {
       {/* ══ Block 2: Bottom bar — social links + copyright ══════════ */}
       <div
         id="footer-bottom"
+        className="footer-bottom"
         style={{
           display: 'flex',
           flexDirection: 'row',
@@ -119,6 +137,7 @@ export default function Footer() {
         {/* Social links row — gap 14px */}
         <nav
           id="footer-social"
+          className="footer-social"
           aria-label="Social links"
           style={{
             display: 'flex',
@@ -136,6 +155,7 @@ export default function Footer() {
               key={link.label}
               href={link.href}
               id={`footer-social-${link.label.toLowerCase()}`}
+              className="footer-social-link"
               style={{
                 ...socialLinkStyle,
                 order: i,
@@ -149,6 +169,7 @@ export default function Footer() {
         {/* Copyright notice — Britti 13.8px, 50% white, text-align right */}
         <span
           id="footer-copyright"
+          className="footer-copyright"
           style={{
             fontFamily: "'Britti Sans Trial', 'Inter Tight', system-ui, sans-serif",
             fontStyle:  'normal',
