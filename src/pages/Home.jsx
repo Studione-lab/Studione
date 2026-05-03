@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import HeroImage from '../assets/Hero Image.png'
+import HeroImage2 from '../assets/Hero Image-1.png'
+import AboutImage from '../assets/Studio Image.png'
+import CTABillboard from '../assets/Hero Image-2.png'
+
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -55,24 +60,27 @@ function CardDescription({ children, style = {} }) {
 const WORK_CARDS = [
   {
     id: 'card-1',
-    title: 'Website Builderh',
+    title: 'Website Builder',
     tags: ['Brand Identity', 'Strategy'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
     // image: '/images/work-1.jpg',   ← replace with real asset path
+    image: "../src/assets/project-1.png"
   },
   {
     id: 'card-2',
-    title: 'Website Builderh',
+    title: 'Website Builder',
     tags: ['Design System'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
     // image: '/images/work-2.jpg',
+    image: "../src/assets/project-2.png"
   },
   {
     id: 'card-3',
-    title: 'Website Builderh',
+    title: 'Website Builder',
     tags: ['Brand Identity', 'Production Design'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
     // image: '/images/work-3.jpg',
+    image: "../src/assets/project-3.png",
     wide: true,   // card-3 is wider (793px in spec → spans full row)
   },
 ]
@@ -81,11 +89,11 @@ const WORK_CARDS = [
 // Brand gallery items
 // ─────────────────────────────────────────────────────────────────
 const BRAND_ITEMS = [
-  { id: 'brand-1', /* image: '/images/brand-1.png' */ },
-  { id: 'brand-2', /* image: '/images/brand-2.png' */ },
-  { id: 'brand-3', /* image: '/images/brand-3.png' */ },
-  { id: 'brand-4', /* image: '/images/brand-4.png' */ },
-  { id: 'brand-5', /* image: '/images/brand-5.png' */ },
+  { id: 'brand-1', image: '../src/assets/BrandImage-1.png' },
+  { id: 'brand-2', image: '../src/assets/BrandImage-1.png' },
+  { id: 'brand-3', image: '../src/assets/BrandImage-1.png' },
+  { id: 'brand-4', image: '../src/assets/BrandImage-1.png' },
+  { id: 'brand-5', image: '../src/assets/BrandImage-1.png' },
 ]
 
 // ─────────────────────────────────────────────────────────────────
@@ -439,7 +447,7 @@ export default function Home() {
           <ImagePlaceholder
             width="50%"
             height="clamp(320px, 52vw, 657px)"
-            src={undefined /* '/images/hero-1.png' */}
+            src={HeroImage}
             alt="Project showcase left"
             style={{ flexShrink: 1, minWidth: 0 }}
             className="hero-img-mobile"
@@ -447,7 +455,7 @@ export default function Home() {
           <ImagePlaceholder
             width="50%"
             height="clamp(320px, 52vw, 657px)"
-            src={undefined /* '/images/hero-2.png' */}
+            src={HeroImage2}
             alt="Project showcase right"
             style={{ flexShrink: 1, minWidth: 0 }}
             className="hero-img-desktop-only hero-img-mobile"
@@ -509,7 +517,7 @@ export default function Home() {
         <ImagePlaceholder
           width="100%"
           height="clamp(300px, 52vw, 657px)"
-          src={undefined /* '/images/about-main.png' */}
+          src={AboutImage}
           alt="About Studione"
           style={{ alignSelf: 'stretch' }}
           className="about-image"
@@ -750,7 +758,7 @@ export default function Home() {
         <ImagePlaceholder
           width="100%"
           height="505px"
-          src={undefined /* '/images/cta-billboard.png' */}
+          src={CTABillboard}
           alt="Billboard showcase"
           style={{ flexShrink: 0 }}
           className="cta-img"
