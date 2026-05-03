@@ -341,7 +341,7 @@ export default function Home() {
           .home-section { padding-left: 16px !important; padding-right: 16px !important; }
           
           /* Hero Section */
-          .hero-section { padding-top: 152px !important; padding-bottom: 40px !important; gap: 40px !important; }
+          .hero-section { padding-top: 188px !important; padding-bottom: 40px !important; gap: 40px !important; }
           .heading-hero { font-size: 36px !important; }
           .hero-image-card { flex-direction: column !important; }
           .hero-img-desktop-only { display: none !important; }
