@@ -73,6 +73,7 @@ const SERVICES = [
     label: 'Discovery',
     desc: 'We partner with ambitious teams to shape meaningful brands and digital experiences.',
     // image: '/images/services-discovery.png',
+    image: '/src/assets/project-1.png'
   },
   {
     id: 'svc-2',

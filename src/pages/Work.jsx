@@ -364,15 +364,15 @@ export default function Work() {
         >
           {/* Image 1 — 460 × 336, left */}
           <div style={{ position: 'absolute', width: '460px', height: '336px', left: 'calc(50% - 230px - 418px)', top: 0, overflow: 'hidden' }}>
-            <ImgPlaceholder src="/images/work-fintech.png" alt="Money Talks Softly" />
+            <ImgPlaceholder src="/src/assets/Studio Image.png" alt="Money Talks Softly" />
           </div>
           {/* Image 2 — 358 × 241, right */}
           <div style={{ position: 'absolute', width: '358px', height: '241px', left: 'calc(50% - 179px + 469px)', top: '60px', overflow: 'hidden' }}>
-            <ImgPlaceholder src="/images/work-logo.png" alt="Àkawó" />
+            <ImgPlaceholder src="/src/assets/Hero Image.png" alt="Àkawó" />
           </div>
           {/* Image 3 — 290 × 195, mid-centre */}
           <div style={{ position: 'absolute', width: '290px', height: '195px', left: 'calc(50% - 145px + 51px)', top: '94px', overflow: 'hidden' }}>
-            <ImgPlaceholder src="/images/work-brand.png" alt="City Brand Identity" />
+            <ImgPlaceholder src="/src/assets/Hero Image-1.png" alt="City Brand Identity" />
           </div>
         </div>
       </section>
