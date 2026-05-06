@@ -1,21 +1,61 @@
 @import "tailwindcss";
 
-/* ─── Britti Sans Trial: drop .woff2/.woff files into /public/fonts/ ─── */
-/* See /public/fonts/README.md for download steps (noistype.com)           */
+/* ─── Britti Sans Trial — loaded via Vite asset pipeline (src/assets/fonts/) ─── */
+/* Vite will hash these files for production caching automatically.               */
 @font-face {
   font-family: 'Britti Sans Trial';
-  src: url('/fonts/BrittiSansTrial-Regular.woff2') format('woff2'),
-       url('/fonts/BrittiSansTrial-Regular.woff') format('woff');
+  src: url('./assets/fonts/BrittiSansTrial-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Britti Sans Trial';
+  src: url('./assets/fonts/BrittiSansTrial-Regular.woff2') format('woff2');
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: 'Britti Sans Trial';
-  src: url('/fonts/BrittiSansTrial-Light.woff2') format('woff2'),
-       url('/fonts/BrittiSansTrial-Light.woff') format('woff');
-  font-weight: 300;
+  src: url('./assets/fonts/BrittiSansTrial-Semibold.woff2') format('woff2');
+  font-weight: 600;
   font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Britti Sans Trial';
+  src: url('./assets/fonts/BrittiSansTrial-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Britti Sans Trial';
+  src: url('./assets/fonts/BrittiSansTrial-LightItalic.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Britti Sans Trial';
+  src: url('./assets/fonts/BrittiSansTrial-RegularItalic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Britti Sans Trial';
+  src: url('./assets/fonts/BrittiSansTrial-SemiboldItalic.woff2') format('woff2');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Britti Sans Trial';
+  src: url('./assets/fonts/BrittiSansTrial-BoldItalic.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
   font-display: swap;
 }
 
@@ -23,9 +63,8 @@
 @theme {
   /* Fonts */
   --font-sans:   'Inter Tight', 'Inter', system-ui, sans-serif;
-  /* Britti Sans Trial → place .woff2/.woff files in /public/fonts/ to activate */
-  /* DM Sans + Plus Jakarta Sans bridge the gap as closest Google Fonts matches   */
-  --font-britti: 'Britti Sans Trial', 'DM Sans', 'Plus Jakarta Sans', 'Inter Tight', system-ui, sans-serif;
+  /* Britti Sans Trial — loaded from src/assets/fonts/ via Vite */
+  --font-britti: 'Britti Sans Trial', sans-serif;
   --font-inter:  'Inter', system-ui, sans-serif;
   --font-mono:   ui-monospace, 'Cascadia Code', monospace;
 
