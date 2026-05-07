@@ -90,6 +90,7 @@ function TagPill({ label }) {
 function PainPointBlock({ title, text }) {
   return (
     <div
+      className="project-pain-point-block"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -103,6 +104,7 @@ function PainPointBlock({ title, text }) {
     >
       {/* Pain point title — Britti italic 22px 400 */}
       <h3
+        className="project-pain-point-title"
         style={{
           fontFamily: "var(--font-britti)",
           fontStyle: 'italic',
@@ -122,6 +124,7 @@ function PainPointBlock({ title, text }) {
       </h3>
       {/* Pain point description — Inter 20px 400 */}
       <p
+        className="project-pain-point-text"
         style={{
           fontFamily: "'Inter', system-ui, sans-serif",
           fontStyle: 'normal',
@@ -150,8 +153,10 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
     <Link
       to={`/work/${project.slug}`}
       style={{ textDecoration: 'none', flexShrink: 0 }}
+      className="related-case-card-link"
     >
       <div
+        className="related-case-card"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -163,6 +168,7 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
       >
         {/* Image */}
         <div
+          className="related-case-img"
           style={{
             width: `${width}px`,
             height: `${imgHeight}px`,
@@ -176,6 +182,7 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
 
         {/* Card content */}
         <div
+          className="related-case-info"
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -187,6 +194,7 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
         >
           {/* Title + tags row */}
           <div
+            className="related-case-header"
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -199,10 +207,11 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
             }}
           >
             <span
+              className="related-case-title"
               style={{
                 fontFamily: 'var(--font-britti)',
                 fontStyle: 'normal',
-                fontWeight: 600,
+                fontWeight: 400,
                 fontSize: '24px',
                 lineHeight: '28px',
                 letterSpacing: '0.01em',
@@ -214,6 +223,7 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
             </span>
 
             <div
+              className="related-case-tags"
               style={{
                 display: 'flex',
                 flexDirection: 'row',
@@ -224,13 +234,16 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
               }}
             >
               {project.tags.map((tag) => (
-                <TagPill key={tag} label={tag} />
+                <div key={tag} className="related-case-tag-wrapper">
+                  <TagPill label={tag} />
+                </div>
               ))}
             </div>
           </div>
 
           {/* Description */}
           <p
+            className="related-case-desc"
             style={{
               fontFamily: "'Inter', system-ui, sans-serif",
               fontStyle: 'normal',
@@ -277,18 +290,15 @@ export default function ProjectTemplate() {
   useGSAP(() => {
     if (!heroRef.current || !contentRef.current) return
 
-    let mm = gsap.matchMedia()
-    mm.add('(min-width: 768px)', () => {
-      // Pin the hero in place; content slides up and covers it
-      ScrollTrigger.create({
-        trigger: heroRef.current,
-        start: 'top top',
-        // pin until the content section's top reaches the top of viewport
-        endTrigger: contentRef.current,
-        end: 'top top',
-        pin: true,
-        pinSpacing: false,
-      })
+    // Pin the hero in place; content slides up and covers it
+    ScrollTrigger.create({
+      trigger: heroRef.current,
+      start: 'top top',
+      // pin until the content section's top reaches the top of viewport
+      endTrigger: contentRef.current,
+      end: 'top top',
+      pin: true,
+      pinSpacing: false,
     })
   }, { dependencies: [slug] })
 
@@ -356,6 +366,7 @@ export default function ProjectTemplate() {
         >
           {/* ── LEFT COLUMN (627px) ──────────────────────────────── */}
           <div
+            className="project-col-left"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -392,6 +403,7 @@ export default function ProjectTemplate() {
               >
                 {/* Date — Inter 18px 400 */}
                 <span
+                  className="project-date"
                   style={{
                     fontFamily: "'Inter', system-ui, sans-serif",
                     fontStyle: 'normal',
@@ -411,6 +423,7 @@ export default function ProjectTemplate() {
 
                 {/* Tagline — Britti 32px 300 */}
                 <h1
+                  className="project-tagline"
                   style={{
                     fontFamily: 'var(--font-britti)',
                     fontStyle: 'normal',
@@ -432,6 +445,7 @@ export default function ProjectTemplate() {
 
               {/* Tag container */}
               <div
+                className="project-tags"
                 style={{
                   display: 'flex',
                   flexDirection: 'row',
@@ -448,6 +462,7 @@ export default function ProjectTemplate() {
 
             {/* Introduction paragraph — Inter 20px 400 */}
             <p
+              className="project-intro-text"
               style={{
                 fontFamily: "'Inter', system-ui, sans-serif",
                 fontStyle: 'normal',
@@ -468,6 +483,7 @@ export default function ProjectTemplate() {
 
           {/* ── RIGHT COLUMN (387px) ─────────────────────────────── */}
           <div
+            className="project-col-right"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -480,6 +496,7 @@ export default function ProjectTemplate() {
           >
             {/* Client logo text — Britti 80px 300 */}
             <span
+              className="project-logo-text"
               style={{
                 fontFamily: 'var(--font-britti)',
                 fontStyle: 'normal',
@@ -499,6 +516,7 @@ export default function ProjectTemplate() {
 
             {/* Skillset — Inter 18px 400 */}
             <span
+              className="project-skillset"
               style={{
                 fontFamily: "'Inter', system-ui, sans-serif",
                 fontStyle: 'normal',
@@ -518,6 +536,7 @@ export default function ProjectTemplate() {
 
         {/* ── Banner Image — 100% × 580px ─────────────────────────── */}
         <div
+          className="project-banner-img"
           style={{
             width: '100%',
             height: '580px',
@@ -541,6 +560,7 @@ export default function ProjectTemplate() {
 
         {/* ── Full-width image after pain point 1 ─────────────────── */}
         <div
+          className="project-pain-point-img"
           style={{
             width: '100%',
             height: '580px',
@@ -576,6 +596,7 @@ export default function ProjectTemplate() {
         >
           {/* Full-width image box */}
           <div
+            className="project-gallery-full"
             style={{
               width: '100%',
               height: '580px',
@@ -592,6 +613,7 @@ export default function ProjectTemplate() {
 
           {/* Two-column pair — 590px each, gap 20px */}
           <div
+            className="project-gallery-pair"
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -603,6 +625,7 @@ export default function ProjectTemplate() {
             }}
           >
             <div
+              className="project-gallery-pair-img"
               style={{
                 flex: '1 1 0',
                 height: '580px',
@@ -616,6 +639,7 @@ export default function ProjectTemplate() {
               />
             </div>
             <div
+              className="project-gallery-pair-img"
               style={{
                 flex: '1 1 0',
                 height: '580px',
@@ -632,6 +656,7 @@ export default function ProjectTemplate() {
 
           {/* Bottom full-width image */}
           <div
+            className="project-gallery-bottom"
             style={{
               width: '100%',
               height: '580px',
@@ -650,6 +675,7 @@ export default function ProjectTemplate() {
         {/* ── Testimonial ─────────────────────────────────────────── */}
         {project.testimonial && (
           <div
+            className="project-testimonial-block"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -663,6 +689,7 @@ export default function ProjectTemplate() {
           >
             {/* Testimonial title */}
             <h3
+              className="project-testimonial-title"
               style={{
                 fontFamily: 'var(--font-britti)',
                 fontStyle: 'italic',
@@ -681,6 +708,7 @@ export default function ProjectTemplate() {
 
             {/* Testimonial text — Britti 22px 400 */}
             <p
+              className="project-testimonial-text"
               style={{
                 fontFamily: 'var(--font-britti)',
                 fontStyle: 'normal',
@@ -754,6 +782,7 @@ export default function ProjectTemplate() {
               >
                 {/* Author name — Britti 16px 500 */}
                 <span
+                  className="project-testimonial-author-name"
                   style={{
                     fontFamily: 'var(--font-britti)',
                     fontStyle: 'normal',
@@ -771,6 +800,7 @@ export default function ProjectTemplate() {
                 </span>
                 {/* Author role — Britti 14px 400 */}
                 <span
+                  className="project-testimonial-author-role"
                   style={{
                     fontFamily: 'var(--font-britti)',
                     fontStyle: 'normal',
@@ -878,14 +908,155 @@ export default function ProjectTemplate() {
         }
         @media (max-width: 768px) {
           #project-hero {
-            height: 400px !important;
+            height: 420px !important;
           }
           #project-content {
-            padding: 40px 20px 120px !important;
-            gap: 80px !important;
+            padding: 48px 16px 120px !important;
+            gap: 64px !important;
           }
+          .project-main-content {
+            flex-direction: column !important;
+            gap: 48px !important;
+          }
+          .project-col-left {
+            order: 2 !important;
+            width: 100% !important;
+            gap: 24px !important;
+          }
+          .project-col-right {
+            order: 1 !important;
+            width: 100% !important;
+            gap: 12px !important;
+          }
+          .project-logo-text {
+            font-size: 32px !important;
+            line-height: 100% !important;
+          }
+          .project-skillset {
+            font-size: 16px !important;
+            line-height: 140% !important;
+          }
+          .project-date {
+            font-size: 14px !important;
+          }
+          .project-tagline {
+            font-size: 22px !important;
+          }
+          .project-intro-text {
+            font-size: 16px !important;
+          }
+          .project-banner-img {
+            height: 220px !important;
+          }
+          .project-pain-point-block {
+            padding: 0 !important;
+            gap: 24px !important;
+          }
+          .project-pain-point-title {
+            font-size: 20px !important;
+            width: 100% !important;
+          }
+          .project-pain-point-text {
+            font-size: 16px !important;
+            width: 100% !important;
+          }
+          .project-pain-point-img {
+            height: 220px !important;
+          }
+          .project-gallery-full {
+            height: 220px !important;
+          }
+          .project-gallery-pair {
+            flex-direction: column !important;
+            height: auto !important;
+            gap: 12px !important;
+          }
+          .project-gallery-pair-img {
+            width: 100% !important;
+            height: 380px !important;
+            flex: none !important;
+          }
+          .project-gallery-bottom {
+            height: 220px !important;
+          }
+          .project-testimonial-block {
+            padding: 0 !important;
+            width: 100% !important;
+            gap: 24px !important;
+          }
+          .project-testimonial-title {
+            font-size: 20px !important;
+          }
+          .project-testimonial-text {
+            font-size: 16px !important;
+            width: 100% !important;
+          }
+          .project-testimonial-author-name {
+            font-size: 16px !important;
+          }
+          .project-testimonial-author-role {
+            font-size: 14px !important;
+          }
+          
+          /* Related Case Study Section */
           #related-case-study {
-            padding: 0 20px 120px !important;
+            padding: 40px 16px 64px !important;
+            gap: 10px !important;
+          }
+          #related-case-study h2 {
+            font-size: 20px !important;
+          }
+          .related-cards-row {
+            flex-direction: row !important;
+            gap: 32px !important;
+            overflow-x: auto !important;
+            flex-wrap: nowrap !important;
+            padding-bottom: 20px !important;
+            scroll-snap-type: x mandatory !important;
+            width: 100% !important;
+          }
+          .related-cards-row::-webkit-scrollbar {
+            display: none;
+          }
+          .related-case-card-link {
+            scroll-snap-align: start !important;
+          }
+          .related-case-card {
+            width: 292px !important;
+            gap: 17px !important;
+          }
+          .related-case-img {
+            width: 292px !important;
+            height: 250px !important;
+          }
+          .related-case-info {
+            width: 292px !important;
+            gap: 14px !important;
+          }
+          .related-case-header {
+            width: 292px !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            height: auto !important;
+            gap: 12px !important;
+          }
+          .related-case-title {
+            font-size: 18px !important;
+            line-height: 28px !important;
+          }
+          .related-case-tags {
+            flex-wrap: wrap !important;
+            gap: 3px !important;
+          }
+          .related-case-tag-wrapper > div {
+            padding: 4px 10px !important;
+            height: 28px !important;
+          }
+          .related-case-tag-wrapper span {
+            font-size: 14px !important;
+          }
+          .related-case-desc {
+            display: none !important; /* Seems missing in mobile design or implicitly hidden */
           }
         }
       `}</style>

@@ -40,6 +40,7 @@ function ImgPlaceholder({ src, alt = '' }) {
 function TagPill({ label }) {
   return (
     <div
+      className="work-tag-pill"
       style={{
         display: 'flex',
         flexDirection: 'row',
@@ -53,6 +54,7 @@ function TagPill({ label }) {
       }}
     >
       <span
+        className="work-tag-text"
         style={{
           fontFamily: "'Inter', system-ui, sans-serif",
           fontWeight: 300,
@@ -79,6 +81,7 @@ function ProjectCard({ project }) {
   const cardContent = (
     /* Image card — flex-grow: 0, fixed width, flex-shrink: 0 */
     <div
+      className="work-project-card"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -95,6 +98,7 @@ function ProjectCard({ project }) {
     >
       {/* ── Image ─────────────────────────────────────────────── */}
       <div
+        className="work-project-img-wrapper"
         style={{
           position: 'relative',
           width: `${cardW}px`,
@@ -186,6 +190,7 @@ function ProjectCard({ project }) {
 
       {/* ── Card content ──────────────────────────────────────── */}
       <div
+        className="work-project-info"
         style={{
           display: 'flex',
           flexDirection: 'column',
@@ -198,6 +203,7 @@ function ProjectCard({ project }) {
       >
         {/* Card header: title (left) + tag pills (right) */}
         <div
+          className="work-project-header"
           style={{
             display: 'flex',
             flexDirection: 'row',
@@ -211,6 +217,7 @@ function ProjectCard({ project }) {
         >
           {/* Card title */}
           <span
+            className="work-project-title"
             style={{
               fontFamily: 'var(--font-britti)',
               fontStyle: 'normal',
@@ -227,6 +234,7 @@ function ProjectCard({ project }) {
 
           {/* Tag pills — flex row, gap 16px (for multiple) */}
           <div
+            className="work-project-tags"
             style={{
               display: 'flex',
               flexDirection: 'row',
@@ -244,6 +252,7 @@ function ProjectCard({ project }) {
 
         {/* Card description */}
         <p
+          className="work-project-desc"
           style={{
             fontFamily: "'Inter', system-ui, sans-serif",
             fontStyle: 'normal',
@@ -401,6 +410,7 @@ export default function Work() {
         {/* ── Header: "All Work" left + filter column right ───── */}
         {/* Spec: flex-row, space-between, padding-top 96px, width 1200px */}
         <div
+          id="work-all-header"
           style={{
             display: 'flex',
             flexDirection: 'row',
@@ -413,6 +423,7 @@ export default function Work() {
         >
           {/* "All Work" */}
           <span
+            id="work-all-title"
             style={{
               fontFamily: 'var(--font-britti)',
               fontStyle: 'normal',
@@ -429,6 +440,7 @@ export default function Work() {
 
           {/* Filter list — column, align-end, gap 16px */}
           <div
+            id="work-filters-container"
             style={{
               display: 'flex',
               flexDirection: 'column',
@@ -442,6 +454,7 @@ export default function Work() {
               return (
                 <button
                   key={f}
+                  className="work-filter-btn"
                   onClick={() => setActiveFilter(f)}
                   style={{
                     fontFamily: 'var(--font-britti)',
@@ -497,8 +510,103 @@ export default function Work() {
 
       <style>{`
         @media (max-width: 767px) {
+          /* Hero Section Mobile */
+          #work-hero {
+            padding: 142px 16px 48px !important;
+            gap: 10px !important;
+            align-items: flex-start !important;
+            justify-content: flex-start !important;
+          }
+          #work-eyebrow {
+            font-size: 24px !important;
+            text-align: left !important;
+          }
           #work-tagline {
+            font-size: 32px !important;
+            text-align: left !important;
             max-width: 100% !important;
+            align-self: flex-start !important;
+          }
+          
+          /* Hide the desktop images grid on mobile or stack them */
+          #work-images {
+            display: none !important; /* Mobile designs usually hide or reshape this */
+          }
+
+          /* Work Section Mobile */
+          #work-all {
+            padding: 0px 16px 64px !important;
+            gap: 32px !important;
+          }
+          #work-all-header {
+            width: 100% !important;
+            padding-top: 0px !important;
+            flex-direction: column !important;
+            gap: 32px !important;
+          }
+          #work-all-title {
+            display: none !important; /* Based on the mobile mockups, title is not visible there */
+          }
+          
+          /* Filters Mobile */
+          #work-filters-container {
+            flex-direction: row !important;
+            align-items: flex-start !important;
+            flex-wrap: wrap !important;
+            gap: 16px !important;
+            width: 100% !important;
+          }
+          .work-filter-btn {
+            font-size: 16px !important;
+            text-align: left !important;
+          }
+
+          /* Articles Container Mobile */
+          #work-cards-grid {
+            width: 100% !important;
+            flex-direction: column !important;
+            gap: 32px !important;
+          }
+          .work-project-card {
+            width: 100% !important;
+            gap: 17px !important;
+          }
+          .work-project-img-wrapper {
+            width: 100% !important;
+            height: 250px !important;
+          }
+          .work-project-info {
+            width: 100% !important;
+            gap: 14px !important;
+          }
+          .work-project-header {
+            width: 100% !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            height: auto !important;
+            gap: 12px !important;
+          }
+          .work-project-title {
+            font-size: 18px !important;
+            line-height: 28px !important;
+          }
+          .work-project-tags {
+            gap: 3px !important;
+            flex-wrap: wrap !important;
+          }
+          .work-tag-pill {
+            padding: 4px 10px !important;
+            height: 28px !important;
+            gap: 10px !important;
+          }
+          .work-tag-text {
+            font-size: 14px !important;
+          }
+          .work-project-desc {
+            width: 100% !important;
+            font-size: 16px !important;
+            line-height: 140% !important;
+            color: #A6A6A6 !important;
           }
         }
       `}</style>
