@@ -976,6 +976,17 @@ function ServicesSection() {
           i - 1
         )
       }
+
+      // ── Immersive: Hide Global Navbar while section is being scrolled pass ──
+      ScrollTrigger.create({
+        trigger: section,
+        start: 'top 10%',
+        end:   'bottom 10%',
+        onEnter:      () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
+        onLeave:      () => gsap.to('#navbar-v1', { opacity: 1, pointerEvents: 'all',  duration: 0.4 }),
+        onEnterBack:  () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
+        onLeaveBack:  () => gsap.to('#navbar-v1', { opacity: 1, pointerEvents: 'all',  duration: 0.4 }),
+      })
     })
 
     return () => mm.revert()
@@ -1195,7 +1206,7 @@ function ServicesSection() {
         <div
           style={{
             display: 'flex',
-            padding: '0 16px 40px',
+            padding: '40px 16px 40px',
             alignItems: 'flex-start',
             gap: '10px',
             width: '100%',
