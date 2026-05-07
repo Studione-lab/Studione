@@ -316,6 +316,12 @@ function DesignProcessSection() {
   const isAnimRef   = useRef(false)
   const activeRef   = useRef(0)        // service index currently at slot 0
 
+  // ── Mobile tap-to-preview refs ─────────────────────────────────
+  const mobileSlots  = useRef([])      // card-slot wrappers (height animated)
+  const mobileInners = useRef([])      // card-inner divs (opacity/y animated)
+  const mobileActive = useRef(0)       // avoids stale-closure in callback
+  const CARD_H = 284                   // 220px image + 20px gap + 44px text
+
   // ── Physical constants ────────────────────────────────────────────
   const N    = SERVICES.length         // 7
   const UNIT = 80                      // px per slot (64 px font + 16 px gap)
@@ -468,6 +474,58 @@ function DesignProcessSection() {
     return () => mm.revert()
   }, [])  // stable — all refs, nothing to re-capture
 
+  // ── Mobile tap handler ───────────────────────────────────────────
+  const handleMobileTap = useCallback((tappedIdx) => {
+    const prevIdx = mobileActive.current
+    if (tappedIdx === prevIdx) return // already open
+
+    const EASE = 'power3.inOut'
+    const DUR  = 0.6
+
+    // Close previous card
+    const prevSlot  = mobileSlots.current[prevIdx]
+    const prevInner = mobileInners.current[prevIdx]
+    if (prevSlot && prevInner) {
+      gsap.to(prevInner, { opacity: 0, y: -8, duration: DUR * 0.5, ease: 'power2.in' })
+      gsap.to(prevSlot,  { height: 0, duration: DUR, ease: EASE })
+    }
+
+    // Open tapped card
+    const slot  = mobileSlots.current[tappedIdx]
+    const inner = mobileInners.current[tappedIdx]
+    if (slot && inner) {
+      gsap.set(inner, { opacity: 0, y: 15 })
+      gsap.to(slot,  { height: CARD_H, duration: DUR, ease: EASE })
+      gsap.to(inner, { opacity: 1, y: 0, duration: DUR * 0.8, ease: 'power2.out', delay: DUR * 0.2 })
+    }
+
+    // Update colors
+    SERVICES.forEach((_, i) => {
+      const btn = mobileSlots.current[i]?.previousElementSibling
+      if (btn) gsap.to(btn, { color: i === tappedIdx ? '#FFFFFF' : '#272626', duration: 0.3 })
+    })
+
+    mobileActive.current = tappedIdx
+    setActiveIdx(tappedIdx)
+  }, [CARD_H])
+
+  // ── Initialize first mobile card as open ─────────────────────────
+  useEffect(() => {
+    // Only run on mobile
+    if (window.innerWidth >= 768) return
+    const firstSlot  = mobileSlots.current[0]
+    const firstInner = mobileInners.current[0]
+    if (firstSlot)  gsap.set(firstSlot,  { height: CARD_H })
+    if (firstInner) gsap.set(firstInner, { opacity: 1, y: 0 })
+    // Close all others
+    for (let i = 1; i < SERVICES.length; i++) {
+      const s = mobileSlots.current[i]
+      const inner = mobileInners.current[i]
+      if (s) gsap.set(s, { height: 0 })
+      if (inner) gsap.set(inner, { opacity: 0, y: 12 })
+    }
+  }, [CARD_H])
+
   const svc = SERVICES[activeIdx]
 
   return (
@@ -482,89 +540,185 @@ function DesignProcessSection() {
         overflow: 'hidden',
       }}
     >
-      {/* ── Section title ─────────────────────────────────────── */}
-      <p
-        id="studio-services-title"
-        style={{
-          position: 'absolute',
-          left: '40px',
-          top: '96px',
-          width: 'clamp(220px, 55vw, 793px)',
-          fontFamily: 'var(--font-britti)',
-          fontWeight: 400,
-          fontSize: '32px',
-          lineHeight: '120%',
-          color: '#FFFFFF',
-          margin: 0,
-        }}
-      >
-        <span style={{ color: '#FFFFFF' }}>
-          From concept to craft, our dedicated team transforms emotion into expression,{' '}
-        </span>
-        <span style={{ color: '#6B6B6B' }}>
-          distilling bold ideas into standout strategies that elevate brands to new heights.
-        </span>
-      </p>
+      <style>{`
+        /* Desktop: show absolute layout, hide mobile */
+        .dp-mobile-layout { display: none; }
+        .dp-desktop-layout { display: block; }
+        #studio-services-title,
+        #studio-services-card,
+        #studio-services-list-clip { display: flex; }
 
-      {/* ── Card — left column, static ───────────────────────── */}
-      <div
-        id="studio-services-card"
-        style={{
-          position: 'absolute',
-          left: '40px',
-          top: '328px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-start',
-          gap: '20px',
-          width: '387px',
-        }}
-      >
-        <div
-          ref={cardImgRef}
-          style={{ width: '387px', height: '260px', overflow: 'hidden', flexShrink: 0 }}
-        >
-          {svc.image ? (
-            <img
-              src={svc.image}
-              alt={svc.label}
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-            />
-          ) : (
-            <div
-              style={{
-                width: '100%', height: '100%',
-                background: '#232222',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-              }}
-            >
-              <svg width="40" height="40" viewBox="0 0 40 40" fill="none" opacity="0.25">
-                <rect x="4" y="4" width="32" height="32" rx="4" stroke="#FFF" strokeWidth="1.5" />
-                <circle cx="14" cy="14" r="3" stroke="#FFF" strokeWidth="1.5" />
-                <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-          )}
-        </div>
+        @media (max-width: 767px) {
+          .dp-mobile-layout { display: flex !important; }
+          .dp-desktop-layout { display: none !important; }
+          #studio-services-title,
+          #studio-services-card,
+          #studio-services-list-clip { display: none !important; }
 
-        <div
-          ref={cardDescRef}
+          #studio-design-process {
+            min-height: auto !important;
+            position: relative !important;
+          }
+          .dp-mobile-layout {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 0 16px 96px;
+            gap: 64px;
+            width: 100%;
+            box-sizing: border-box;
+          }
+          .dp-mobile-title {
+            font-family: var(--font-britti);
+            font-weight: 400;
+            font-size: 22px;
+            line-height: 120%;
+            color: #FFFFFF;
+            margin: 0;
+          }
+          .dp-mobile-list {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 24px;
+            width: 100%;
+          }
+          .dp-mobile-group {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 16px;
+            width: 100%;
+          }
+          .dp-mobile-item {
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: var(--font-britti);
+            font-weight: 300;
+            font-size: 28px;
+            line-height: 100%;
+            text-transform: capitalize;
+            color: #272626;
+            cursor: pointer;
+            text-align: left;
+            width: 100%;
+          }
+          .dp-mobile-card-slot {
+            overflow: hidden;
+            height: 0;
+            width: 100%;
+          }
+          .dp-mobile-card-inner {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+            width: 100%;
+            opacity: 0;
+          }
+          .dp-mobile-card-text {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            width: 100%;
+          }
+          .dp-mobile-card-text p {
+            font-family: var(--font-britti);
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            letter-spacing: -0.02em;
+            color: #A6A6A6;
+            margin: 0;
+          }
+        }
+      `}</style>
+
+      <div className="dp-desktop-layout">
+        {/* ── Section title ─────────────────────────────────────── */}
+        <p
+          // id="studio-services-title"
           style={{
-            display: 'flex', flexDirection: 'column',
-            alignItems: 'flex-start', gap: '16px',
-            width: '100%', maxWidth: '387px',
+            position: 'absolute',
+            left: '40px',
+            top: '96px',
+            width: 'clamp(220px, 55vw, 793px)',
+            fontFamily: 'var(--font-britti)',
+            fontWeight: 400,
+            fontSize: '32px',
+            lineHeight: '120%',
+            color: '#FFFFFF',
+            margin: 0,
           }}
         >
-          <p
+          <span style={{ color: '#FFFFFF' }}>
+            From concept to craft, our dedicated team transforms emotion into expression,{' '}
+          </span>
+          <span style={{ color: '#6B6B6B' }}>
+            distilling bold ideas into standout strategies that elevate brands to new heights.
+          </span>
+        </p>
+
+        {/* ── Card — left column, static ───────────────────────── */}
+        <div
+          id="studio-services-card"
+          style={{
+            position: 'absolute',
+            left: '40px',
+            top: '328px',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-start',
+            gap: '20px',
+            width: '387px',
+          }}
+        >
+          <div
+            ref={cardImgRef}
+            style={{ width: '387px', height: '260px', overflow: 'hidden', flexShrink: 0 }}
+          >
+            {svc.image ? (
+              <img
+                src={svc.image}
+                alt={svc.label}
+                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: '100%', height: '100%',
+                  background: '#232222',
+                  display: 'flex', alignItems: 'center', justifyContent: 'center',
+                }}
+              >
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" opacity="0.25">
+                  <rect x="4" y="4" width="32" height="32" rx="4" stroke="#FFF" strokeWidth="1.5" />
+                  <circle cx="14" cy="14" r="3" stroke="#FFF" strokeWidth="1.5" />
+                  <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#FFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </div>
+            )}
+          </div>
+
+          <div
+            ref={cardDescRef}
             style={{
-              fontFamily: "'Inter', system-ui, sans-serif",
-              fontWeight: 400, fontSize: '18px',
-              lineHeight: '140%', letterSpacing: '-0.02em',
-              color: '#C0C0C0', margin: 0,
+              display: 'flex', flexDirection: 'column',
+              alignItems: 'flex-start', gap: '16px',
+              width: '100%', maxWidth: '387px',
             }}
           >
-            {svc.desc}
-          </p>
+            <p
+              style={{
+                fontFamily: "'Inter', system-ui, sans-serif",
+                fontWeight: 400, fontSize: '18px',
+                lineHeight: '140%', letterSpacing: '-0.02em',
+                color: '#C0C0C0', margin: 0,
+              }}
+            >
+              {svc.desc}
+            </p>
+          </div>
         </div>
       </div>
 
@@ -615,6 +769,48 @@ function DesignProcessSection() {
               }}
             >
               {s.label}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* ── MOBILE TAP LAYOUT ─────────────────────────────────── */}
+      <div className="dp-mobile-layout">
+        <p className="dp-mobile-title">
+          <span>From concept to craft, our dedicated team transforms emotion into expression, </span>
+          <span style={{ color: '#6B6B6B' }}>distilling bold ideas into standout strategies that elevate brands to new heights.</span>
+        </p>
+
+        <div className="dp-mobile-list">
+          {SERVICES.map((s, i) => (
+            <div key={s.id} className="dp-mobile-group">
+              <button
+                className="dp-mobile-item"
+                style={{ color: i === activeIdx ? '#FFFFFF' : '#272626' }}
+                onClick={() => handleMobileTap(i)}
+              >
+                {s.label}
+              </button>
+
+              <div
+                ref={el => (mobileSlots.current[i] = el)}
+                className="dp-mobile-card-slot"
+              >
+                <div
+                  ref={el => (mobileInners.current[i] = el)}
+                  className="dp-mobile-card-inner"
+                >
+                  <ImagePlaceholder
+                    width="100%"
+                    height="220px"
+                    src={s.image}
+                    alt={s.label}
+                  />
+                  <div className="dp-mobile-card-text">
+                    <p>{s.desc}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
@@ -1738,7 +1934,7 @@ export default function Studio() {
             gap: 48px !important;
           }
           
-#studio-services > p {
+          #studio-services > p {
             padding: 64px 16px 40px !important;
             font-size: 24px !important;
           }
