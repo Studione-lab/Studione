@@ -2,6 +2,7 @@ import { useRef, useState, useEffect, useCallback, useLayoutEffect } from 'react
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Project1 from '../assets/project-1.png'
 gsap.registerPlugin(ScrollTrigger)
 
 // ─────────────────────────────────────────────────────────────────
@@ -73,7 +74,7 @@ const SERVICES = [
     label: 'Discovery',
     desc: 'We partner with ambitious teams to shape meaningful brands and digital experiences.',
     // image: '/images/services-discovery.png',
-    image: '/src/assets/project-1.png'
+    image: Project1
   },
   {
     id: 'svc-2',

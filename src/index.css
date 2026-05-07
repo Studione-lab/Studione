@@ -380,9 +380,9 @@ body {
   #hero,
   #about,
   #work,
-  #brand { padding-left: 28px !important; padding-right: 28px !important; }
+  #brand { padding-left: 20px !important; padding-right: 20px !important; }
 
-  #see-more-work { right: 28px !important; }
+  #see-more-work { right: 20px !important; }
   #brand-gallery  { left: 160px !important; }
 }
 
@@ -397,7 +397,7 @@ body {
   /* Hamburger visible, desktop nav hidden — handled by md:hidden class */
 
   #hero {
-    padding: 96px 20px 0px !important;
+    padding: 96px 16px 0px;
     gap: 40px !important;
     min-height: auto !important;
   }
@@ -416,12 +416,12 @@ body {
   }
 
   #about {
-    padding: 72px 20px 0px !important;
+    padding: 72px 16px 0px !important;
     gap: 48px !important;
   }
 
   #work {
-    padding: 72px 20px 160px !important;
+    padding: 72px 16px 160px !important;
   }
 
   /* Work rows: stack vertically on mobile, cards go full-width */

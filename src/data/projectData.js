@@ -9,6 +9,10 @@
 //   heroImage, date, tagline, introText, clientLogo, skillset,
 //   bannerImage, painPoints[], gallery{}, testimonial{}
 // ─────────────────────────────────────────────────────────────────
+import Project1 from '../assets/project-1.png'
+import Project2 from '../assets/project-2.png'
+import Project3 from '../assets/project-3.png'
+import HeroImg from '../assets/Hero Image.png'
 
 export const PROJECTS = [
   {
@@ -17,7 +21,7 @@ export const PROJECTS = [
     title: 'Locusverse',
     tags: ['Brand Identity', 'Strategy'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
-    src: '/src/assets/project-1.png',
+    src: Project1,
     imgH: 463,
     cardW: 623,
     comingSoon: true,
@@ -62,7 +66,7 @@ export const PROJECTS = [
     title: 'Website Builderh',
     tags: ['Design System'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
-    src: '/src/assets/project-2.png',
+    src: Project2,
     imgH: 260,
     cardW: 472,
     comingSoon: false,
@@ -106,7 +110,7 @@ export const PROJECTS = [
     title: 'Website Builderh',
     tags: ['Strategy'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
-    src: '/src/assets/project-3.png',
+    src: Project3,
     imgH: 463,
     cardW: 488,
     comingSoon: false,
@@ -150,7 +154,7 @@ export const PROJECTS = [
     title: 'Website Builderh',
     tags: ['Brand Identity', 'Strategy'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
-    src: '/src/assets/Hero Image.png',
+    src: HeroImg,
     imgH: 463,
     cardW: 607,
     comingSoon: false,

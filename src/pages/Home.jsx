@@ -7,7 +7,10 @@ import HeroImage from '../assets/Hero Image.png'
 import HeroImage2 from '../assets/Hero Image-1.png'
 import AboutImage from '../assets/Studio Image.png'
 import CTABillboard from '../assets/Hero Image-2.png'
-
+import Project1 from '../assets/project-1.png'
+import Project2 from '../assets/project-2.png'
+import Project3 from '../assets/project-3.png'
+import Brand1 from '../assets/BrandImage-1.png'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -64,7 +67,7 @@ const WORK_CARDS = [
     tags: ['Brand Identity', 'Strategy'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
     // image: '/images/work-1.jpg',   ← replace with real asset path
-    image: "../src/assets/project-1.png"
+    image: Project1
   },
   {
     id: 'card-2',
@@ -72,7 +75,7 @@ const WORK_CARDS = [
     tags: ['Design System'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
     // image: '/images/work-2.jpg',
-    image: "../src/assets/project-2.png"
+    image: Project2
   },
   {
     id: 'card-3',
@@ -80,7 +83,7 @@ const WORK_CARDS = [
     tags: ['Brand Identity', 'Production Design'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
     // image: '/images/work-3.jpg',
-    image: "../src/assets/project-3.png",
+    image: Project3,
     wide: true,   // card-3 is wider (793px in spec → spans full row)
   },
 ]
@@ -89,11 +92,11 @@ const WORK_CARDS = [
 // Brand gallery items
 // ─────────────────────────────────────────────────────────────────
 const BRAND_ITEMS = [
-  { id: 'brand-1', image: '../src/assets/BrandImage-1.png' },
-  { id: 'brand-2', image: '../src/assets/BrandImage-1.png' },
-  { id: 'brand-3', image: '../src/assets/BrandImage-1.png' },
-  { id: 'brand-4', image: '../src/assets/BrandImage-1.png' },
-  { id: 'brand-5', image: '../src/assets/BrandImage-1.png' },
+  { id: 'brand-1', image: Brand1 },
+  { id: 'brand-2', image: Brand1 },
+  { id: 'brand-3', image: Brand1 },
+  { id: 'brand-4', image: Brand1 },
+  { id: 'brand-5', image: Brand1 },
 ]
 
 // ─────────────────────────────────────────────────────────────────
@@ -341,7 +344,7 @@ export default function Home() {
           .home-section { padding-left: 16px !important; padding-right: 16px !important; }
           
           /* Hero Section */
-          .hero-section { padding-top: 188px !important; padding-bottom: 40px !important; gap: 40px !important; }
+          .hero-section { padding-top: 152px !important; padding-bottom: 40px !important; gap: 40px !important; }
           .heading-hero { font-size: 36px !important; }
           .hero-image-card { flex-direction: column !important; }
           .hero-img-desktop-only { display: none !important; }
@@ -377,7 +380,7 @@ export default function Home() {
 
           /* CTA Section */
           .cta-section { padding: 0 !important; gap: 0 !important; }
-          .cta-text { padding: 0px 16px 40px !important; gap: 10px !important; width: 100% !important; max-width: 100% !important; }
+          .cta-text { padding: 24px 16px 40px !important; gap: 10px !important; width: 100% !important; max-width: 100% !important; }
           .cta-heading { font-size: 30.5px !important; line-height: 120% !important; width: 290px !important; }
           .cta-img { height: 250.12px !important; width: 100% !important; }
         }
