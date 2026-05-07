@@ -1028,7 +1028,7 @@ function ServicesSection() {
         @media (max-width: 767px) {
           .svc-desktop-title, .svc-desktop-cards { display: none !important; }
           .svc-mobile-layout { display: flex !important; }
-          #studio-services { padding-bottom: 1000px !important; }
+          #studio-services { padding-bottom: 0 !important; }
         }
       `}</style>
 
@@ -2152,7 +2152,7 @@ export default function Studio() {
             min-height: auto !important;
             display: flex !important;
             flex-direction: column !important;
-            padding-bottom: 1000px !important;
+            padding-bottom: 64px !important;
             gap: 48px !important;
           }
           

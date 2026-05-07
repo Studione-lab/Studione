@@ -456,7 +456,7 @@ body {
     left: 20px !important;
     top: 140px !important;
     position: relative !important;
-    padding: 0 20px !important;
+    padding: 0 64px 0 20px !important;
   }
   .heading-section[style*="position: absolute"] {
     left: 20px !important;
