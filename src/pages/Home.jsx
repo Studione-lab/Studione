@@ -380,7 +380,7 @@ export default function Home() {
 
           /* CTA Section */
           .cta-section { padding: 0 !important; gap: 0 !important; }
-          .cta-text { padding: 24px 16px 40px !important; gap: 10px !important; width: 100% !important; max-width: 100% !important; }
+          .cta-text { padding: 48px 16px 40px !important; gap: 10px !important; width: 100% !important; max-width: 100% !important; }
           .cta-heading { font-size: 30.5px !important; line-height: 120% !important; width: 290px !important; }
           .cta-img { height: 250.12px !important; width: 100% !important; }
         }
