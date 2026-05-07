@@ -890,6 +890,8 @@ function ServicesSection() {
   const sectionRef   = useRef(null)
   const cardsWrapRef = useRef(null)
   const cardRefs     = useRef([])
+  const mobileCardsWrapRef = useRef(null)
+  const mobileCardRefs     = useRef([])
   const tlRef        = useRef(null)
 
   const CARD_H  = 556    // px — full card height
@@ -945,6 +947,37 @@ function ServicesSection() {
       })
     })
 
+    mm.add('(max-width: 767px)', () => {
+      const mobWrap = mobileCardsWrapRef.current
+      if (!mobWrap) return
+
+      // Hide cards 2-5 below the container initially
+      for (let i = 1; i < N; i++) {
+        const el = mobileCardRefs.current[i]
+        if (el) gsap.set(el, { y: 800 })
+      }
+
+      // Mobile accordion timeline
+      const mobTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: mobWrap,
+          pin: true,
+          start: 'top 80px',
+          end: `+=${(N - 1) * 200}`, // 800px virtual scroll
+          scrub: 1.2,
+        },
+      })
+
+      // Slide cards up sequentially
+      for (let i = 1; i < N; i++) {
+        mobTl.to(
+          mobileCardRefs.current[i],
+          { y: 0, duration: 1, ease: 'power2.inOut' },
+          i - 1
+        )
+      }
+    })
+
     return () => mm.revert()
   }, [N])
 
@@ -985,6 +1018,7 @@ function ServicesSection() {
         position: 'relative',
         boxSizing: 'border-box',
         paddingBottom: '200px', // extra space for scroll
+        zIndex: 10,
       }}
     >
       <style>{`
@@ -994,7 +1028,7 @@ function ServicesSection() {
         @media (max-width: 767px) {
           .svc-desktop-title, .svc-desktop-cards { display: none !important; }
           .svc-mobile-layout { display: flex !important; }
-          #studio-services { padding-bottom: 0 !important; }
+          #studio-services { padding-bottom: 1000px !important; }
         }
       `}</style>
 
@@ -1184,16 +1218,19 @@ function ServicesSection() {
 
         {/* Mobile stacked cards container */}
         <div
+          ref={mobileCardsWrapRef}
           style={{
             position: 'relative',
             width: '100%',
             minWidth: '320px',
             height: '620px',
+            overflow: 'hidden',
           }}
         >
           {SERVICES_CARDS.map((card, i) => (
             <div
               key={card.id}
+              ref={el => mobileCardRefs.current[i] = el}
               style={{
                 position: 'absolute',
                 left: 0,
@@ -1339,7 +1376,7 @@ export default function Studio() {
 
     let mm = gsap.matchMedia()
 
-    mm.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)', () => {
+    mm.add('(prefers-reduced-motion: no-preference)', () => {
       /*
         Shared mutable state object – passed to the marqueeStateRef so that
         arrow-button handlers outside this effect can interact with it.
@@ -2111,7 +2148,7 @@ export default function Studio() {
             min-height: auto !important;
             display: flex !important;
             flex-direction: column !important;
-            padding-bottom: 64px !important;
+            padding-bottom: 1000px !important;
             gap: 48px !important;
           }
           
