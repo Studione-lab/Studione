@@ -986,8 +986,20 @@ function ServicesSection() {
         paddingBottom: '200px', // extra space for scroll
       }}
     >
+      <style>{`
+        .svc-desktop-title, .svc-desktop-cards { display: block; }
+        .svc-mobile-layout { display: none; }
+
+        @media (max-width: 767px) {
+          .svc-desktop-title, .svc-desktop-cards { display: none !important; }
+          .svc-mobile-layout { display: flex !important; }
+          #studio-services { padding-bottom: 0 !important; }
+        }
+      `}</style>
+
       {/* ── "What we offer" title — natural flow, scrolls away ───── */}
-      <p
+      <p 
+        className='svc-desktop-title'
         style={{
           padding: '128px 0 100px 40px',
           fontFamily: 'var(--font-britti)',
@@ -1004,6 +1016,7 @@ function ServicesSection() {
       {/* ── Stacked cards wrap — this Pins at 80px ────────────────── */}
       <div
         ref={cardsWrapRef}
+        className="svc-desktop-cards"
         style={{
           position: 'relative',
           width: '100%',
@@ -1132,6 +1145,160 @@ function ServicesSection() {
           </div>
         </div>
       ))}
+      </div>
+
+      {/* ── MOBILE STACKED CARDS ────────────────────────────────── */}
+      <div
+        className="svc-mobile-layout"
+        style={{
+          flexDirection: 'column',
+          width: '100%',
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* Mobile title */}
+        <div
+          style={{
+            display: 'flex',
+            padding: '0 16px 40px',
+            alignItems: 'flex-start',
+            gap: '10px',
+            width: '100%',
+            boxSizing: 'border-box',
+          }}
+        >
+          <p
+            style={{
+              fontFamily: 'var(--font-britti)',
+              fontWeight: 400,
+              fontSize: '24px',
+              lineHeight: '120%',
+              color: '#FFFFFF',
+              margin: 0,
+            }}
+          >
+            What we offer
+          </p>
+        </div>
+
+        {/* Mobile stacked cards container */}
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            minWidth: '320px',
+            height: '620px',
+          }}
+        >
+          {SERVICES_CARDS.map((card, i) => (
+            <div
+              key={card.id}
+              style={{
+                position: 'absolute',
+                left: 0,
+                top: `${i * 60}px`,
+                width: '100%',
+                height: '380px',
+                background: card.bg,
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'flex-start',
+                padding: '24px 24px 40px 16px',
+                gap: '14px',
+                boxSizing: 'border-box',
+                willChange: 'transform',
+                zIndex: i + 1,
+                overflow: 'hidden',
+              }}
+            >
+              {/* Number */}
+              <span
+                style={{
+                  fontFamily: 'var(--font-britti)',
+                  fontWeight: 400,
+                  fontSize: '14px',
+                  lineHeight: '140%',
+                  color: '#1B1B1B',
+                  flexShrink: 0,
+                }}
+              >
+                {card.num}
+              </span>
+
+              {/* Content column */}
+              <div
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'flex-start',
+                  gap: '16px',
+                  flex: 1,
+                }}
+              >
+                {/* Title */}
+                <h3
+                  style={{
+                    fontFamily: 'var(--font-britti)',
+                    fontWeight: 400,
+                    fontSize: '20px',
+                    lineHeight: '100%',
+                    textTransform: 'capitalize',
+                    color: '#1B1B1B',
+                    margin: 0,
+                  }}
+                >
+                  {card.title}
+                </h3>
+
+                {/* Card: image + text */}
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'flex-start',
+                    gap: '20px',
+                    width: '100%',
+                  }}
+                >
+                  <div
+                    style={{
+                      width: '100%',
+                      height: '220px',
+                      background: '#D0D0D0',
+                      overflow: 'hidden',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      flexShrink: 0,
+                    }}
+                  >
+                    <svg width="44" height="44" viewBox="0 0 40 40" fill="none" opacity="0.35">
+                      <rect x="4" y="4" width="32" height="32" rx="4" stroke="#666" strokeWidth="1.5" />
+                      <circle cx="14" cy="14" r="3" stroke="#666" strokeWidth="1.5" />
+                      <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
+                    <p
+                      style={{
+                        fontFamily: "'Inter', system-ui, sans-serif",
+                        fontWeight: 400,
+                        fontSize: '14px',
+                        lineHeight: '140%',
+                        letterSpacing: '-0.02em',
+                        color: '#A6A6A6',
+                        margin: 0,
+                      }}
+                    >
+                      {card.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   )
@@ -1963,6 +2130,29 @@ export default function Studio() {
             width: 100% !important;
             align-items: flex-start !important;
           }
+
+
+          /* Each card: full-bleed, 380px, static (no absolute positioning) */
+          .studio-svc-card {
+            position: static !important;
+            left: 0 !important;
+            width: 100% !important;
+            height: 380px !important;
+            transform: none !important;
+          }
+          /* Card inner layout row: shift from right-column to left-edge */
+          .studio-svc-inner {
+            position: absolute !important;
+            left: 16px !important;
+            top: 24px !important;
+            width: calc(100% - 40px) !important;
+            gap: 14px !important;
+          }
+          .studio-svc-num  { font-size: 14px !important; }
+          .studio-svc-right { width: 100% !important; gap: 16px !important; }
+          .studio-svc-title { font-size: 20px !important; line-height: 100% !important; }
+          .studio-svc-img   { height: 220px !important; border-radius: 0 !important; }
+          .studio-svc-desc  { font-size: 14px !important; color: #262626 !important; }
         }
       `}</style>
     </div>
