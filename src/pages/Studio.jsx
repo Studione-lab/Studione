@@ -343,6 +343,10 @@ function DesignProcessSection() {
     let mm = gsap.matchMedia()
 
     mm.add('(min-width: 768px)', () => {
+      // Reset state to item 0 when crossing breakpoint to desktop
+      setActiveIdx(0)
+      activeRef.current = 0
+
       // slotOrder[slot] = serviceIdx currently at that visual slot
       // Mutated in place — no React re-render needed for list positions
       let slotOrder = [0, 1, 2, 3, 4, 5, 6]
@@ -511,19 +515,28 @@ function DesignProcessSection() {
 
   // ── Initialize first mobile card as open ─────────────────────────
   useEffect(() => {
-    // Only run on mobile
-    if (window.innerWidth >= 768) return
-    const firstSlot  = mobileSlots.current[0]
-    const firstInner = mobileInners.current[0]
-    if (firstSlot)  gsap.set(firstSlot,  { height: CARD_H })
-    if (firstInner) gsap.set(firstInner, { opacity: 1, y: 0 })
-    // Close all others
-    for (let i = 1; i < SERVICES.length; i++) {
-      const s = mobileSlots.current[i]
-      const inner = mobileInners.current[i]
-      if (s) gsap.set(s, { height: 0 })
-      if (inner) gsap.set(inner, { opacity: 0, y: 12 })
-    }
+    let mm = gsap.matchMedia()
+
+    mm.add('(max-width: 767px)', () => {
+      // Always reset to first item on mobile
+      setActiveIdx(0)
+      mobileActive.current = 0
+
+      const firstSlot  = mobileSlots.current[0]
+      const firstInner = mobileInners.current[0]
+      if (firstSlot)  gsap.set(firstSlot,  { height: CARD_H })
+      if (firstInner) gsap.set(firstInner, { opacity: 1, y: 0 })
+      
+      // Close all others
+      for (let i = 1; i < SERVICES.length; i++) {
+        const s = mobileSlots.current[i]
+        const inner = mobileInners.current[i]
+        if (s) gsap.set(s, { height: 0 })
+        if (inner) gsap.set(inner, { opacity: 0, y: 12 })
+      }
+    })
+
+    return () => mm.revert()
   }, [CARD_H])
 
   const svc = SERVICES[activeIdx]
