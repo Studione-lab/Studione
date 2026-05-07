@@ -960,9 +960,9 @@ function ServicesSection() {
       // Mobile accordion timeline
       const mobTl = gsap.timeline({
         scrollTrigger: {
-          trigger: mobWrap,
+          trigger: section,
           pin: true,
-          start: 'top 80px',
+          start: 'top top',
           end: `+=${(N - 1) * 200}`, // 800px virtual scroll
           scrub: 1.2,
         },
