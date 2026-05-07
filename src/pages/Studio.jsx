@@ -906,11 +906,11 @@ function ServicesSection() {
                 {/* Description */}
                 <p
                   style={{
-                    fontFamily: "'Inter Tight', 'Inter', system-ui, sans-serif",
+                    fontFamily: 'var(--font-britti)',
                     fontWeight: 400,
                     fontSize: '18px',
                     lineHeight: '140%',
-                    letterSpacing: '1px',
+                    letterSpacing: '0px',
                     color: '#595959',
                     margin: 0,
                     width: '100%',
@@ -1537,7 +1537,7 @@ export default function Studio() {
             >
               <span
                 style={{
-                  fontFamily: "'Inter', system-ui",
+                  fontFamily: 'var(--font-britti)',
                   fontWeight: 400,
                   fontSize: '16px',
                   lineHeight: '140%',
@@ -1567,7 +1567,7 @@ export default function Studio() {
             {/* Body text — Inter 18px */}
             <p
               style={{
-                fontFamily: "'Inter', system-ui",
+                fontFamily: 'var(--font-britti)',
                 fontWeight: 400,
                 fontSize: '18px',
                 lineHeight: '140%',
@@ -1640,38 +1640,109 @@ export default function Studio() {
           #studio-services-list         { right: 28px !important; }
         }
 
-        /* Mobile */
-        @media (max-width: 768px) {
+        /* ── Mobile (≤767px) ─────────────────────────────────────── */
+        @media (max-width: 767px) {
+
+          /* 1. HERO — padding: 152px 16px 40px, gap: 10px */
           #studio-hero {
-            padding: 110px 20px 0px !important;
-            gap: 60px !important;
+            padding: 152px 16px 40px !important;
+            gap: 10px !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+          }
+          #studio-hero-tagline {
+            font-size: 36px !important;
+            font-weight: 400 !important;
+            line-height: 120% !important;
+            margin-bottom: 40px !important;
+          }
+          /* Hero image: 100% wide, 250px tall */
+          #studio-hero img,
+          #studio-hero > div:last-child {
+            width: 100% !important;
+            height: 250px !important;
+            margin-top: 0 !important;
+          }
+
+          /* 2. TESTIMONIAL */
+          #studio-testimonial {
+            padding-top: 0 !important;
+            padding-bottom: 80px !important;
           }
           #studio-testimonial-heading {
-            padding-left: 20px !important;
-            margin-bottom: 48px !important;
+            padding: 96px 16px 48px !important;
+            font-size: 24px !important;
+            line-height: 120% !important;
+            margin-bottom: 0 !important;
           }
+          /* Track: scrollable on mobile (arrows use scrollBy fallback) */
+          #studio-testimonial-track {
+            overflow-x: auto !important;
+            scroll-behavior: smooth !important;
+            scrollbar-width: none !important;
+            -ms-overflow-style: none !important;
+          }
+          #studio-testimonial-track::-webkit-scrollbar { display: none !important; }
           #studio-testimonial-marquee { padding-left: 20px !important; }
+          /* Cards: 272×320 on mobile */
+          #studio-testimonial-marquee article {
+            width: 272px !important;
+            min-width: 272px !important;
+            height: 320px !important;
+            padding: 32px !important;
+            flex-shrink: 0 !important;
+          }
+          #studio-testimonial-arrows { margin-top: 48px !important; }
 
-          /* About: revert to normal document flow */
+          /* 3. ABOUT */
           #studio-about {
             position: static !important;
             min-height: auto !important;
             display: flex !important;
             flex-direction: column !important;
-            padding: 64px 20px !important;
+            align-items: flex-start !important;
+            padding: 64px 16px 96px !important;
             gap: 64px !important;
           }
-          #studio-about-intro  { position: static !important; width: 100% !important; }
-          #studio-about-right  { position: static !important; width: 100% !important; }
-
+          #studio-about-intro {
+            position: static !important;
+            width: 100% !important;
+            font-size: 22px !important;
+            line-height: 130% !important;
+            font-weight: 300 !important;
+          }
+          #studio-about-right {
+            position: static !important;
+            width: 100% !important;
+            gap: 40px !important;
+          }
+          #studio-about-image-wrap { width: 100% !important; }
+          #studio-about-image-wrap > div > div,
+          #studio-about-image-wrap > div > img { height: 250px !important; }
+          #studio-about-tag { display: none !important; }
+          #studio-about-desc-wrap { gap: 14px !important; }
+          #studio-about-desc-wrap p {
+            font-size: 16px !important;
+            color: #A6A6A6 !important;
+            max-width: 100% !important;
+          }
+          #studio-about-work-link { font-size: 20px !important; gap: 12px !important; }
+          #studio-about-work-link svg { width: 32px !important; height: 32px !important; }
+          
           /* Services: stack vertically */
           #studio-services {
             min-height: auto !important;
             display: flex !important;
             flex-direction: column !important;
-            padding: 64px 20px !important;
+            padding-bottom: 64px !important;
             gap: 48px !important;
           }
+          
+#studio-services > p {
+            padding: 64px 16px 40px !important;
+            font-size: 24px !important;
+          }
+
           #studio-services-title { position: static !important; width: 100% !important; }
           #studio-services-card  {
             position: static !important;
