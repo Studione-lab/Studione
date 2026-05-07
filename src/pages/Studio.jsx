@@ -1701,9 +1701,12 @@ export default function Studio() {
             color: '#FFFFFF',
             margin: 0,
             width: '100%',
+            maxWidth: '998px',
+            alignSelf: 'flex-start',
+            textAlign: 'left',
           }}
         >
-          Built For Dreamers Who Dare<br />To Launch Bold Ideas.
+          Built For Dreamers Who Dare To Launch Bold Ideas.
         </h1>
 
         {/* Hero image — 505px tall, full width */}
@@ -2069,6 +2072,7 @@ export default function Studio() {
             font-weight: 400 !important;
             line-height: 120% !important;
             margin-bottom: 40px !important;
+            max-width: 100% !important;
           }
           /* Hero image: 100% wide, 250px tall */
           #studio-hero img,

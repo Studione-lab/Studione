@@ -335,10 +335,12 @@ export default function Work() {
             textTransform: 'capitalize',
             color: '#FFFFFF',
             margin: 0,
-            alignSelf: 'stretch',
+            alignSelf: 'flex-start',
+            textAlign: 'left',
+            maxWidth: '988px',
           }}
         >
-          Design That Isn&apos;t Just Seen<br />It&apos;s Understood.
+          Design That Isn&apos;t Just Seen It&apos;s Understood.
         </h1>
       </section>
 
@@ -492,6 +494,14 @@ export default function Work() {
           ))}
         </div>
       </section>
+
+      <style>{`
+        @media (max-width: 767px) {
+          #work-tagline {
+            max-width: 100% !important;
+          }
+        }
+      `}</style>
     </div>
   )
 }

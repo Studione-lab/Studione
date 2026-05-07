@@ -345,7 +345,10 @@ export default function Home() {
           
           /* Hero Section */
           .hero-section { padding-top: 152px !important; padding-bottom: 40px !important; gap: 40px !important; }
-          .heading-hero { font-size: 36px !important; }
+          .heading-hero { 
+            font-size: 36px !important; 
+            max-width: 100% !important;
+          }
           .hero-image-card { flex-direction: column !important; }
           .hero-img-desktop-only { display: none !important; }
           .hero-img-mobile { width: 100% !important; height: 250px !important; }
@@ -425,10 +428,9 @@ export default function Home() {
             "It's"              → white
             "Understood."       → #767676
           */}
-          <h1 className="heading-hero" style={{ width: '100%', maxWidth: '1082px' }}>
+          <h1 className="heading-hero" style={{ width: '100%', maxWidth: '998px', alignSelf: 'flex-start', textAlign: 'left' }}>
             <span style={{ color: '#FFFFFF' }}>Design That Isn&#39;t </span>
-            <span style={{ color: '#767676' }}>Just Seen</span>
-            <br />
+            <span style={{ color: '#767676' }}>Just Seen </span>
             <span style={{ color: '#FFFFFF' }}>It&#39;s </span>
             <span style={{ color: '#767676' }}>Understood.</span>
           </h1>
