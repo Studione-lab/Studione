@@ -1,10 +1,17 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom'
+import gsap from 'gsap'
 import logo from '../../assets/Logo.svg'
 
 // ── Design-spec nav links (Contact handled separately) ────────────
 const NAV_LINKS = [
   { label: 'Work',   to: '/work'   },
+  { label: 'Studio', to: '/studio' },
+]
+
+// ── Mobile explicit links matching the image ──────────────────────
+const MOB_LINKS = [
+  { label: 'Work', to: '/work' },
   { label: 'Studio', to: '/studio' },
 ]
 
@@ -31,12 +38,18 @@ export default function NavbarV1({ noBackground = false }) {
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
+  // ── GSAP Refs ───────────────────────────────────────────────────
+  const menuRef = useRef(null)
+  const linksRef = useRef([])
+  const rightColRef = useRef(null)
+  const closeBtnRef = useRef(null)
+
   // Close drawer on route change
   useEffect(() => { setMenuOpen(false) }, [pathname])
 
   // Scroll to footer — works from any page
   const handleContact = useCallback((e) => {
-    e.preventDefault()
+    if (e) e.preventDefault()
     setMenuOpen(false)
     const scrollToFooter = () => {
       const footer = document.getElementById('footer') || document.getElementById('footer-v1')
@@ -54,8 +67,7 @@ export default function NavbarV1({ noBackground = false }) {
   // ── Scroll listener: detect if past hero (100vh) ─────────────
   useEffect(() => {
     const handleScroll = () => {
-      // Threshold is 100vh minus navbar height to feel snappier,
-      // or just pure 100vh. We'll use window.innerHeight.
+      // Threshold is 100vh minus navbar height to feel snappier
       setIsScrolledPastHero(window.scrollY > window.innerHeight - 92)
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
@@ -63,13 +75,45 @@ export default function NavbarV1({ noBackground = false }) {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  // ── GSAP Mobile Menu Animation ─────────────────────────────────
+  useEffect(() => {
+    const menu = menuRef.current
+    if (!menu) return
+
+    if (menuOpen) {
+      // Disable body scroll
+      document.body.style.overflow = 'hidden'
+      
+      gsap.set(menu, { display: 'flex' })
+      gsap.timeline()
+        .to(menu, { opacity: 1, duration: 0.4, ease: 'power2.out' })
+        .fromTo(closeBtnRef.current, { opacity: 0, rotation: -90 }, { opacity: 1, rotation: 0, duration: 0.4, ease: 'power2.out' }, "-=0.2")
+        .fromTo(linksRef.current, 
+          { y: 80, opacity: 0 }, 
+          { y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: 'power3.out' }, 
+          "-=0.2"
+        )
+        .fromTo(rightColRef.current, 
+          { opacity: 0, y: 30 }, 
+          { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }, 
+          "-=0.4"
+        )
+    } else {
+      // Re-enable body scroll
+      document.body.style.overflow = ''
+      
+      gsap.timeline({ onComplete: () => gsap.set(menu, { display: 'none' }) })
+        .to(linksRef.current, { y: -30, opacity: 0, duration: 0.3, stagger: 0.04, ease: 'power2.in' })
+        .to(rightColRef.current, { opacity: 0, y: 10, duration: 0.3, ease: 'power2.in' }, 0)
+        .to(closeBtnRef.current, { opacity: 0, rotation: 90, duration: 0.3, ease: 'power2.in' }, 0)
+        .to(menu, { opacity: 0, duration: 0.3, ease: 'power2.in' }, "-=0.1")
+    }
+    
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
   return (
     <>
-      {/*
-        ── Responsive visibility via <style> block (same pattern as V2)
-        Desktop (≥768px): #nav-v1-desktop visible, #nav-v1-mob-btn hidden
-        Mobile  (<768px): #nav-v1-desktop hidden,  #nav-v1-mob-btn visible
-      */}
       <style>{`
         @media (min-width: 768px) {
           #nav-v1-desktop  { display: flex !important; }
@@ -80,6 +124,20 @@ export default function NavbarV1({ noBackground = false }) {
           #nav-v1-desktop  { display: none !important; }
           #nav-v1-mob-btn  { display: flex !important; }
           #navbar-v1       { padding-left: 16px !important; padding-right: 16px !important; }
+        }
+        /* Mobile menu responsive split layout */
+        .mob-menu-container {
+           display: flex;
+           flex-direction: column;
+           justify-content: space-between;
+           gap: 64px;
+        }
+        @media (min-width: 500px) {
+           .mob-menu-container {
+             flex-direction: row;
+             justify-content: space-between;
+             align-items: flex-end;
+           }
         }
       `}</style>
 
@@ -137,7 +195,6 @@ export default function NavbarV1({ noBackground = false }) {
             alignItems: 'center',
             padding: '12px 16px',
             gap: '72px',
-            /* initial value overridden by the media query above */
             display: 'flex',
           }}
         >
@@ -176,8 +233,8 @@ export default function NavbarV1({ noBackground = false }) {
         {/* ── Hamburger — mobile only ─────────────────────────────── */}
         <button
           id="nav-v1-mob-btn"
-          onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
+          onClick={() => setMenuOpen(true)}
+          aria-label="Open menu"
           style={{
             display: 'none',
             width: '40px',
@@ -202,83 +259,117 @@ export default function NavbarV1({ noBackground = false }) {
                 background: '#FFFFFF',
                 borderRadius: '2px',
                 display: 'block',
-                transition: 'transform 0.3s ease, opacity 0.3s ease',
-                transform:
-                  i === 0 && menuOpen ? 'translateY(6.5px) rotate(45deg)'  :
-                  i === 2 && menuOpen ? 'translateY(-6.5px) rotate(-45deg)' : 'none',
-                opacity: i === 1 && menuOpen ? 0 : 1,
               }}
             />
           ))}
         </button>
       </header>
 
-      {/* ── Mobile full-screen drawer ───────────────────────────────
-           display: none on desktop is enforced by the <style> above */}
+      {/* ── Mobile full-screen drawer (GSAP Animated) ─────────────────────────────── */}
       <div
         id="nav-v1-mob-menu"
+        ref={menuRef}
         style={{
           position: 'fixed',
           inset: 0,
-          zIndex: 999,
-          background: '#1B1B1B',
-          flexDirection: 'column',
-          padding: '6rem 2.5rem 3rem',
-          transition: 'opacity 0.35s ease, transform 0.35s cubic-bezier(0.4,0,0.2,1)',
-          opacity:     menuOpen ? 1 : 0,
-          transform:   menuOpen ? 'translateY(0)' : 'translateY(-12px)',
-          pointerEvents: menuOpen ? 'all' : 'none',
+          zIndex: 1001,
+          background: '#020202',
           display: 'none',
+          opacity: 0,
+          flexDirection: 'column',
+          padding: '24px 16px',
+          boxSizing: 'border-box',
+          overflowY: 'auto',
+          overflowX: 'hidden',
         }}
       >
-        <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-          {NAV_LINKS.map((link, i) => (
-            <NavLink
-              key={link.to}
-              to={link.to}
-              style={({ isActive }) => ({
-                padding: '1rem 0',
-                fontSize: '2rem',
-                fontFamily: "'Inter Tight', system-ui, sans-serif",
-                fontWeight: 400,
-                letterSpacing: '1px',
-                color: isActive ? 'rgba(255,255,255,0.5)' : '#FFFFFF',
-                textDecoration: 'none',
-                borderBottom: '1px solid rgba(255,255,255,0.08)',
-                transition: 'opacity 0.25s ease',
-                transitionDelay: menuOpen ? `${i * 60}ms` : '0ms',
-                opacity:   menuOpen ? 1 : 0,
-                transform: menuOpen ? 'translateX(0)' : 'translateX(-20px)',
-              })}
-            >
-              {link.label}
-            </NavLink>
-          ))}
-          {/* Contact — scroll to footer */}
+        {/* Top bar w/ Close button */}
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '40px' }}>
           <button
-            onClick={handleContact}
+            ref={closeBtnRef}
+            onClick={() => setMenuOpen(false)}
             style={{
-              padding: '1rem 0',
-              fontSize: '2rem',
-              fontFamily: "'Inter Tight', system-ui, sans-serif",
-              fontWeight: 400,
-              letterSpacing: '1px',
-              color: '#FFFFFF',
-              background: 'none',
-              border: 'none',
-              borderBottom: '1px solid rgba(255,255,255,0.08)',
-              cursor: 'pointer',
-              textAlign: 'left',
-              width: '100%',
-              transition: 'opacity 0.25s ease',
-              transitionDelay: menuOpen ? `${NAV_LINKS.length * 60}ms` : '0ms',
-              opacity:   menuOpen ? 1 : 0,
-              transform: menuOpen ? 'translateX(0)' : 'translateX(-20px)',
+              background: 'none', border: 'none', padding: '16px',
+              cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
-            Contact
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <path d="M18 6L6 18M6 6l12 12" stroke="#FFFFFF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
           </button>
-        </nav>
+        </div>
+
+        {/* Main Content Layout */}
+        <div className="mob-menu-container" style={{ flex: 1, padding: '0 8px' }}>
+          
+          {/* Left Column (Huge Links) */}
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+            {MOB_LINKS.map((link, i) => (
+              <div key={link.to} style={{ overflow: 'hidden' }}>
+                <NavLink
+                  ref={el => (linksRef.current[i] = el)}
+                  to={link.to}
+                  onClick={() => setMenuOpen(false)}
+                  style={({ isActive }) => ({
+                    display: 'block',
+                    fontFamily: 'var(--font-britti), system-ui, sans-serif',
+                    fontWeight: 500,
+                    fontSize: 'clamp(56px, 15vw, 120px)',
+                    lineHeight: '110%',
+                    letterSpacing: '-0.02em',
+                    color: isActive ? '#FFFFFF' : '#FFFFFF',
+                    textDecoration: 'none',
+                    margin: 0,
+                  })}
+                >
+                  {link.label}
+                </NavLink>
+              </div>
+            ))}
+            <div style={{ overflow: 'hidden' }}>
+              <button
+                ref={el => (linksRef.current[MOB_LINKS.length] = el)}
+                onClick={handleContact}
+                style={{
+                  display: 'block',
+                  fontFamily: 'var(--font-britti), system-ui, sans-serif',
+                  fontWeight: 500,
+                  fontSize: 'clamp(56px, 15vw, 120px)',
+                  lineHeight: '110%',
+                  letterSpacing: '-0.02em',
+                  color: '#FFFFFF',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                  margin: 0,
+                  textAlign: 'left',
+                }}
+              >
+                Contact
+              </button>
+            </div>
+
+            
+          </nav>
+
+          {/* Bottom row / Right column: Email Address */}
+          <div ref={rightColRef} style={{ paddingBottom: '32px', display: 'flex' }}>
+            <a 
+              href="mailto:hello@studione.com"
+              style={{
+                fontFamily: 'var(--font-britti), system-ui, sans-serif',
+                fontWeight: 400,
+                fontSize: 'clamp(24px, 8vw, 40px)',
+                lineHeight: '120%',
+                color: '#FFFFFF',
+                textDecoration: 'underline',
+              }}
+            >
+              hello@studione.com
+            </a>
+          </div>
+        </div>
       </div>
     </>
   )
