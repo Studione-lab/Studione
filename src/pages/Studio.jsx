@@ -312,8 +312,6 @@ function DesignProcessSection() {
   const cardDescRef = useRef(null)
   const clipRef     = useRef(null)     // overflow:hidden window + wheel target
   const itemEls     = useRef([])       // itemEls[serviceIdx] = DOM element
-  const hoverRef    = useRef(null)     // onMouseEnter: pause cycle + show card
-  const hoverEndRef = useRef(null)     // onMouseLeave: restore card + resume cycle
   const intervalRef = useRef(null)
   const isAnimRef   = useRef(false)
   const activeRef   = useRef(0)        // service index currently at slot 0
@@ -440,24 +438,6 @@ function DesignProcessSection() {
           restartCycle()
         })
       }
-
-      // ── HOVER: pause cycle + show that item's card (no list movement) ─
-      function onHoverItem(svcIdx) {
-        clearInterval(intervalRef.current)   // pause auto-cycle
-        setColors(svcIdx)                    // highlight hovered item
-        fadeCard(svcIdx)                     // cross-fade card content
-      }
-
-      // ── HOVER END: restore to true active + resume cycle ────────────
-      function onHoverEnd() {
-        const activeSvcIdx = slotOrder[0]    // actual item at slot 0
-        setColors(activeSvcIdx)
-        fadeCard(activeSvcIdx)
-        restartCycle()
-      }
-
-      hoverRef.current    = onHoverItem
-      hoverEndRef.current = onHoverEnd
 
       // ── Auto-cycle ─────────────────────────────────────────────────
       intervalRef.current = setInterval(advanceFwd, 10000)
@@ -616,8 +596,6 @@ function DesignProcessSection() {
             <div
               key={s.id}
               ref={el => (itemEls.current[i] = el)}
-              onMouseEnter={() => hoverRef.current?.(i)}
-              onMouseLeave={() => hoverEndRef.current?.()}
               style={{
                 position: 'absolute',
                 top: 0,
