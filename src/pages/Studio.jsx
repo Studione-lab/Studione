@@ -887,6 +887,7 @@ const SERVICES_CARDS = [
 //  • Mouse leave: smooth return to stacked position.
 // ─────────────────────────────────────────────────────────────────
 function ServicesSection() {
+  const sectionWrapRef = useRef(null)
   const sectionRef   = useRef(null)
   const cardsWrapRef = useRef(null)
   const cardRefs     = useRef([])
@@ -901,9 +902,10 @@ function ServicesSection() {
 
   // ── Initial setup & Scroll-driven reveal ────────────────────────
   useLayoutEffect(() => {
+    const sectionWrap = sectionWrapRef.current
     const section = sectionRef.current
     const cardsWrap = cardsWrapRef.current
-    if (!section || !cardsWrap || cardRefs.current.some(c => !c)) return
+    if (!sectionWrap || !section || !cardsWrap || cardRefs.current.some(c => !c)) return
 
     let mm = gsap.matchMedia()
 
@@ -937,7 +939,7 @@ function ServicesSection() {
 
       // ── Immersive: Hide Global Navbar while section is being scrolled pass ──
       ScrollTrigger.create({
-        trigger: section,
+        trigger: sectionWrap,
         start: 'top 10%',
         end:   'bottom 10%',
         onEnter:      () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
@@ -960,8 +962,8 @@ function ServicesSection() {
       // Mobile accordion timeline
       const mobTl = gsap.timeline({
         scrollTrigger: {
-          trigger: section,
-          pin: true,
+          trigger: sectionWrap,
+          pin: section,
           start: 'top top',
           end: `+=${(N - 1) * 200}`, // 800px virtual scroll
           scrub: 1.2,
@@ -979,7 +981,7 @@ function ServicesSection() {
 
       // ── Immersive: Hide Global Navbar while section is being scrolled pass ──
       ScrollTrigger.create({
-        trigger: section,
+        trigger: sectionWrap,
         start: 'top 10%',
         end:   'bottom 10%',
         onEnter:      () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
@@ -1020,9 +1022,10 @@ function ServicesSection() {
   }
 
   return (
-    <section
-      ref={sectionRef}
-      id="studio-services"
+    <div ref={sectionWrapRef} style={{ width: '100%', position: 'relative' }}>
+      <section
+        ref={sectionRef}
+        id="studio-services"
       style={{
         width: '100%',
         background: '#020202',
@@ -1350,6 +1353,7 @@ function ServicesSection() {
         </div>
       </div>
     </section>
+    </div>
   )
 }
 
