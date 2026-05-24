@@ -12,7 +12,7 @@
 import Project1 from '../assets/project-1.png'
 import Project2 from '../assets/project-2.png'
 import Project3 from '../assets/project-3.png'
-import HeroImg from '../assets/Hero Image.png'
+import HeroImg from '../assets/Studio Image.png'
 
 export const PROJECTS = [
   {

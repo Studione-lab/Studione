@@ -2,7 +2,21 @@ import { useRef, useState, useEffect, useCallback, useLayoutEffect } from 'react
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import Discovery from '../assets/Image/DesignProcess/Discovery.jpeg'
+import Research from '../assets/Image/DesignProcess/ResearchandPositioning.jpeg'
+import Strategy from '../assets/Image/DesignProcess/Strategy.jpeg'
+import VisualDirection from '../assets/Image/DesignProcess/VisualDirection.mp4'
+import ConceptDevelopment from '../assets/Image/DesignProcess/ConceptDevelopment.jpeg'
+import Refinement from '../assets/Image/DesignProcess/Refinement.jpeg'
+import Production from '../assets/Image/DesignProcess/Production.jfif'
 import Project1 from '../assets/project-1.png'
+import BrandNarrative from '../assets/Image/Service/BrandNarrative.gif'
+import BrandStrategy from '../assets/Image/Service/Website.jpeg'
+import DigitalProduct from '../assets/Image/Service/DigitalProduct.png'
+import Prototype from '../assets/Image/Service/Prototype.jfif'
+import VisualIdentity from '../assets/Image/Service/DigitalProduct2.jfif'
+import HeroImageVideo from '../assets/Image/StudioImage.mp4'
+
 gsap.registerPlugin(ScrollTrigger)
 
 // ─────────────────────────────────────────────────────────────────
@@ -11,7 +25,7 @@ gsap.registerPlugin(ScrollTrigger)
 const TESTIMONIALS = [
   {
     id: 't1',
-    text: '"Studione transformed our brand completely. The work is clean, modern, and immediately resonates. Highly recommended!"',
+    text: '"The brand they built for us opened doors we didnt know how to knock on before."',
     name: 'Alex Carter',
     role: 'Product Designer, Base',
     verified: false,
@@ -20,7 +34,7 @@ const TESTIMONIALS = [
   },
   {
     id: 't2',
-    text: '"Studione saved us weeks of back-and-forth. They understood our vision instantly and executed with precision."',
+    text: '"They didn\'t just design a logo — they gave our business a voice we hadn\'t found yet."',
     name: 'Ethan Hunt',
     role: 'Product Designer, Base',
     verified: true,
@@ -29,7 +43,7 @@ const TESTIMONIALS = [
   },
   {
     id: 't3',
-    text: '"I\'ve worked with dozens of studios — Studione is by far the most thoughtful and versatile one yet."',
+    text: '"Six weeks in, our conversion rate jumped 40%. Design had everything to do with it."',
     name: 'Jordan Kim',
     role: 'Frontend Engineer, Atlas',
     verified: false,
@@ -38,7 +52,7 @@ const TESTIMONIALS = [
   },
   {
     id: 't4',
-    text: '"The design quality is top-tier. It gave our MVP a polished, professional feel right from day one. Incredible team."',
+    text: '"Working with Studione felt like having a creative director on call. Precise, fast, intentional."',
     name: 'Alicia Roberts',
     role: 'Founder, PixelPath',
     verified: false,
@@ -72,45 +86,51 @@ const SERVICES = [
   {
     id: 'svc-1',
     label: 'Discovery',
-    desc: 'We partner with ambitious teams to shape meaningful brands and digital experiences.',
+    desc: 'We begin by listening. Brand audits, stakeholder interviews, and competitor analysis to understand not just where you are — but where the opportunity actually lives.',
     // image: '/images/services-discovery.png',
-    image: Project1
+    image: Discovery
   },
   {
     id: 'svc-2',
     label: 'Research & Positioning',
-    desc: 'Deep market analysis and competitive research to carve out a distinct, ownable position for your brand.',
+    desc: 'We identify where your brand can own a credible, differentiated position — and map out the whitespace competitors haven\'t claimed. The output is a clear positioning statement and messaging framework your whole team can align around.',
     // image: '/images/services-research.png',
+    image: Research
   },
   {
     id: 'svc-3',
     label: 'Strategy & Briefing',
-    desc: 'Translating insights into clear creative briefs that align your team and guide every design decision.',
+    desc: 'Research becomes a creative brief. We translate positioning, audience insight, and business goals into a clear strategic direction — the single document that aligns clients and creatives before any concept work begins.',
     // image: '/images/services-strategy.png',
+    image: Strategy
   },
   {
     id: 'svc-4',
     label: 'Visual Direction',
-    desc: 'Defining the aesthetic language — typography, colour, motion — that makes your brand instantly recognisable.',
+    desc: 'Before committing to a single direction, we explore the visual language — moodboards, typographic pairings, colour worlds, and reference systems. This is where we establish the aesthetic parameters of the brand together.',
     // image: '/images/services-visual.png',
+    image: VisualDirection
   },
   {
     id: 'svc-5',
     label: 'Concept Development',
-    desc: 'Generating bold creative concepts that push past the expected and bring your vision to life.',
+    desc: 'The strategy becomes form. We develop initial brand concepts — identity systems, layout principles, and visual expressions — presented with rationale. You see not just what we made, but why it works for your brand specifically.',
     // image: '/images/services-concept.png',
+    image: ConceptDevelopment
   },
   {
     id: 'svc-6',
     label: 'Refinement',
-    desc: 'Iterative craft — pixel-perfect execution from first draft to production-ready asset.',
+    desc: 'We take the chosen direction and tighten every detail — spacing, hierarchy, balance, and behaviour across formats. This is where good becomes precise. We don\'t consider the work done until it holds at every size, in every context.',
     // image: '/images/services-refinement.png',
+    image: Refinement
   },
   {
     id: 'svc-7',
     label: 'Production',
-    desc: 'Final delivery across every format and platform, ready to launch with confidence.',
+    desc: 'Final assets, brand guidelines, and a structured handoff. Every file is named, organised, and documented so your team — or the next agency — can work from them without ambiguity. The brand is yours to use from day one.',
     // image: '/images/services-production.png',
+    image: Production
   },
 ]
 
@@ -121,19 +141,19 @@ const ABOUT_PROJECTS = [
   {
     id: 'ap-1',
     tag: 'Brand Identity',
-    // image: '/images/studio-about-1.png',
-    desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
+    image: Project1,
+    desc: 'A full brand identity for a global property management platform — built to communicate trust across markets, from Lagos to London.',
   },
   {
     id: 'ap-2',
     tag: 'Web Design',
-    // image: '/images/studio-about-2.png',
+    image: Project1,
     desc: 'We craft digital experiences that convert visitors into believers. Our web design process balances aesthetics with strategy for measurable, lasting impact across every screen.',
   },
   {
     id: 'ap-3',
     tag: 'Design System',
-    // image: '/images/studio-about-3.png',
+    image: Project1,
     desc: 'Building scalable design foundations that empower your entire product team. Consistent, reusable, and built for growth and long-term collaboration between design and engineering.',
   },
 ]
@@ -142,9 +162,24 @@ const ABOUT_PROJECTS = [
 // SHARED PRIMITIVES
 // ─────────────────────────────────────────────────────────────────
 
+const isVideoAsset = (url) => typeof url === 'string' && /\.(mp4|webm|ogg|mov)($|\?)/i.test(url);
+
 /** Placeholder tile identical to Home.jsx pattern */
 function ImagePlaceholder({ width, height, src, alt = '', style = {} }) {
   if (src) {
+    const isVideo = isVideoAsset(src);
+    if (isVideo) {
+      return (
+        <video
+          src={src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{ width, height, objectFit: 'cover', display: 'block', flexShrink: 0, ...style }}
+        />
+      )
+    }
     return (
       <img
         src={src}
@@ -187,11 +222,11 @@ function TestimonialCard({ card }) {
         flexDirection: 'column',
         justifyContent: 'space-between',
         alignItems: 'flex-start',
-        padding: '32px',
-        gap: '8px',
-        width: '320px',
-        minWidth: '320px',
-        height: '320px',
+        padding: '3.2rem',
+        gap: '0.8rem',
+        width: '32rem',
+        minWidth: '32rem',
+        height: '32rem',
         background: '#FAFAFA',
         boxSizing: 'border-box',
         flexShrink: 0,
@@ -204,9 +239,9 @@ function TestimonialCard({ card }) {
         style={{
           fontFamily: "'Inter', system-ui, sans-serif",
           fontWeight: 400,
-          fontSize: '15px',
+          fontSize: '1.5rem',
           lineHeight: '150%',
-          letterSpacing: '-0.2px',
+          letterSpacing: '-0.02rem',
           color: '#5E5E5E',
           margin: 0,
           flex: 1,
@@ -217,19 +252,19 @@ function TestimonialCard({ card }) {
       </p>
 
       {/* Profile row */}
-      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '12px', width: '100%' }}>
+      <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: '1.2rem', width: '100%' }}>
         {/* Avatar */}
         <div
           style={{
-            width: '32px',
-            height: '32px',
+            width: '3.2rem',
+            height: '3.2rem',
             borderRadius: '100px',
             background: card.avatarBg,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             flexShrink: 0,
-            fontSize: '11px',
+            fontSize: '1.1rem',
             fontWeight: 700,
             color: 'rgba(255,255,255,0.75)',
             fontFamily: "'Inter', system-ui",
@@ -239,15 +274,15 @@ function TestimonialCard({ card }) {
         </div>
 
         {/* Name + role */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
             <span
               style={{
                 fontFamily: "'Inter', system-ui",
                 fontWeight: 500,
-                fontSize: '15px',
+                fontSize: '1.5rem',
                 lineHeight: '150%',
-                letterSpacing: '-0.2px',
+                letterSpacing: '-0.02rem',
                 color: '#000000',
               }}
             >
@@ -257,7 +292,7 @@ function TestimonialCard({ card }) {
               <span
                 title="Verified"
                 style={{
-                  width: '14px', height: '14px',
+                  width: '1.4rem', height: '1.4rem',
                   background: '#4C9EEB',
                   borderRadius: '50%',
                   display: 'inline-flex',
@@ -276,9 +311,9 @@ function TestimonialCard({ card }) {
             style={{
               fontFamily: "'Inter', system-ui",
               fontWeight: 400,
-              fontSize: '13px',
+              fontSize: '1.3rem',
               lineHeight: '150%',
-              letterSpacing: '-0.1px',
+              letterSpacing: '-0.01rem',
               color: '#7C7C7C',
             }}
           >
@@ -550,7 +585,7 @@ function DesignProcessSection() {
         background: '#020202',
         position: 'relative',
         boxSizing: 'border-box',
-        minHeight: '949px',
+        minHeight: '94.9rem',
         overflow: 'hidden',
       }}
     >
@@ -562,7 +597,7 @@ function DesignProcessSection() {
         #studio-services-card,
         #studio-services-list-clip { display: flex; }
 
-        @media (max-width: 767px) {
+        @media (max-width: 47.938em) {
           .dp-mobile-layout { display: flex !important; }
           .dp-desktop-layout { display: none !important; }
           #studio-services-title,
@@ -576,15 +611,15 @@ function DesignProcessSection() {
           .dp-mobile-layout {
             flex-direction: column;
             align-items: flex-start;
-            padding: 0 16px 96px;
-            gap: 64px;
+            padding: 0 1.6rem 9.6rem;
+            gap: 6.4rem;
             width: 100%;
             box-sizing: border-box;
           }
           .dp-mobile-title {
             font-family: var(--font-britti);
             font-weight: 400;
-            font-size: 22px;
+            font-size: 2.2rem;
             line-height: 120%;
             color: #FFFFFF;
             margin: 0;
@@ -593,14 +628,14 @@ function DesignProcessSection() {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 24px;
+            gap: 2.4rem;
             width: 100%;
           }
           .dp-mobile-group {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 16px;
+            gap: 1.6rem;
             width: 100%;
           }
           .dp-mobile-item {
@@ -609,7 +644,7 @@ function DesignProcessSection() {
             padding: 0;
             font-family: var(--font-britti);
             font-weight: 300;
-            font-size: 28px;
+            font-size: 2.8rem;
             line-height: 100%;
             text-transform: capitalize;
             color: #272626;
@@ -626,20 +661,20 @@ function DesignProcessSection() {
             display: flex;
             flex-direction: column;
             align-items: flex-start;
-            gap: 20px;
+            gap: 2rem;
             width: 100%;
             opacity: 0;
           }
           .dp-mobile-card-text {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 1.6rem;
             width: 100%;
           }
           .dp-mobile-card-text p {
             font-family: var(--font-britti);
             font-weight: 400;
-            font-size: 16px;
+            font-size: 1.6rem;
             line-height: 140%;
             letter-spacing: -0.02em;
             color: #A6A6A6;
@@ -654,22 +689,22 @@ function DesignProcessSection() {
           // id="studio-services-title"
           style={{
             position: 'absolute',
-            left: '40px',
-            top: '96px',
-            width: 'clamp(220px, 55vw, 793px)',
+            left: '4rem',
+            top: '9.6rem',
+            width: 'clamp(22rem, 55vw, 79.3rem)',
             fontFamily: 'var(--font-britti)',
             fontWeight: 400,
-            fontSize: '32px',
+            fontSize: '3.2rem',
             lineHeight: '120%',
             color: '#FFFFFF',
             margin: 0,
           }}
         >
           <span style={{ color: '#FFFFFF' }}>
-            From concept to craft, our dedicated team transforms emotion into expression,{' '}
+            Every project begins with a question: what does this brand need to do?{' '}
           </span>
           <span style={{ color: '#6B6B6B' }}>
-            distilling bold ideas into standout strategies that elevate brands to new heights.
+            From that point, we move through research, strategy, identity, and execution — each stage informed by the last.
           </span>
         </p>
 
@@ -678,25 +713,36 @@ function DesignProcessSection() {
           id="studio-services-card"
           style={{
             position: 'absolute',
-            left: '40px',
-            top: '328px',
+            left: '4rem',
+            top: '32.8rem',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            gap: '20px',
-            width: '387px',
+            gap: '2rem',
+            width: '38.7rem',
           }}
         >
           <div
             ref={cardImgRef}
-            style={{ width: '387px', height: '260px', overflow: 'hidden', flexShrink: 0 }}
+            style={{ width: '38.7rem', height: '26rem', overflow: 'hidden', flexShrink: 0 }}
           >
             {svc.image ? (
-              <img
-                src={svc.image}
-                alt={svc.label}
-                style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-              />
+              isVideoAsset(svc.image) ? (
+                <video
+                  src={svc.image}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              ) : (
+                <img
+                  src={svc.image}
+                  alt={svc.label}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              )
             ) : (
               <div
                 style={{
@@ -718,14 +764,14 @@ function DesignProcessSection() {
             ref={cardDescRef}
             style={{
               display: 'flex', flexDirection: 'column',
-              alignItems: 'flex-start', gap: '16px',
-              width: '100%', maxWidth: '387px',
+              alignItems: 'flex-start', gap: '1.6rem',
+              width: '100%', maxWidth: '38.7rem',
             }}
           >
             <p
               style={{
                 fontFamily: "'Inter', system-ui, sans-serif",
-                fontWeight: 400, fontSize: '18px',
+                fontWeight: 400, fontSize: '1.8rem',
                 lineHeight: '140%', letterSpacing: '-0.02em',
                 color: '#C0C0C0', margin: 0,
               }}
@@ -748,9 +794,9 @@ function DesignProcessSection() {
         id="studio-services-list-clip"
         style={{
           position: 'absolute',
-          right: '40px',
-          top: '341px',
-          width: 'clamp(280px, 43vw, 623px)',
+          right: '4rem',
+          top: '34.1rem',
+          width: 'clamp(28rem, 43vw, 62.3rem)',
           height: `${(N - 1) * UNIT + 64}px`,   /* 544 px — shows all N items exactly */
           overflow: 'hidden',
         }}
@@ -769,11 +815,11 @@ function DesignProcessSection() {
                 top: 0,
                 left: 0,
                 width: '100%',
-                height: '64px',
+                height: '6.4rem',
                 fontFamily: 'var(--font-britti)',
                 fontWeight: 300,
-                fontSize: 'clamp(28px, 4.4vw, 64px)',
-                lineHeight: '64px',       /* exact item height — no extra gap from line-height */
+                fontSize: 'clamp(2.8rem, 4.4vw, 6.4rem)',
+                lineHeight: '6.4rem',  /* exact item height — fixed px constraint, not a ratio */
                 textAlign: 'right',
                 textTransform: 'capitalize',
                 color: i === 0 ? '#FFFFFF' : '#272626',
@@ -791,8 +837,8 @@ function DesignProcessSection() {
       {/* ── MOBILE TAP LAYOUT ─────────────────────────────────── */}
       <div className="dp-mobile-layout">
         <p className="dp-mobile-title">
-          <span>From concept to craft, our dedicated team transforms emotion into expression, </span>
-          <span style={{ color: '#6B6B6B' }}>distilling bold ideas into standout strategies that elevate brands to new heights.</span>
+          <span>Every project begins with a question: what does this brand need to do? </span>
+          <span style={{ color: '#6B6B6B' }}>From that point, we move through research, strategy, identity, and execution — each stage informed by the last.</span>
         </p>
 
         <div className="dp-mobile-list">
@@ -841,8 +887,9 @@ const SERVICES_CARDS = [
     id: 'sc-1',
     num: '01',
     title: 'Visual identities',
-    desc: 'Building the visual language that defines your brand — typography, colour, and form — across every touchpoint.',
+    desc: 'A complete brand identity system — logo suite, wordmark, typography, colour palette, iconography, and usage rules. Built to be flexible enough to adapt, and distinct enough to own. Whether you\'re launching from scratch or refreshing what exists, we design identities that hold up at every scale.',
     bg: '#EAEEED',
+    image: VisualIdentity
   },
   {
     id: 'sc-2',
@@ -850,27 +897,31 @@ const SERVICES_CARDS = [
     title: 'Brand narratives',
     desc: 'Crafting the stories that give your brand purpose, voice, and enduring resonance with the audiences that matter.',
     bg: '#5EDDE6',
+    image: BrandNarrative
   },
   {
     id: 'sc-3',
     num: '03',
     title: 'Digital products',
-    desc: 'Designing functional, beautiful digital experiences that solve real problems and feel effortless to use at any scale.',
+    desc: 'UI design and scalable design systems for web and mobile products. We create component libraries, interaction patterns, and documentation that bridge design and engineering — so your product looks intentional and ships faster.',
     bg: '#EAEEED',
+    image: DigitalProduct
   },
   {
     id: 'sc-4',
     num: '04',
-    title: 'Websites',
-    desc: 'Creating websites that communicate brand clarity, inspire confidence, and drive meaningful user engagement.',
+    title: 'Brand Strategy & Positioning',
+    desc: 'Before anything is designed, we establish what the brand believes, who it\'s for, and how it communicates. Positioning framework, messaging pillars, tone of voice, and a brand narrative your team can actually use — across pitches, campaigns, and every client touchpoint.',
     bg: '#FA4A47',
+    image: BrandStrategy
   },
   {
     id: 'sc-5',
     num: '05',
     title: 'Prototypes',
-    desc: 'Developing interactive models to test and validate how the brand behaves in real use before it ever ships.',
+    desc: 'Developing interactive models to test how a brand or product behaves before a single line of production code is written. Useful for investor presentations, usability testing, and internal alignment — when you need to show the idea before you build it.',
     bg: '#F7D066',
+    image: Prototype
   },
 ]
 
@@ -921,7 +972,7 @@ function ServicesSection() {
         scrollTrigger: {
           trigger: cardsWrap,
           pin: true,
-          start: 'top 80px',
+          start: 'top 8rem',
           end: `+=${(N - 1) * 320}`,   // 4 × 320 = 1280 px of virtual scroll
           scrub: 1.2,
         },
@@ -941,7 +992,7 @@ function ServicesSection() {
       ScrollTrigger.create({
         trigger: sectionWrap,
         start: 'top 10%',
-        end:   'bottom 10%',
+        end: 'bottom 10%',
         onEnter:      () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
         onLeave:      () => gsap.to('#navbar-v1', { opacity: 1, pointerEvents: 'all',  duration: 0.4 }),
         onEnterBack:  () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
@@ -983,7 +1034,7 @@ function ServicesSection() {
       ScrollTrigger.create({
         trigger: sectionWrap,
         start: 'top 10%',
-        end:   'bottom 10%',
+        end: 'bottom 10%',
         onEnter:      () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
         onLeave:      () => gsap.to('#navbar-v1', { opacity: 1, pointerEvents: 'all',  duration: 0.4 }),
         onEnterBack:  () => gsap.to('#navbar-v1', { opacity: 0, pointerEvents: 'none', duration: 0.4 }),
@@ -1031,7 +1082,7 @@ function ServicesSection() {
         background: '#020202',
         position: 'relative',
         boxSizing: 'border-box',
-        paddingBottom: '200px', // extra space for scroll
+        paddingBottom: '20rem', // extra space for scroll
         zIndex: 10,
       }}
     >
@@ -1039,7 +1090,7 @@ function ServicesSection() {
         .svc-desktop-title, .svc-desktop-cards { display: block; }
         .svc-mobile-layout { display: none; }
 
-        @media (max-width: 767px) {
+        @media (max-width: 47.938em) {
           .svc-desktop-title, .svc-desktop-cards { display: none !important; }
           .svc-mobile-layout { display: flex !important; }
           #studio-services { padding-bottom: 0 !important; }
@@ -1050,10 +1101,10 @@ function ServicesSection() {
       <p 
         className='svc-desktop-title'
         style={{
-          padding: '128px 0 100px 40px',
+          padding: '12.8rem 0 10rem 4rem',
           fontFamily: 'var(--font-britti)',
           fontWeight: 400,
-          fontSize: '32px',
+          fontSize: '3.2rem',
           lineHeight: '140%',
           color: '#FFFFFF',
           margin: 0,
@@ -1069,7 +1120,7 @@ function ServicesSection() {
         style={{
           position: 'relative',
           width: '100%',
-          height: '900px', // height of the full-open stack
+          height: '90rem', // height of the full-open stack
         }}
       >
         {SERVICES_CARDS.map((card, i) => (
@@ -1080,9 +1131,9 @@ function ServicesSection() {
             onMouseLeave={() => handleLeave(i)}
             style={{
               position: 'absolute',
-              left: '40px',
+              left: '4rem',
               top: i * TAB_H,
-              width: 'calc(100% - 80px)',
+              width: 'calc(100% - 8rem)',
               height: CARD_H,
               background: card.bg,
               zIndex: i + 1,
@@ -1091,17 +1142,17 @@ function ServicesSection() {
               overflow: 'hidden',
             }}
           >
-          {/* Content row: pinned at left:285px top:36px */}
+          {/* Content row: pinned at left: 28.5rem top: 3.6rem */}
           <div
             style={{
               position: 'absolute',
-              left: '325px',
-              top: '36px',
+              left: '32.5rem',
+              top: '3.6rem',
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'flex-start',
-              gap: '51px',
-              width: '581px',
+              gap: '5.1rem',
+              width: '58.1rem',
             }}
           >
             {/* Number */}
@@ -1109,11 +1160,11 @@ function ServicesSection() {
               style={{
                 fontFamily: 'var(--font-britti)',
                 fontWeight: 400,
-                fontSize: '24px',
-                lineHeight: '40px',
+                fontSize: '2.4rem',
+                lineHeight: '2.5',
                 color: '#1B1B1B',
                 flexShrink: 0,
-                width: '27px',
+                width: '2.7rem',
               }}
             >
               {card.num}
@@ -1125,8 +1176,8 @@ function ServicesSection() {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'flex-start',
-                gap: '48px',
-                width: '508px',
+                gap: '4.8rem',
+                width: '50.8rem',
               }}
             >
               {/* Service title */}
@@ -1134,8 +1185,8 @@ function ServicesSection() {
                 style={{
                   fontFamily: 'var(--font-britti)',
                   fontWeight: 400,
-                  fontSize: '55.3px',
-                  lineHeight: '56px',
+                  fontSize: '5.53rem',
+                  lineHeight: '5.6rem',
                   color: '#1B1B1B',
                   margin: 0,
                   width: '100%',
@@ -1149,15 +1200,15 @@ function ServicesSection() {
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
-                  gap: '32px',
+                  gap: '3.2rem',
                   width: '100%',
                 }}
               >
-                {/* Image placeholder */}
+                {/* Image placeholder or actual image */}
                 <div
                   style={{
                     width: '100%',
-                    height: '248px',
+                    height: '24.8rem',
                     background: '#D0D0D0',
                     borderRadius: '16px',
                     overflow: 'hidden',
@@ -1167,11 +1218,30 @@ function ServicesSection() {
                     flexShrink: 0,
                   }}
                 >
-                  <svg width="44" height="44" viewBox="0 0 40 40" fill="none" opacity="0.35">
-                    <rect x="4" y="4" width="32" height="32" rx="4" stroke="#666" strokeWidth="1.5" />
-                    <circle cx="14" cy="14" r="3" stroke="#666" strokeWidth="1.5" />
-                    <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
+                  {card.image ? (
+                    isVideoAsset(card.image) ? (
+                      <video
+                        src={card.image}
+                        autoPlay
+                        loop
+                        muted
+                        playsInline
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                      />
+                    ) : (
+                      <img
+                        src={card.image}
+                        alt={card.title}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                      />
+                    )
+                  ) : (
+                    <svg width="44" height="44" viewBox="0 0 40 40" fill="none" opacity="0.35">
+                      <rect x="4" y="4" width="32" height="32" rx="4" stroke="#666" strokeWidth="1.5" />
+                      <circle cx="14" cy="14" r="3" stroke="#666" strokeWidth="1.5" />
+                      <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  )}
                 </div>
 
                 {/* Description */}
@@ -1179,9 +1249,9 @@ function ServicesSection() {
                   style={{
                     fontFamily: 'var(--font-britti)',
                     fontWeight: 400,
-                    fontSize: '18px',
+                    fontSize: '1.8rem',
                     lineHeight: '140%',
-                    letterSpacing: '0px',
+                    letterSpacing: '0rem',
                     color: '#595959',
                     margin: 0,
                     width: '100%',
@@ -1209,9 +1279,9 @@ function ServicesSection() {
         <div
           style={{
             display: 'flex',
-            padding: '40px 16px 40px',
+            padding: '4rem 1.6rem 4rem',
             alignItems: 'flex-start',
-            gap: '10px',
+            gap: '1rem',
             width: '100%',
             boxSizing: 'border-box',
           }}
@@ -1220,7 +1290,7 @@ function ServicesSection() {
             style={{
               fontFamily: 'var(--font-britti)',
               fontWeight: 400,
-              fontSize: '24px',
+              fontSize: '2.4rem',
               lineHeight: '120%',
               color: '#FFFFFF',
               margin: 0,
@@ -1236,8 +1306,8 @@ function ServicesSection() {
           style={{
             position: 'relative',
             width: '100%',
-            minWidth: '320px',
-            height: '620px',
+            minWidth: '32rem',
+            height: '62rem',
             overflow: 'hidden',
           }}
         >
@@ -1250,13 +1320,13 @@ function ServicesSection() {
                 left: 0,
                 top: `${i * 60}px`,
                 width: '100%',
-                height: '380px',
+                height: '38rem',
                 background: card.bg,
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'flex-start',
-                padding: '24px 24px 40px 16px',
-                gap: '14px',
+                padding: '2.4rem 2.4rem 4rem 1.6rem',
+                gap: '1.4rem',
                 boxSizing: 'border-box',
                 willChange: 'transform',
                 zIndex: i + 1,
@@ -1268,7 +1338,7 @@ function ServicesSection() {
                 style={{
                   fontFamily: 'var(--font-britti)',
                   fontWeight: 400,
-                  fontSize: '14px',
+                  fontSize: '1.4rem',
                   lineHeight: '140%',
                   color: '#1B1B1B',
                   flexShrink: 0,
@@ -1283,7 +1353,7 @@ function ServicesSection() {
                   display: 'flex',
                   flexDirection: 'column',
                   alignItems: 'flex-start',
-                  gap: '16px',
+                  gap: '1.6rem',
                   flex: 1,
                 }}
               >
@@ -1292,7 +1362,7 @@ function ServicesSection() {
                   style={{
                     fontFamily: 'var(--font-britti)',
                     fontWeight: 400,
-                    fontSize: '20px',
+                    fontSize: '2rem',
                     lineHeight: '100%',
                     textTransform: 'capitalize',
                     color: '#1B1B1B',
@@ -1308,14 +1378,14 @@ function ServicesSection() {
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
-                    gap: '20px',
+                    gap: '2rem',
                     width: '100%',
                   }}
                 >
                   <div
                     style={{
                       width: '100%',
-                      height: '220px',
+                      height: '22rem',
                       background: '#D0D0D0',
                       overflow: 'hidden',
                       display: 'flex',
@@ -1324,19 +1394,38 @@ function ServicesSection() {
                       flexShrink: 0,
                     }}
                   >
-                    <svg width="44" height="44" viewBox="0 0 40 40" fill="none" opacity="0.35">
-                      <rect x="4" y="4" width="32" height="32" rx="4" stroke="#666" strokeWidth="1.5" />
-                      <circle cx="14" cy="14" r="3" stroke="#666" strokeWidth="1.5" />
-                      <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                    </svg>
+                    {card.image ? (
+                      isVideoAsset(card.image) ? (
+                        <video
+                          src={card.image}
+                          autoPlay
+                          loop
+                          muted
+                          playsInline
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                        />
+                      ) : (
+                        <img
+                          src={card.image}
+                          alt={card.title}
+                          style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                        />
+                      )
+                    ) : (
+                      <svg width="44" height="44" viewBox="0 0 40 40" fill="none" opacity="0.35">
+                        <rect x="4" y="4" width="32" height="32" rx="4" stroke="#666" strokeWidth="1.5" />
+                        <circle cx="14" cy="14" r="3" stroke="#666" strokeWidth="1.5" />
+                        <path d="M4 28l9-9 6 6 4-4 13 13" stroke="#666" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                      </svg>
+                    )}
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.6rem', width: '100%' }}>
                     <p
                       style={{
                         fontFamily: "'Inter', system-ui, sans-serif",
                         fontWeight: 400,
-                        fontSize: '14px',
+                        fontSize: '1.4rem',
                         lineHeight: '140%',
                         letterSpacing: '-0.02em',
                         color: '#A6A6A6',
@@ -1697,8 +1786,8 @@ export default function Studio() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          padding: '214px 40px 0px',
-          gap: '120px',   /* ← 195px → 120px per spec */
+          padding: '21.4rem 4rem 0rem',
+          gap: '12rem',   /* ← 195px → 120px per spec */
           width: '100%',
           background: '#020202',
           boxSizing: 'border-box',
@@ -1710,13 +1799,13 @@ export default function Studio() {
           style={{
             fontFamily: 'var(--font-britti)',
             fontWeight: 300,
-            fontSize: 'clamp(36px, 5.5vw, 80px)',
+            fontSize: 'clamp(3.6rem, 5.5vw, 8rem)',
             lineHeight: '100%',
             textTransform: 'capitalize',
             color: '#FFFFFF',
             margin: 0,
             width: '100%',
-            maxWidth: '998px',
+            maxWidth: '99.8rem',
             alignSelf: 'flex-start',
             textAlign: 'left',
           }}
@@ -1728,7 +1817,7 @@ export default function Studio() {
         <ImagePlaceholder
           width="100%"
           height="505px"
-          src={undefined /* '/images/studio-hero.png' */}
+          src={HeroImageVideo}
           alt="Studione Studio showcase"
         />
       </section>
@@ -1747,24 +1836,24 @@ export default function Studio() {
           background: '#020202',
           position: 'relative',
           boxSizing: 'border-box',
-          paddingTop: '120px',
-          paddingBottom: '80px',
+          paddingTop: '12rem',
+          paddingBottom: '8rem',
         }}
       >
-        {/* ── Heading — left offset mirrors spec (left: 365px at 1440px) ── */}
+        {/* ── Heading — left offset mirrors spec (left: 36.5rem at 1440px) ── */}
         <h2
           id="studio-testimonial-heading"
           style={{
             fontFamily: 'var(--font-britti)',
             fontWeight: 300,
-            fontSize: 'clamp(28px, 3.9vw, 56px)',
+            fontSize: 'clamp(2.8rem, 3.9vw, 5.6rem)',
             lineHeight: '100%',
             textTransform: 'capitalize',
             color: '#FFFFFF',
             margin: 0,
-            marginBottom: '80px',
-            paddingLeft: 'clamp(40px, 25vw, 365px)',
-            paddingRight: '40px',
+            marginBottom: '8rem',
+            paddingLeft: 'clamp(4rem, 25vw, 36.5rem)',
+            paddingRight: '4rem',
           }}
         >
           Our Partners Value Our <br />Hard Work.
@@ -1779,7 +1868,7 @@ export default function Studio() {
           style={{
             overflow: 'hidden',
             width: '100%',
-            marginBottom: '48px',
+            marginBottom: '4.8rem',
           }}
         >
           {/*
@@ -1798,12 +1887,12 @@ export default function Studio() {
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
-              gap: '12px',
+              gap: '1.2rem',
               cursor: 'grab',
               userSelect: 'none',
               touchAction: 'pan-y',
               willChange: 'transform',
-              paddingLeft: '40px',   /* card strip indent matches page gutter */
+              paddingLeft: '4rem',   /* card strip indent matches page gutter */
             }}
           >
             {dupedCards.map((card, i) => (
@@ -1820,7 +1909,7 @@ export default function Studio() {
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            gap: '8px',
+            gap: '0.8rem',
           }}
         >
           <button
@@ -1828,8 +1917,8 @@ export default function Studio() {
             onClick={() => handleMarqueeNav('prev')}
             aria-label="Previous testimonials"
             style={{
-              width: '48px',
-              height: '48px',
+              width: '4.8rem',
+              height: '4.8rem',
               background: 'rgba(255,255,255,0.05)',
               border: 'none',
               borderRadius: '50%',
@@ -1852,8 +1941,8 @@ export default function Studio() {
             onClick={() => handleMarqueeNav('next')}
             aria-label="Next testimonials"
             style={{
-              width: '48px',
-              height: '48px',
+              width: '4.8rem',
+              height: '4.8rem',
               background: 'rgba(255,255,255,0.05)',
               border: 'none',
               borderRadius: '50%',
@@ -1883,7 +1972,7 @@ export default function Studio() {
           background: '#020202',
           position: 'relative',
           boxSizing: 'border-box',
-          minHeight: '1120px',
+          minHeight: '112rem',
         }}
       >
         {/* ── Intro paragraph — left column ────────────────────── */}
@@ -1891,21 +1980,19 @@ export default function Studio() {
           id="studio-about-intro"
           style={{
             position: 'absolute',
-            width: 'clamp(260px, 46vw, 692px)',
-            left: '36px',
-            top: '64px',
+            width: 'clamp(26rem, 46vw, 69.2rem)',
+            left: '3.6rem',
+            top: '6.4rem',
             fontFamily: 'var(--font-britti)',
             fontWeight: 300,
-            fontSize: 'clamp(18px, 2.2vw, 32px)',
+            fontSize: 'clamp(1.8rem, 2.2vw, 3.2rem)',
             lineHeight: '125%',
             textTransform: 'capitalize',
             color: '#FFFFFF',
             margin: 0,
           }}
         >
-          We Partner With Seed-Stage Founders Looking To Shake Up The Market.
-          Whether It&apos;s Developing Your Brand Or Launching Your MVP, We Offer
-          The Insight And Drive Necessary To Elevate Your Vision.
+          We work with founders and operators at pivotal moments — launch, growth, repositioning. When the stakes are high and the brand needs to perform, we build identities and experiences that are built to last.
         </p>
 
         {/* ── Right column — cycling image + description + link ── */}
@@ -1913,13 +2000,13 @@ export default function Studio() {
           id="studio-about-right"
           style={{
             position: 'absolute',
-            right: '40px',
-            top: '344px',
+            right: '4rem',
+            top: '34.4rem',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'flex-start',
-            gap: '36px',
-            width: 'clamp(260px, 54vw, 793px)',
+            gap: '2.25em',
+            width: 'clamp(26rem, 54vw, 79.3rem)',
           }}
         >
           {/*
@@ -1955,8 +2042,8 @@ export default function Studio() {
                 left: 0,
                 display: 'flex',
                 alignItems: 'center',
-                padding: '10px 14px',
-                gap: '10px',
+                padding: '0.625em 0.875em',
+                gap: '0.625em',
                 background: 'rgba(43,43,43,0.55)',
                 backdropFilter: 'blur(8px)',
                 WebkitBackdropFilter: 'blur(8px)',
@@ -1971,7 +2058,7 @@ export default function Studio() {
                 style={{
                   fontFamily: 'var(--font-britti)',
                   fontWeight: 400,
-                  fontSize: '16px',
+                  fontSize: '1.6rem',
                   lineHeight: '140%',
                   letterSpacing: '-0.02em',
                   color: '#C0C0C0',
@@ -1993,7 +2080,7 @@ export default function Studio() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-start',
-              gap: '36px',
+              gap: '2.25em',
             }}
           >
             {/* Body text — Inter 18px */}
@@ -2001,12 +2088,12 @@ export default function Studio() {
               style={{
                 fontFamily: 'var(--font-britti)',
                 fontWeight: 400,
-                fontSize: '18px',
+                fontSize: '1.8rem',
                 lineHeight: '140%',
                 letterSpacing: '-0.02em',
                 color: '#C0C0C0',
                 margin: 0,
-                maxWidth: '519px',
+                maxWidth: '51.9rem',
               }}
             >
               {currentProject.desc}
@@ -2022,11 +2109,11 @@ export default function Studio() {
               style={{
                 fontFamily: 'var(--font-britti)',
                 fontWeight: 400,
-                fontSize: '24px',
+                fontSize: '2.4rem',
                 lineHeight: '140%',
                 display: 'flex',
                 alignItems: 'center',
-                gap: '15px',
+                gap: '0.938em',
                 textDecorationLine: 'underline',
                 textDecoration: 'underline',
                 textTransform: 'capitalize',
@@ -2061,50 +2148,50 @@ export default function Studio() {
       {/* ── Responsive overrides ─────────────────────────────────── */}
       <style>{`
         /* Tablet */
-        @media (max-width: 1024px) {
-          #studio-hero                  { padding-left: 28px !important; padding-right: 28px !important; }
-          #studio-testimonial-heading   { padding-left: 28px !important; }
-          #studio-testimonial-marquee   { padding-left: 28px !important; }
-          #studio-about-intro           { left: 28px !important; width: 42vw !important; }
-          #studio-about-right           { right: 28px !important; width: 50vw !important; }
-          #studio-services-title        { left: 28px !important; }
-          #studio-services-card         { left: 28px !important; width: 320px !important; }
-          #studio-services-list         { right: 28px !important; }
+        @media (max-width: 64em) {
+          #studio-hero                  { padding-left: 2.8rem !important; padding-right: 2.8rem !important; }
+          #studio-testimonial-heading   { padding-left: 2.8rem !important; }
+          #studio-testimonial-marquee   { padding-left: 2.8rem !important; }
+          #studio-about-intro           { left: 2.8rem !important; width: 42vw !important; }
+          #studio-about-right           { right: 2.8rem !important; width: 50vw !important; }
+          #studio-services-title        { left: 2.8rem !important; }
+          #studio-services-card         { left: 2.8rem !important; width: 32rem !important; }
+          #studio-services-list         { right: 2.8rem !important; }
         }
 
         /* ── Mobile (≤767px) ─────────────────────────────────────── */
-        @media (max-width: 767px) {
+        @media (max-width: 47.938em) {
 
-          /* 1. HERO — padding: 152px 16px 40px, gap: 10px */
+          /* 1. HERO — padding: 9.5em 16px 40px, gap: 0.625em */
           #studio-hero {
-            padding: 152px 16px 40px !important;
-            gap: 10px !important;
+            padding: 15.2rem 1.6rem 4rem !important;
+            gap: 1rem !important;
             flex-direction: column !important;
             align-items: flex-start !important;
           }
           #studio-hero-tagline {
-            font-size: 36px !important;
+            font-size: 3.6rem !important;
             font-weight: 400 !important;
             line-height: 120% !important;
-            margin-bottom: 40px !important;
+            margin-bottom: 4rem !important;
             max-width: 100% !important;
           }
           /* Hero image: 100% wide, 250px tall */
           #studio-hero img,
           #studio-hero > div:last-child {
             width: 100% !important;
-            height: 250px !important;
+            height: 25rem !important;
             margin-top: 0 !important;
           }
 
           /* 2. TESTIMONIAL */
           #studio-testimonial {
             padding-top: 0 !important;
-            padding-bottom: 80px !important;
+            padding-bottom: 8rem !important;
           }
           #studio-testimonial-heading {
-            padding: 96px 16px 48px !important;
-            font-size: 24px !important;
+            padding: 9.6rem 1.6rem 4.8rem !important;
+            font-size: 2.4rem !important;
             line-height: 120% !important;
             margin-bottom: 0 !important;
           }
@@ -2116,16 +2203,16 @@ export default function Studio() {
             -ms-overflow-style: none !important;
           }
           #studio-testimonial-track::-webkit-scrollbar { display: none !important; }
-          #studio-testimonial-marquee { padding-left: 20px !important; }
+          #studio-testimonial-marquee { padding-left: 2rem !important; }
           /* Cards: 272×320 on mobile */
           #studio-testimonial-marquee article {
-            width: 272px !important;
-            min-width: 272px !important;
-            height: 320px !important;
-            padding: 32px !important;
+            width: 27.2rem !important;
+            min-width: 27.2rem !important;
+            height: 32rem !important;
+            padding: 3.2rem !important;
             flex-shrink: 0 !important;
           }
-          #studio-testimonial-arrows { margin-top: 48px !important; }
+          #studio-testimonial-arrows { margin-top: 4.8rem !important; }
 
           /* 3. ABOUT */
           #studio-about {
@@ -2134,46 +2221,46 @@ export default function Studio() {
             display: flex !important;
             flex-direction: column !important;
             align-items: flex-start !important;
-            padding: 64px 16px 96px !important;
-            gap: 64px !important;
+            padding: 6.4rem 1.6rem 9.6rem !important;
+            gap: 6.4rem !important;
           }
           #studio-about-intro {
             position: static !important;
             width: 100% !important;
-            font-size: 22px !important;
+            font-size: 2.2rem !important;
             line-height: 130% !important;
             font-weight: 300 !important;
           }
           #studio-about-right {
             position: static !important;
             width: 100% !important;
-            gap: 40px !important;
+            gap: 4rem !important;
           }
           #studio-about-image-wrap { width: 100% !important; }
           #studio-about-image-wrap > div > div,
-          #studio-about-image-wrap > div > img { height: 250px !important; }
+          #studio-about-image-wrap > div > img { height: 25rem !important; }
           #studio-about-tag { display: none !important; }
-          #studio-about-desc-wrap { gap: 14px !important; }
+          #studio-about-desc-wrap { gap: 0.875em !important; }
           #studio-about-desc-wrap p {
-            font-size: 16px !important;
+            font-size: 1.6rem !important;
             color: #A6A6A6 !important;
             max-width: 100% !important;
           }
-          #studio-about-work-link { font-size: 20px !important; gap: 12px !important; }
-          #studio-about-work-link svg { width: 32px !important; height: 32px !important; }
+          #studio-about-work-link { font-size: 2rem !important; gap: 0.75em !important; }
+          #studio-about-work-link svg { width: 3.2rem !important; height: 3.2rem !important; }
           
           /* Services: stack vertically */
           #studio-services {
             min-height: auto !important;
             display: flex !important;
             flex-direction: column !important;
-            padding-bottom: 64px !important;
-            gap: 48px !important;
+            padding-bottom: 6.4rem !important;
+            gap: 4.8rem !important;
           }
           
           #studio-services > p {
-            padding: 64px 16px 40px !important;
-            font-size: 24px !important;
+            padding: 6.4rem 1.6rem 4rem !important;
+            font-size: 2.4rem !important;
           }
 
           #studio-services-title { position: static !important; width: 100% !important; }
@@ -2194,22 +2281,22 @@ export default function Studio() {
             position: static !important;
             left: 0 !important;
             width: 100% !important;
-            height: 380px !important;
+            height: 38rem !important;
             transform: none !important;
           }
           /* Card inner layout row: shift from right-column to left-edge */
           .studio-svc-inner {
             position: absolute !important;
-            left: 16px !important;
-            top: 24px !important;
-            width: calc(100% - 40px) !important;
-            gap: 14px !important;
+            left: 1.6rem !important;
+            top: 2.4rem !important;
+            width: calc(100% - 4rem) !important;
+            gap: 1.4rem !important;
           }
-          .studio-svc-num  { font-size: 14px !important; }
-          .studio-svc-right { width: 100% !important; gap: 16px !important; }
-          .studio-svc-title { font-size: 20px !important; line-height: 100% !important; }
-          .studio-svc-img   { height: 220px !important; border-radius: 0 !important; }
-          .studio-svc-desc  { font-size: 14px !important; color: #262626 !important; }
+          .studio-svc-num  { font-size: 1.4rem !important; }
+          .studio-svc-right { width: 100% !important; gap: 1em !important; }
+          .studio-svc-title { font-size: 2rem !important; line-height: 100% !important; }
+          .studio-svc-img   { height: 22rem !important; border-radius: 0 !important; }
+          .studio-svc-desc  { font-size: 1.4rem !important; color: #262626 !important; }
         }
       `}</style>
     </div>

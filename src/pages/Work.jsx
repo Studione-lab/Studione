@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PROJECTS, FILTERS } from '../data/projectData'
-import StudioImg from '../assets/Studio Image.png'
-import HeroImg from '../assets/Hero Image.png'
-import HeroImg1 from '../assets/Hero Image-1.png'
+import WorkHeroImg1 from '../assets/Image/Work/WorkHeroImage.jfif'
+import WorkHeroImg2 from '../assets/Image/Work/WorkHeroImage2.jfif'
+import WorkHeroImg3 from '../assets/Image/Work/WorkHeroImage3.jfif'
 
 // ─────────────────────────────────────────────────────────────────
 // (Data imported from ../data/projectData.js)
@@ -46,9 +46,9 @@ function TagPill({ label }) {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '10px',
-        gap: '10px',
-        height: '45px',
+        padding: '1rem',
+        gap: '1rem',
+        height: '4.5rem',
         background: 'rgba(43, 43, 43, 0.50)',
         flexShrink: 0,
       }}
@@ -58,7 +58,7 @@ function TagPill({ label }) {
         style={{
           fontFamily: "'Inter', system-ui, sans-serif",
           fontWeight: 300,
-          fontSize: '17px',
+          fontSize: '1.7rem',
           lineHeight: '140%',
           letterSpacing: '-0.02em',
           color: '#C0C0C0',
@@ -87,7 +87,7 @@ function ProjectCard({ project }) {
         flexDirection: 'column',
         alignItems: 'flex-start',
         padding: 0,
-        gap: '20px',
+        gap: '2rem',
         width: `${cardW}px`,
         flexGrow: 0,
         flexShrink: 0,
@@ -115,16 +115,16 @@ function ProjectCard({ project }) {
         <div
           style={{
             position: 'absolute',
-            left: '18px',
-            top: '18px',
+            left: '1.8rem',
+            top: '1.8rem',
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: '12px 24px',
-            gap: '10px',
-            width: '135px',
-            height: '44px',
+            padding: '1.2rem 2.4rem',
+            gap: '1rem',
+            width: '13.5rem',
+            height: '4.4rem',
             background: '#020202',
             borderRadius: '32px',
             boxSizing: 'border-box',
@@ -137,9 +137,9 @@ function ProjectCard({ project }) {
             style={{
               fontFamily: "'Inter', system-ui, sans-serif",
               fontWeight: 400,
-              fontSize: '12.6px',
-              lineHeight: '20px',
-              letterSpacing: '0.28px',
+              fontSize: '1.26rem',
+              lineHeight: '1.25',
+              letterSpacing: '0.028rem',
               color: '#FFFFFF',
               textAlign: 'center',
               whiteSpace: 'nowrap',
@@ -155,16 +155,16 @@ function ProjectCard({ project }) {
           <div
             style={{
               position: 'absolute',
-              left: '228px',
-              top: 'calc(50% - 22.5px)',
+              left: '22.8rem',
+              top: 'calc(50% - 2.25rem)',
               display: 'flex',
               flexDirection: 'row',
               justifyContent: 'center',
               alignItems: 'center',
-              padding: '10px',
-              gap: '10px',
-              width: '131px',
-              height: '45px',
+              padding: '1rem',
+              gap: '1rem',
+              width: '13.1rem',
+              height: '4.5rem',
               background: 'rgba(43, 43, 43, 0.50)',
               backdropFilter: 'blur(4.3px)',
               WebkitBackdropFilter: 'blur(4.3px)',
@@ -175,7 +175,7 @@ function ProjectCard({ project }) {
               style={{
                 fontFamily: "'Inter', system-ui, sans-serif",
                 fontWeight: 300,
-                fontSize: '17px',
+                fontSize: '1.7rem',
                 lineHeight: '140%',
                 letterSpacing: '-0.02em',
                 color: '#C0C0C0',
@@ -196,7 +196,7 @@ function ProjectCard({ project }) {
           flexDirection: 'column',
           alignItems: 'flex-start',
           padding: 0,
-          gap: '16px',
+          gap: '1.6rem',
           width: `${cardW}px`,
           flexShrink: 0,
         }}
@@ -210,9 +210,9 @@ function ProjectCard({ project }) {
             justifyContent: 'space-between',
             alignItems: 'center',
             padding: 0,
-            gap: '16px',
+            gap: '1.6rem',
             width: `${cardW}px`,
-            height: '45px',
+            height: '4.5rem',
           }}
         >
           {/* Card title */}
@@ -222,8 +222,8 @@ function ProjectCard({ project }) {
               fontFamily: 'var(--font-britti)',
               fontStyle: 'normal',
               fontWeight: 400,
-              fontSize: '24px',
-              lineHeight: '28px',
+              fontSize: '2.4rem',
+              lineHeight: '1.75',
               letterSpacing: '0.01em',
               color: '#FFFFFF',
               flexShrink: 0,
@@ -240,7 +240,7 @@ function ProjectCard({ project }) {
               flexDirection: 'row',
               alignItems: 'flex-start',
               padding: 0,
-              gap: '16px',
+              gap: '1.6rem',
               flexShrink: 0,
             }}
           >
@@ -257,7 +257,7 @@ function ProjectCard({ project }) {
             fontFamily: "'Inter', system-ui, sans-serif",
             fontStyle: 'normal',
             fontWeight: 300,
-            fontSize: '17px',
+            fontSize: '1.7rem',
             lineHeight: '140%',
             letterSpacing: '-0.02em',
             color: '#C0C0C0',
@@ -309,8 +309,8 @@ export default function Work() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          padding: '196px 40px 40px',
-          gap: '20px',
+          padding: '19.6rem 4rem 4rem',
+          gap: '2rem',
           width: '100%',
           boxSizing: 'border-box',
           background: '#020202',
@@ -322,7 +322,7 @@ export default function Work() {
             fontFamily: 'var(--font-britti)',
             fontStyle: 'italic',
             fontWeight: 300,
-            fontSize: '32px',
+            fontSize: '3.2rem',
             lineHeight: '125%',
             textTransform: 'capitalize',
             color: '#FFFFFF',
@@ -339,17 +339,17 @@ export default function Work() {
             fontFamily: 'var(--font-britti)',
             fontStyle: 'normal',
             fontWeight: 300,
-            fontSize: 'clamp(40px, 5.5vw, 80px)',
+            fontSize: 'clamp(4rem, 5.5vw, 8rem)',
             lineHeight: '100%',
             textTransform: 'capitalize',
             color: '#FFFFFF',
             margin: 0,
             alignSelf: 'flex-start',
             textAlign: 'left',
-            maxWidth: '988px',
+            maxWidth: '98.8rem',
           }}
         >
-          Design That Isn&apos;t Just Seen It&apos;s Understood.
+          Every Project Starts with a Problem Worth Solving.
         </h1>
       </section>
 
@@ -361,7 +361,7 @@ export default function Work() {
         style={{
           position: 'relative',
           width: '100%',
-          height: '704px',
+          height: '70.4rem',
           background: '#020202',
           overflow: 'hidden',
         }}
@@ -370,23 +370,23 @@ export default function Work() {
         <div
           style={{
             position: 'absolute',
-            width: '1296px',
-            height: '336px',
-            left: 'calc(50% - 648px - 41px)',
-            top: '182px',
+            width: '129.6rem',
+            height: '33.6rem',
+            left: 'calc(50% - 64.8rem - 4.1rem)',
+            top: '18.2rem',
           }}
         >
           {/* Image 1 — 460 × 336, left */}
-          <div style={{ position: 'absolute', width: '460px', height: '336px', left: 'calc(50% - 230px - 418px)', top: 0, overflow: 'hidden' }}>
-            <ImgPlaceholder src={StudioImg} alt="Money Talks Softly" />
+          <div style={{ position: 'absolute', width: '46rem', height: '33.6rem', left: 'calc(50% - 23rem - 41.8rem)', top: 0, overflow: 'hidden' }}>
+            <ImgPlaceholder src={WorkHeroImg1} alt="Money Talks Softly" />
           </div>
           {/* Image 2 — 358 × 241, right */}
-          <div style={{ position: 'absolute', width: '358px', height: '241px', left: 'calc(50% - 179px + 469px)', top: '60px', overflow: 'hidden' }}>
-            <ImgPlaceholder src={HeroImg} alt="Àkawó" />
+          <div style={{ position: 'absolute', width: '35.8rem', height: '24.1rem', left: 'calc(50% - 17.9rem + 46.9rem)', top: '6rem', overflow: 'hidden' }}>
+            <ImgPlaceholder src={WorkHeroImg2} alt="Àkawó" />
           </div>
           {/* Image 3 — 290 × 195, mid-centre */}
-          <div style={{ position: 'absolute', width: '290px', height: '195px', left: 'calc(50% - 145px + 51px)', top: '94px', overflow: 'hidden' }}>
-            <ImgPlaceholder src={HeroImg1} alt="City Brand Identity" />
+          <div style={{ position: 'absolute', width: '29rem', height: '19.5rem', left: 'calc(50% - 14.5rem + 5.1rem)', top: '9.4rem', overflow: 'hidden' }}>
+            <ImgPlaceholder src={WorkHeroImg3} alt="City Brand Identity" />
           </div>
         </div>
       </section>
@@ -400,8 +400,8 @@ export default function Work() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          padding: '0 40px 196px',
-          gap: '100px',
+          padding: '0 4rem 19.6rem',
+          gap: '10rem',
           width: '100%',
           boxSizing: 'border-box',
           background: '#020202',
@@ -416,9 +416,9 @@ export default function Work() {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'flex-start',
-            paddingTop: '96px',
-            gap: '40px',
-            width: '1200px',
+            paddingTop: '9.6rem',
+            gap: '4rem',
+            width: '120rem',
           }}
         >
           {/* "All Work" */}
@@ -428,7 +428,7 @@ export default function Work() {
               fontFamily: 'var(--font-britti)',
               fontStyle: 'normal',
               fontWeight: 400,
-              fontSize: '32px',
+              fontSize: '3.2rem',
               lineHeight: '125%',
               textTransform: 'capitalize',
               color: '#FFFFFF',
@@ -446,7 +446,7 @@ export default function Work() {
               flexDirection: 'column',
               alignItems: 'flex-end',
               padding: 0,
-              gap: '16px',
+              gap: '1.6rem',
             }}
           >
             {FILTERS.map((f) => {
@@ -460,7 +460,7 @@ export default function Work() {
                     fontFamily: 'var(--font-britti)',
                     fontStyle: 'normal',
                     fontWeight: 300,
-                    fontSize: '18px',
+                    fontSize: '1.8rem',
                     lineHeight: '100%',
                     textAlign: 'right',
                     textTransform: 'capitalize',
@@ -484,8 +484,8 @@ export default function Work() {
         {/*
             Spec: flex-row, flex-wrap, align-items flex-start,
                   align-content flex-start, gap 120px 105px, width 1200px
-            Row 1: 623px + 105px gap + 472px = 1200px
-            Row 2: 488px + 105px gap + 607px = 1200px
+            Row 1: 62.3rem + 105px gap + 472px = 1200px
+            Row 2: 48.8rem + 105px gap + 607px = 1200px
             All cards: flex-grow 0, flex-shrink 0
         */}
         <div
@@ -497,8 +497,8 @@ export default function Work() {
             alignItems: 'flex-start',
             alignContent: 'flex-start',
             padding: 0,
-            gap: '120px 105px',
-            width: '1200px',
+            gap: '12rem 10.5rem',
+            width: '120rem',
             background: '#020202',
           }}
         >
@@ -509,20 +509,20 @@ export default function Work() {
       </section>
 
       <style>{`
-        @media (max-width: 767px) {
+        @media (max-width: 47.938em) {
           /* Hero Section Mobile */
           #work-hero {
-            padding: 142px 16px 48px !important;
-            gap: 10px !important;
+            padding: 14.2rem 1.6rem 4.8rem !important;
+            gap: 1rem !important;
             align-items: flex-start !important;
             justify-content: flex-start !important;
           }
           #work-eyebrow {
-            font-size: 24px !important;
+            font-size: 2.4rem !important;
             text-align: left !important;
           }
           #work-tagline {
-            font-size: 32px !important;
+            font-size: 3.2rem !important;
             text-align: left !important;
             max-width: 100% !important;
             align-self: flex-start !important;
@@ -535,14 +535,14 @@ export default function Work() {
 
           /* Work Section Mobile */
           #work-all {
-            padding: 0px 16px 64px !important;
-            gap: 32px !important;
+            padding: 0rem 1.6rem 6.4rem !important;
+            gap: 3.2rem !important;
           }
           #work-all-header {
             width: 100% !important;
-            padding-top: 0px !important;
+            padding-top: 0rem !important;
             flex-direction: column !important;
-            gap: 32px !important;
+            gap: 3.2rem !important;
           }
           #work-all-title {
             display: none !important; /* Based on the mobile mockups, title is not visible there */
@@ -553,11 +553,11 @@ export default function Work() {
             flex-direction: row !important;
             align-items: flex-start !important;
             flex-wrap: wrap !important;
-            gap: 16px !important;
+            gap: 1.6rem !important;
             width: 100% !important;
           }
           .work-filter-btn {
-            font-size: 16px !important;
+            font-size: 1.6rem !important;
             text-align: left !important;
           }
 
@@ -565,46 +565,46 @@ export default function Work() {
           #work-cards-grid {
             width: 100% !important;
             flex-direction: column !important;
-            gap: 32px !important;
+            gap: 3.2rem !important;
           }
           .work-project-card {
             width: 100% !important;
-            gap: 17px !important;
+            gap: 1.7rem !important;
           }
           .work-project-img-wrapper {
             width: 100% !important;
-            height: 250px !important;
+            height: 25rem !important;
           }
           .work-project-info {
             width: 100% !important;
-            gap: 14px !important;
+            gap: 1.4rem !important;
           }
           .work-project-header {
             width: 100% !important;
             flex-direction: column !important;
             align-items: flex-start !important;
             height: auto !important;
-            gap: 12px !important;
+            gap: 1.2rem !important;
           }
           .work-project-title {
-            font-size: 18px !important;
-            line-height: 28px !important;
+            font-size: 1.8rem !important;
+            line-height: 1.75 !important;
           }
           .work-project-tags {
-            gap: 3px !important;
+            gap: 0.3rem !important;
             flex-wrap: wrap !important;
           }
           .work-tag-pill {
-            padding: 4px 10px !important;
-            height: 28px !important;
-            gap: 10px !important;
+            padding: 0.4rem 1rem !important;
+            height: 2.8rem !important;
+            gap: 1rem !important;
           }
           .work-tag-text {
-            font-size: 14px !important;
+            font-size: 1.4rem !important;
           }
           .work-project-desc {
             width: 100% !important;
-            font-size: 16px !important;
+            font-size: 1.6rem !important;
             line-height: 140% !important;
             color: #A6A6A6 !important;
           }

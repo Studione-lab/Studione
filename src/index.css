@@ -94,8 +94,8 @@
   --spacing-section-sm: 4rem;
 
   /* Border Radius */
-  --radius-card: 1.25rem;
-  --radius-pill: 999px;
+  --radius-card: 2rem;      /* 20px */
+  --radius-pill: 999px;     /* stay px — fixed pill shape */
 
   /* Transitions */
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
@@ -111,12 +111,13 @@
 
 html {
   scroll-behavior: smooth;
-  font-size: 16px;
+  font-size: 62.5%; /* 1rem = 10px — the 62.5% trick */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 body {
+  font-size: 1.6rem; /* 16px */
   font-family: var(--font-sans);
   background-color: var(--color-studio-bg);
   color: var(--color-studio-white);
@@ -140,10 +141,10 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: 1rem;
   background: rgba(43, 43, 43, 0.5);
   font-family: var(--font-inter);
-  font-size: 18px;
+  font-size: 1.8rem;
   line-height: 140%;
   letter-spacing: -0.02em;
   color: #C0C0C0;
@@ -154,9 +155,9 @@ body {
 .heading-hero {
   font-family: var(--font-britti);
   font-weight: 400;
-  font-size: clamp(48px, 7vw, 85px);
+  font-size: clamp(4.8rem, 7vw, 8.5rem);
   line-height: 100%;
-  letter-spacing: -1px;
+  letter-spacing: -1px; /* fixed optical kern — keep px */
   text-transform: capitalize;
   color: #FFFFFF;
 }
@@ -164,7 +165,7 @@ body {
 .heading-section {
   font-family: var(--font-britti);
   font-weight: 400;
-  font-size: 32px;
+  font-size: 3.2rem;
   line-height: 140%;
   color: #FFFFFF;
 }
@@ -172,8 +173,8 @@ body {
 .heading-card {
   font-family: var(--font-britti);
   font-weight: 400;
-  font-size: 24px;
-  line-height: 28px;
+  font-size: 2.4rem;
+  line-height: 1.75;
   letter-spacing: 0.01em;
   color: #FFFFFF;
 }
@@ -181,7 +182,7 @@ body {
 .text-muted-studio {
   font-family: var(--font-inter);
   font-weight: 400;
-  font-size: 18px;
+  font-size: 1.8rem;
   line-height: 140%;
   letter-spacing: -0.02em;
   color: #C0C0C0;
@@ -189,14 +190,14 @@ body {
 
 /* ─── Custom Scrollbar ───────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 4px;
+  width: 4px; /* fixed thin track — keep px */
 }
 ::-webkit-scrollbar-track {
   background: var(--color-brand-black);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--color-brand-border);
-  border-radius: 4px;
+  border-radius: 4px; /* keep px — decorative only */
 }
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-brand-text);
@@ -236,12 +237,12 @@ body {
 .btn-primary {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 1.75rem;
+  gap: 0.5em;          /* em — scales with button font size */
+  padding: 0.875em 1.75em; /* em — proportional to own font size */
   background-color: var(--color-brand-accent);
   color: var(--color-brand-black);
   font-weight: 700;
-  font-size: 0.9rem;
+  font-size: 1.4rem;   /* 14px */
   letter-spacing: 0.01em;
   border-radius: var(--radius-pill);
   border: none;
@@ -249,19 +250,19 @@ body {
   transition: transform 0.25s var(--ease-bounce), box-shadow 0.25s var(--ease-smooth);
 }
 .btn-primary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px); /* shadow offset — keep px */
   box-shadow: 0 12px 32px rgba(212, 245, 122, 0.3);
 }
 
 .btn-outline {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.875rem 1.75rem;
+  gap: 0.5em;          /* em — scales with button font size */
+  padding: 0.875em 1.75em; /* em — proportional to own font size */
   background: transparent;
   color: var(--color-brand-white);
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: 1.4rem;   /* 14px */
   letter-spacing: 0.01em;
   border-radius: var(--radius-pill);
   border: 1px solid var(--color-brand-border);
@@ -279,7 +280,7 @@ body {
   transition: transform 0.35s var(--ease-smooth), box-shadow 0.35s var(--ease-smooth);
 }
 .card-hover:hover {
-  transform: translateY(-6px);
+  transform: translateY(-0.6rem);
   box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4);
 }
 
@@ -307,21 +308,21 @@ body {
 /* ─── Container ──────────────────────────────────────────────── */
 .container-custom {
   width: 100%;
-  max-width: 1400px;
+  max-width: 140rem;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1.5rem;
   padding-right: 1.5rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 48em) {
   .container-custom {
     padding-left: 2.5rem;
     padding-right: 2.5rem;
   }
 }
 
-@media (min-width: 1280px) {
+@media (min-width: 80em) {
   .container-custom {
     padding-left: 4rem;
     padding-right: 4rem;
@@ -346,7 +347,7 @@ body {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(32px);
+    transform: translateY(3.2rem);
   }
   to {
     opacity: 1;
@@ -375,35 +376,35 @@ body {
 /* ─── Home Page Responsive Rules ────────────────────────────── */
 
 /* Tablet (≤1024px): slightly reduce paddings */
-@media (max-width: 1024px) {
+@media (max-width: 64em) {
   #navbar,
   #hero,
   #about,
   #work,
-  #brand { padding-left: 20px !important; padding-right: 20px !important; }
+  #brand { padding-left: 2rem !important; padding-right: 2rem !important; }
 
-  #see-more-work { right: 20px !important; }
-  #brand-gallery  { left: 160px !important; }
+  #see-more-work { right: 2rem !important; }
+  #brand-gallery  { left: 16rem !important; }
 }
 
 /* Mobile (≤768px): stack everything, reset left offsets */
-@media (max-width: 768px) {
+@media (max-width: 48em) {
   #navbar {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-    height: 72px !important;
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    height: 7.2rem !important;
   }
 
   /* Hamburger visible, desktop nav hidden — handled by md:hidden class */
 
   #hero {
-    padding: 96px 16px 0px;
-    gap: 40px !important;
+    padding: 9.6rem 1.6rem 0rem;
+    gap: 4rem !important;
     min-height: auto !important;
   }
 
   .heading-hero {
-    font-size: clamp(36px, 11vw, 60px) !important;
+    font-size: clamp(3.6rem, 11vw, 6rem) !important;
   }
 
   /* Hero images stack vertically on mobile */
@@ -412,25 +413,25 @@ body {
   }
   #hero-image-card > * {
     width: 100% !important;
-    height: clamp(240px, 60vw, 380px) !important;
+    height: clamp(24rem, 60vw, 38rem) !important;
   }
 
   #about {
-    padding: 72px 16px 0px !important;
-    gap: 48px !important;
+    padding: 7.2rem 1.6rem 0rem !important;
+    gap: 4.8rem !important;
   }
 
   #work {
-    padding: 72px 16px 48px !important;
+    padding: 7.2rem 1.6rem 4.8rem !important;
   }
 
   /* Work rows: stack vertically on mobile, cards go full-width */
   #work-image-card-grid {
-    gap: 48px !important;
+    gap: 4.8rem !important;
   }
   .work-row {
     flex-direction: column !important;
-    gap: 40px !important;
+    gap: 4rem !important;
   }
   .work-row > article {
     flex: 0 0 100% !important;
@@ -438,28 +439,28 @@ body {
   }
 
   .work-tag {
-    font-size: 14px !important;
-    padding: 6px 10px !important;
+    font-size: 1.4rem !important;
+    padding: 0.6rem 1rem !important;
   }
 
   #see-more-work {
-    right: 20px !important;
-    bottom: 60px !important;
+    right: 2rem !important;
+    bottom: 6rem !important;
   }
 
   /* Brand section: GSAP handles translation, do not force overflow auto */
   #brand {
-    min-height: 480px !important;
+    min-height: 48rem !important;
     overflow-x: hidden !important;
   }
   #brand-gallery {
-    left: 20px !important;
-    top: 140px !important;
+    left: 2rem !important;
+    top: 14rem !important;
     position: relative !important;
-    padding: 0 64px 0 20px !important;
+    padding: 0 6.4rem 0 2rem !important;
   }
   .heading-section[style*="position: absolute"] {
-    left: 20px !important;
+    left: 2rem !important;
   }
 }
 

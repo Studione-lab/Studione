@@ -13,13 +13,13 @@ export default function About() {
         }}
       >
         <div style={{
-          position: 'absolute', top: '-100px', right: '-100px',
-          width: '500px', height: '500px',
+          position: 'absolute', top: '-10rem', right: '-10rem',
+          width: '50rem', height: '50rem',
           background: 'radial-gradient(circle, rgba(212,245,122,0.05) 0%, transparent 70%)',
           pointerEvents: 'none',
         }} />
         <div className="container-custom">
-          <div style={{ maxWidth: '800px' }}>
+          <div style={{ maxWidth: '80rem' }}>
             <p style={{ fontSize: '0.8rem', color: 'var(--color-brand-accent)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '1.5rem' }}>
               About Studione
             </p>
@@ -34,7 +34,7 @@ export default function About() {
               Design is how we<br />
               <span className="text-gradient-accent">change the world</span>
             </h1>
-            <p style={{ fontSize: '1.1rem', color: 'var(--color-brand-text)', lineHeight: 1.8, maxWidth: '560px' }}>
+            <p style={{ fontSize: '1.1rem', color: 'var(--color-brand-text)', lineHeight: 1.8, maxWidth: '56rem' }}>
               We're a tight-knit team of designers, strategists, and storytellers united by a passion for craft and a belief that design has the power to transform businesses.
             </p>
           </div>
@@ -72,7 +72,7 @@ export default function About() {
                   borderRadius: '1rem',
                   border: '1px solid var(--color-brand-border)',
                 }}>
-                  <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-brand-accent)', letterSpacing: '0.05em', flexShrink: 0, marginTop: '2px' }}>{v.num}</span>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--color-brand-accent)', letterSpacing: '0.05em', flexShrink: 0, marginTop: '0.2rem' }}>{v.num}</span>
                   <div>
                     <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--color-brand-white)', marginBottom: '0.4rem' }}>{v.title}</h3>
                     <p style={{ fontSize: '0.85rem', color: 'var(--color-brand-text)', lineHeight: 1.6 }}>{v.desc}</p>
@@ -83,7 +83,7 @@ export default function About() {
           </div>
         </div>
         <style>{`
-          @media (max-width: 768px) {
+          @media (max-width: 48em) {
             .values-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
           }
         `}</style>
@@ -98,7 +98,7 @@ export default function About() {
               The people behind the work
             </h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 26rem), 1fr))', gap: '1.5rem' }}>
             {[
               { name: 'Alex Rivera', role: 'Creative Director', initials: 'AR' },
               { name: 'Mia Tanaka', role: 'Lead Designer', initials: 'MT' },

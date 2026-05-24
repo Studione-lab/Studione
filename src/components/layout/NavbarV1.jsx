@@ -18,17 +18,17 @@ const MOB_LINKS = [
 // ── Shared nav link style — Inter Tight 400, 16px, 1px tracking ─
 const linkStyle = {
   fontFamily: "'Inter Tight', 'Inter', system-ui, sans-serif",
-  fontStyle:  'normal',
+  fontStyle: 'normal',
   fontWeight: 400,
-  fontSize:   '16px',
-  lineHeight: '20px',
-  display:    'flex',
+  fontSize: '1.6rem',
+  lineHeight: '1.25',
+  display: 'flex',
   alignItems: 'center',
-  textAlign:  'center',
-  letterSpacing: '1px',
+  textAlign: 'center',
+  letterSpacing: '0.1rem',
   color: '#FFFFFF',
   textDecoration: 'none',
-  flex:     'none',
+  flex: 'none',
   flexGrow: 0,
 }
 
@@ -115,24 +115,24 @@ export default function NavbarV1({ noBackground = false }) {
   return (
     <>
       <style>{`
-        @media (min-width: 768px) {
+        @media (min-width: 48em) {
           #nav-v1-desktop  { display: flex !important; }
           #nav-v1-mob-btn  { display: none !important; }
           #nav-v1-mob-menu { display: none !important; }
         }
-        @media (max-width: 767px) {
+        @media (max-width: 47.938em) {
           #nav-v1-desktop  { display: none !important; }
           #nav-v1-mob-btn  { display: flex !important; }
-          #navbar-v1       { padding-left: 16px !important; padding-right: 16px !important; }
+          #navbar-v1       { padding-left: 1.6rem !important; padding-right: 1.6rem !important; }
         }
         /* Mobile menu responsive split layout */
         .mob-menu-container {
            display: flex;
            flex-direction: column;
            justify-content: space-between;
-           gap: 64px;
+           gap: 6.4rem;
         }
-        @media (min-width: 500px) {
+        @media (min-width: 31.25em) {
            .mob-menu-container {
              flex-direction: row;
              justify-content: space-between;
@@ -146,8 +146,8 @@ export default function NavbarV1({ noBackground = false }) {
         id="navbar-v1"
         style={{
           position: 'fixed',
-          width:  '100%',
-          height: '92px',
+          width: '100%',
+          height: '9.2rem',
           left: 0,
           top:  0,
           zIndex: 1000,
@@ -156,7 +156,7 @@ export default function NavbarV1({ noBackground = false }) {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '24px 40px',
+          padding: '2.4rem 4rem',
           boxSizing: 'border-box',
         }}
       >
@@ -170,8 +170,8 @@ export default function NavbarV1({ noBackground = false }) {
             }
           }}
           style={{
-            width: '128px',
-            height: '24px',
+            width: '12.8rem',
+            height: '2.4rem',
             textDecoration: 'none',
             display: 'flex',
             alignItems: 'center',
@@ -183,7 +183,7 @@ export default function NavbarV1({ noBackground = false }) {
             alt="Studione"
             width={128}
             height={24}
-            style={{ width: '128px', height: '24px', display: 'block', objectFit: 'contain' }}
+            style={{ width: '12.8rem', height: '2.4rem', display: 'block', objectFit: 'contain' }}
           />
         </Link>
 
@@ -193,8 +193,8 @@ export default function NavbarV1({ noBackground = false }) {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            padding: '12px 16px',
-            gap: '72px',
+            padding: '1.2rem 1.6rem',
+            gap: '7.2rem',
             display: 'flex',
           }}
         >
@@ -237,8 +237,8 @@ export default function NavbarV1({ noBackground = false }) {
           aria-label="Open menu"
           style={{
             display: 'none',
-            width: '40px',
-            height: '40px',
+            width: '4rem',
+            height: '4rem',
             background: 'rgba(43,43,43,0.5)',
             border: 'none',
             borderRadius: '8px',
@@ -246,7 +246,7 @@ export default function NavbarV1({ noBackground = false }) {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '5px',
+            gap: '0.313em',
             padding: 0,
           }}
         >
@@ -254,8 +254,8 @@ export default function NavbarV1({ noBackground = false }) {
             <span
               key={i}
               style={{
-                width: '18px',
-                height: '1.5px',
+                width: '1.8rem',
+                height: '0.15rem',
                 background: '#FFFFFF',
                 borderRadius: '2px',
                 display: 'block',
@@ -277,19 +277,19 @@ export default function NavbarV1({ noBackground = false }) {
           display: 'none',
           opacity: 0,
           flexDirection: 'column',
-          padding: '24px 16px',
+          padding: '1.5em 1em',
           boxSizing: 'border-box',
           overflowY: 'auto',
           overflowX: 'hidden',
         }}
       >
         {/* Top bar w/ Close button */}
-        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '40px' }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '4rem' }}>
           <button
             ref={closeBtnRef}
             onClick={() => setMenuOpen(false)}
             style={{
-              background: 'none', border: 'none', padding: '16px',
+              background: 'none', border: 'none', padding: '1em',
               cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
@@ -300,10 +300,10 @@ export default function NavbarV1({ noBackground = false }) {
         </div>
 
         {/* Main Content Layout */}
-        <div className="mob-menu-container" style={{ flex: 1, padding: '0 8px' }}>
+        <div className="mob-menu-container" style={{ flex: 1, padding: '0 0.5em' }}>
           
           {/* Left Column (Huge Links) */}
-          <nav style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <nav style={{ display: 'flex', flexDirection: 'column', gap: '0.5em' }}>
             {MOB_LINKS.map((link, i) => (
               <div key={link.to} style={{ overflow: 'hidden' }}>
                 <NavLink
@@ -314,7 +314,7 @@ export default function NavbarV1({ noBackground = false }) {
                     display: 'block',
                     fontFamily: 'var(--font-britti), system-ui, sans-serif',
                     fontWeight: 500,
-                    fontSize: 'clamp(56px, 15vw, 120px)',
+                    fontSize: 'clamp(5.6rem, 15vw, 12rem)',
                     lineHeight: '110%',
                     letterSpacing: '-0.02em',
                     color: isActive ? '#FFFFFF' : '#FFFFFF',
@@ -334,7 +334,7 @@ export default function NavbarV1({ noBackground = false }) {
                   display: 'block',
                   fontFamily: 'var(--font-britti), system-ui, sans-serif',
                   fontWeight: 500,
-                  fontSize: 'clamp(56px, 15vw, 120px)',
+                  fontSize: 'clamp(5.6rem, 15vw, 12rem)',
                   lineHeight: '110%',
                   letterSpacing: '-0.02em',
                   color: '#FFFFFF',
@@ -354,13 +354,13 @@ export default function NavbarV1({ noBackground = false }) {
           </nav>
 
           {/* Bottom row / Right column: Email Address */}
-          <div ref={rightColRef} style={{ paddingBottom: '32px', display: 'flex' }}>
+          <div ref={rightColRef} style={{ paddingBottom: '3.2rem', display: 'flex' }}>
             <a 
               href="mailto:hello@studione.com"
               style={{
                 fontFamily: 'var(--font-britti), system-ui, sans-serif',
                 fontWeight: 400,
-                fontSize: 'clamp(24px, 8vw, 40px)',
+                fontSize: 'clamp(2.4rem, 8vw, 4rem)',
                 lineHeight: '120%',
                 color: '#FFFFFF',
                 textDecoration: 'underline',

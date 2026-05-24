@@ -9,13 +9,13 @@ const SOCIAL_LINKS = [
 // ─── Shared social link style — Britti 18px underline ─────────
 const socialLinkStyle = {
   fontFamily: "'Britti Sans Trial', 'DM Sans', 'Inter Tight', system-ui, sans-serif",
-  fontStyle:  'normal',
+  fontStyle: 'normal',
   fontWeight: 400,
-  fontSize:   '18px',
-  lineHeight: '20px',
-  letterSpacing: '0.28px',
+  fontSize: '1.8rem',
+  lineHeight: '1.25',
+  letterSpacing: '0.028rem',
   textDecorationLine: 'underline',
-  textDecoration:     'underline',
+  textDecoration: 'underline',
   color: '#FFFFFF',
   flexShrink: 0,
 }
@@ -26,14 +26,14 @@ export default function FooterV1() {
       <footer
         id="footer-v1"
         style={{
-          position:   'relative',
-          width:      '100%',
+          position: 'relative',
+          width: '100%',
           background: '#020202',
-          boxSizing:  'border-box',
-          display:    'flex',
+          boxSizing: 'border-box',
+          display: 'flex',
           flexDirection: 'column',
-          padding: '0 40px',
-          minHeight: '577px',
+          padding: '0 4rem',
+          minHeight: '57.7rem',
           overflow: 'hidden',
         }}
       >
@@ -45,7 +45,7 @@ export default function FooterV1() {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'center',
-            paddingTop:    '213px',
+            paddingTop: '21.3rem',
           }}
         >
           {/* Social links — gap 14px */}
@@ -56,7 +56,7 @@ export default function FooterV1() {
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
-              gap: '14px',
+              gap: '1.4rem',
             }}
           >
             {SOCIAL_LINKS.map((link, i) => (
@@ -76,11 +76,11 @@ export default function FooterV1() {
             id="footer-v1-copyright"
             style={{
               fontFamily: "'Britti Sans Trial', 'DM Sans', 'Inter Tight', system-ui, sans-serif",
-              fontStyle:  'normal',
+              fontStyle: 'normal',
               fontWeight: 400,
-              fontSize:   '18px',
-              lineHeight: '20px',
-              letterSpacing: '0.28px',
+              fontSize: '1.8rem',
+              lineHeight: '1.25',
+              letterSpacing: '0.028rem',
               color: 'rgba(255, 255, 255, 0.5)',
               textAlign: 'right',
               whiteSpace: 'nowrap',
@@ -98,8 +98,8 @@ export default function FooterV1() {
             flexDirection: 'row',
             justifyContent: 'space-between',
             alignItems: 'flex-end',
-            marginTop:     'auto',
-            paddingTop:    '40px',
+            marginTop: 'auto',
+            paddingTop: '4rem',
           }}
         >
           {/* Large "Studione" wordmark — Britti 192px weight 300 */}
@@ -107,9 +107,9 @@ export default function FooterV1() {
             id="footer-v1-wordmark"
             style={{
               fontFamily: "'Britti Sans Trial', 'DM Sans', 'Inter Tight', system-ui, sans-serif",
-              fontStyle:  'normal',
+              fontStyle: 'normal',
               fontWeight: 300,
-              fontSize:   'clamp(72px, 13vw, 192px)',
+              fontSize: 'clamp(7.2rem, 13vw, 19.2rem)',
               lineHeight: '100%',
               textTransform: 'capitalize',
               color: '#FFFFFF',
@@ -127,16 +127,16 @@ export default function FooterV1() {
             href="mailto:hello@studione.com"
             style={{
               fontFamily: "'Britti Sans Trial', 'DM Sans', 'Inter Tight', system-ui, sans-serif",
-              fontStyle:  'normal',
+              fontStyle: 'normal',
               fontWeight: 300,
-              fontSize:   'clamp(18px, 2.8vw, 40px)',
-              lineHeight: '60px',
-              letterSpacing: '1px',
+              fontSize: 'clamp(1.8rem, 2.8vw, 4rem)',
+              lineHeight: '6rem',
+              letterSpacing: '0.1rem',
               textDecorationLine: 'underline',
-              textDecoration:     'underline',
+              textDecoration: 'underline',
               color: 'rgba(255, 255, 255, 0.5)',
               alignSelf: 'flex-end',
-              paddingBottom: '16px',
+              paddingBottom: '1.6rem',
               whiteSpace: 'nowrap',
             }}
           >
@@ -147,29 +147,29 @@ export default function FooterV1() {
 
       {/* ── Responsive overrides ────────────────────────────────── */}
       <style>{`
-        @media (max-width: 1024px) {
-          #footer-v1 { padding-left: 28px !important; padding-right: 28px !important; }
+        @media (max-width: 64em) {
+          #footer-v1 { padding-left: 2.8rem !important; padding-right: 2.8rem !important; }
         }
-        @media (max-width: 768px) {
+        @media (max-width: 48em) {
           #footer-v1 {
-            padding: 0 20px !important;
+            padding: 0 2rem !important;
             min-height: auto !important;
           }
           #footer-v1-top {
-            padding-top: 60px !important;
+            padding-top: 6rem !important;
             flex-direction: column !important;
             align-items: flex-start !important;
-            gap: 14px !important;
+            gap: 1.4rem !important;
           }
           #footer-v1-social {
             flex-wrap: wrap !important;
-            gap: 10px 14px !important;
+            gap: 1rem 1.4rem !important;
           }
           #footer-v1-bottom {
             flex-direction: column !important;
             align-items: flex-start !important;
-            gap: 12px !important;
-            padding-bottom: 32px !important;
+            gap: 1.2rem !important;
+            padding-bottom: 3.2rem !important;
           }
           #footer-v1-email {
             align-self: flex-start !important;
@@ -177,8 +177,8 @@ export default function FooterV1() {
             line-height: 1.4 !important;
           }
         }
-        @media (max-width: 480px) {
-          #footer-v1-wordmark { font-size: clamp(60px, 18vw, 100px) !important; }
+        @media (max-width: 30em) {
+          #footer-v1-wordmark { font-size: clamp(6rem, 18vw, 10rem) !important; }
         }
       `}</style>
     </>

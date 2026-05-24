@@ -13,9 +13,9 @@ const linkTextStyle = {
   fontFamily: "'Inter Tight', 'Inter', system-ui, sans-serif",
   fontStyle: 'normal',
   fontWeight: 300,
-  fontSize: '16px',
-  lineHeight: '20px',
-  letterSpacing: '1px',
+  fontSize: '1.6rem',
+  lineHeight: '1.25',
+  letterSpacing: '0.1rem',
   color: '#FFFFFF',
   textDecoration: 'none',
   display: 'flex',
@@ -67,16 +67,16 @@ export default function Navbar() {
       */}
       <style>{`
         /* Desktop: show pill nav, hide hamburger + drawer */
-        @media (min-width: 768px) {
+        @media (min-width: 48em) {
           #desktop-nav    { display: flex   !important; }
           #mobile-menu-btn { display: none  !important; }
           #mobile-menu    { display: none   !important; }
         }
         /* Mobile: hide pill nav, show hamburger */
-        @media (max-width: 767px) {
+        @media (max-width: 47.938em) {
           #desktop-nav    { display: none   !important; }
           #mobile-menu-btn { display: flex  !important; }
-          #navbar         { padding-left: 16px !important; padding-right: 16px !important; }
+          #navbar         { padding-left: 1.6rem !important; padding-right: 1.6rem !important; }
         }
       `}</style>
 
@@ -86,7 +86,7 @@ export default function Navbar() {
         style={{
           position: 'fixed',
           width: '100%',
-          height: '92px',
+          height: '9.2rem',
           left: 0,
           top: 0,
           zIndex: 1000,
@@ -94,10 +94,10 @@ export default function Navbar() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingLeft: '40px',
-          paddingRight: '40px',
-          paddingTop: '24px',
-          paddingBottom: '24px',
+          paddingLeft: '4rem',
+          paddingRight: '4rem',
+          paddingTop: '2.4rem',
+          paddingBottom: '2.4rem',
           boxSizing: 'border-box',
         }}
       >
@@ -113,8 +113,8 @@ export default function Navbar() {
             }
           }}
           style={{
-            width: '128px',
-            height: '24px',
+            width: '12.8rem',
+            height: '2.4rem',
             textDecoration: 'none',
             display: 'flex',
             alignItems: 'center',
@@ -127,8 +127,8 @@ export default function Navbar() {
             width={128}
             height={24}
             style={{
-              width: '128px',
-              height: '24px',
+              width: '12.8rem',
+              height: '2.4rem',
               display: 'block',
               objectFit: 'contain',
             }}
@@ -142,9 +142,9 @@ export default function Navbar() {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-            padding: '12px 16px',
-            gap: '48px',
-            height: '44px',
+            padding: '1.2rem 1.6rem',
+            gap: '4.8rem',
+            height: '4.4rem',
             background: 'rgba(43, 43, 43, 0.5)',
             backdropFilter: 'blur(10px)',
             WebkitBackdropFilter: 'blur(10px)',
@@ -192,8 +192,8 @@ export default function Navbar() {
           style={{
             /* initial: hidden — overridden to flex on mobile via the <style> above */
             display: 'none',
-            width: '40px',
-            height: '40px',
+            width: '4rem',
+            height: '4rem',
             background: 'rgba(43,43,43,0.5)',
             border: 'none',
             borderRadius: '8px',
@@ -201,7 +201,7 @@ export default function Navbar() {
             flexDirection: 'column',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: '5px',
+            gap: '0.313em',
             padding: 0,
           }}
         >
@@ -209,8 +209,8 @@ export default function Navbar() {
             <span
               key={i}
               style={{
-                width: '18px',
-                height: '1.5px',
+                width: '1.8rem',
+                height: '0.15rem',
                 background: '#FFFFFF',
                 borderRadius: '2px',
                 display: 'block',
@@ -254,10 +254,10 @@ export default function Navbar() {
                 fontSize: '2rem',
                 fontFamily: "'Inter Tight', system-ui, sans-serif",
                 fontWeight: 400,
-                letterSpacing: '1px',
+                letterSpacing: '0.1rem',
                 color: isActive ? 'rgba(255,255,255,0.5)' : '#FFFFFF',
                 textDecoration: 'none',
-                borderBottom: '1px solid rgba(255,255,255,0.08)',
+                borderBottom: '0.1rem solid rgba(255,255,255,0.08)',
                 transition: 'opacity 0.25s ease',
                 transitionDelay: menuOpen ? `${i * 60}ms` : '0ms',
                 opacity: menuOpen ? 1 : 0,
@@ -275,12 +275,12 @@ export default function Navbar() {
               fontSize: '2rem',
               fontFamily: "'Inter Tight', system-ui, sans-serif",
               fontWeight: 400,
-              letterSpacing: '1px',
+              letterSpacing: '0.1rem',
               color: '#FFFFFF',
               textDecoration: 'none',
               background: 'none',
               border: 'none',
-              borderBottom: '1px solid rgba(255,255,255,0.08)',
+              borderBottom: '0.1rem solid rgba(255,255,255,0.08)',
               cursor: 'pointer',
               textAlign: 'left',
               transition: 'opacity 0.25s ease',

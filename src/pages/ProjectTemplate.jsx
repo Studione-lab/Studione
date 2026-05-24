@@ -60,9 +60,9 @@ function TagPill({ label }) {
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        padding: '10px',
-        gap: '10px',
-        height: '45px',
+        padding: '1rem',
+        gap: '1rem',
+        height: '4.5rem',
         background: 'rgba(43, 43, 43, 0.50)',
         flexShrink: 0,
       }}
@@ -71,7 +71,7 @@ function TagPill({ label }) {
         style={{
           fontFamily: "'Inter', system-ui, sans-serif",
           fontWeight: 400,
-          fontSize: '18px',
+          fontSize: '1.8rem',
           lineHeight: '140%',
           letterSpacing: '-0.02em',
           color: '#C0C0C0',
@@ -95,9 +95,9 @@ function PainPointBlock({ title, text }) {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        padding: '0 0 0 108px',
-        gap: '12px',
-        width: '596px',
+        padding: '0 0 0 10.8rem',
+        gap: '1.2rem',
+        width: '59.6rem',
         maxWidth: '100%',
         boxSizing: 'border-box',
       }}
@@ -109,14 +109,14 @@ function PainPointBlock({ title, text }) {
           fontFamily: "var(--font-britti)",
           fontStyle: 'italic',
           fontWeight: 400,
-          fontSize: '22px',
+          fontSize: '2.2rem',
           lineHeight: '125%',
           display: 'flex',
           alignItems: 'center',
           textTransform: 'capitalize',
           color: '#FFFFFF',
           margin: 0,
-          width: '488px',
+          width: '48.8rem',
           maxWidth: '100%',
         }}
       >
@@ -129,12 +129,12 @@ function PainPointBlock({ title, text }) {
           fontFamily: "'Inter', system-ui, sans-serif",
           fontStyle: 'normal',
           fontWeight: 400,
-          fontSize: '20px',
+          fontSize: '2rem',
           lineHeight: '140%',
           letterSpacing: '-0.02em',
           color: '#C0C0C0',
           margin: 0,
-          width: '488px',
+          width: '48.8rem',
           maxWidth: '100%',
           whiteSpace: 'pre-line',
         }}
@@ -162,7 +162,7 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
           flexDirection: 'column',
           alignItems: 'flex-start',
           padding: 0,
-          gap: '20px',
+          gap: '2rem',
           width: `${width}px`,
         }}
       >
@@ -188,7 +188,7 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
             flexDirection: 'column',
             alignItems: 'flex-start',
             padding: 0,
-            gap: '16px',
+            gap: '1.6rem',
             width: `${width}px`,
           }}
         >
@@ -201,9 +201,9 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
               justifyContent: 'space-between',
               alignItems: 'center',
               padding: 0,
-              gap: '16px',
+              gap: '1.6rem',
               width: `${width}px`,
-              height: '45px',
+              height: '4.5rem',
             }}
           >
             <span
@@ -212,8 +212,8 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
                 fontFamily: 'var(--font-britti)',
                 fontStyle: 'normal',
                 fontWeight: 400,
-                fontSize: '24px',
-                lineHeight: '28px',
+                fontSize: '2.4rem',
+                lineHeight: '1.75',
                 letterSpacing: '0.01em',
                 color: '#FFFFFF',
                 flexShrink: 0,
@@ -229,7 +229,7 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
                 flexDirection: 'row',
                 alignItems: 'flex-start',
                 padding: 0,
-                gap: '16px',
+                gap: '1.6rem',
                 flexShrink: 0,
               }}
             >
@@ -248,7 +248,7 @@ function CaseStudyCard({ project, width = 488, imgHeight = 463 }) {
               fontFamily: "'Inter', system-ui, sans-serif",
               fontStyle: 'normal',
               fontWeight: 400,
-              fontSize: '18px',
+              fontSize: '1.8rem',
               lineHeight: '140%',
               letterSpacing: '-0.02em',
               color: '#C0C0C0',
@@ -319,7 +319,7 @@ export default function ProjectTemplate() {
         style={{
           position: 'relative',
           width: '100%',
-          height: '678px',
+          height: '67.8rem',
           overflow: 'hidden',
         }}
       >
@@ -344,8 +344,8 @@ export default function ProjectTemplate() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          padding: '64px 40px 296px',
-          gap: '184px',
+          padding: '6.4rem 4rem 29.6rem',
+          gap: '18.4rem',
           width: '100%',
           background: '#020202',
           boxSizing: 'border-box',
@@ -358,7 +358,7 @@ export default function ProjectTemplate() {
             flexDirection: 'row',
             alignItems: 'flex-start',
             padding: 0,
-            gap: '186px',
+            gap: '18.6rem',
             width: '100%',
             background: '#020202',
           }}
@@ -372,8 +372,8 @@ export default function ProjectTemplate() {
               flexDirection: 'column',
               alignItems: 'flex-start',
               padding: 0,
-              gap: '24px',
-              width: '627px',
+              gap: '2.4rem',
+              width: '62.7rem',
               flexShrink: 0,
             }}
           >
@@ -384,8 +384,8 @@ export default function ProjectTemplate() {
                 flexDirection: 'column',
                 alignItems: 'flex-start',
                 padding: 0,
-                gap: '24px',
-                width: '590px',
+                gap: '2.4rem',
+                width: '59rem',
                 maxWidth: '100%',
               }}
             >
@@ -396,8 +396,8 @@ export default function ProjectTemplate() {
                   flexDirection: 'column',
                   alignItems: 'flex-start',
                   padding: 0,
-                  gap: '13px',
-                  width: '590px',
+                  gap: '1.3rem',
+                  width: '59rem',
                   maxWidth: '100%',
                 }}
               >
@@ -408,13 +408,13 @@ export default function ProjectTemplate() {
                     fontFamily: "'Inter', system-ui, sans-serif",
                     fontStyle: 'normal',
                     fontWeight: 400,
-                    fontSize: '18px',
+                    fontSize: '1.8rem',
                     lineHeight: '140%',
                     display: 'flex',
                     alignItems: 'center',
                     letterSpacing: '-0.02em',
                     color: '#C0C0C0',
-                    width: '590px',
+                    width: '59rem',
                     maxWidth: '100%',
                   }}
                 >
@@ -428,14 +428,14 @@ export default function ProjectTemplate() {
                     fontFamily: 'var(--font-britti)',
                     fontStyle: 'normal',
                     fontWeight: 300,
-                    fontSize: '32px',
+                    fontSize: '3.2rem',
                     lineHeight: '125%',
                     display: 'flex',
                     alignItems: 'center',
                     textTransform: 'capitalize',
                     color: '#FFFFFF',
                     margin: 0,
-                    width: '590px',
+                    width: '59rem',
                     maxWidth: '100%',
                   }}
                 >
@@ -451,7 +451,7 @@ export default function ProjectTemplate() {
                   flexDirection: 'row',
                   alignItems: 'flex-start',
                   padding: 0,
-                  gap: '16px',
+                  gap: '1.6rem',
                 }}
               >
                 {project.tags.map((tag) => (
@@ -467,12 +467,12 @@ export default function ProjectTemplate() {
                 fontFamily: "'Inter', system-ui, sans-serif",
                 fontStyle: 'normal',
                 fontWeight: 400,
-                fontSize: '20px',
+                fontSize: '2rem',
                 lineHeight: '140%',
                 letterSpacing: '-0.02em',
                 color: '#C0C0C0',
                 margin: 0,
-                width: '627px',
+                width: '62.7rem',
                 maxWidth: '100%',
                 whiteSpace: 'pre-line',
               }}
@@ -489,8 +489,8 @@ export default function ProjectTemplate() {
               flexDirection: 'column',
               alignItems: 'flex-start',
               padding: 0,
-              gap: '63px',
-              width: '387px',
+              gap: '6.3rem',
+              width: '38.7rem',
               flexShrink: 0,
             }}
           >
@@ -501,13 +501,13 @@ export default function ProjectTemplate() {
                 fontFamily: 'var(--font-britti)',
                 fontStyle: 'normal',
                 fontWeight: 300,
-                fontSize: '80px',
+                fontSize: '8rem',
                 lineHeight: '100%',
                 display: 'flex',
                 alignItems: 'center',
                 textTransform: 'capitalize',
                 color: '#FFFFFF',
-                width: '387px',
+                width: '38.7rem',
                 maxWidth: '100%',
               }}
             >
@@ -521,11 +521,11 @@ export default function ProjectTemplate() {
                 fontFamily: "'Inter', system-ui, sans-serif",
                 fontStyle: 'normal',
                 fontWeight: 400,
-                fontSize: '18px',
+                fontSize: '1.8rem',
                 lineHeight: '140%',
                 letterSpacing: '-0.02em',
                 color: '#C0C0C0',
-                width: '387px',
+                width: '38.7rem',
                 maxWidth: '100%',
               }}
             >
@@ -539,7 +539,7 @@ export default function ProjectTemplate() {
           className="project-banner-img"
           style={{
             width: '100%',
-            height: '580px',
+            height: '58rem',
             flexShrink: 0,
             overflow: 'hidden',
           }}
@@ -563,7 +563,7 @@ export default function ProjectTemplate() {
           className="project-pain-point-img"
           style={{
             width: '100%',
-            height: '580px',
+            height: '58rem',
             background: '#232222',
             flexShrink: 0,
             overflow: 'hidden',
@@ -590,7 +590,7 @@ export default function ProjectTemplate() {
             flexDirection: 'column',
             alignItems: 'flex-start',
             padding: 0,
-            gap: '20px',
+            gap: '2rem',
             width: '100%',
           }}
         >
@@ -599,7 +599,7 @@ export default function ProjectTemplate() {
             className="project-gallery-full"
             style={{
               width: '100%',
-              height: '580px',
+              height: '58rem',
               background: '#232222',
               flexShrink: 0,
               overflow: 'hidden',
@@ -619,16 +619,16 @@ export default function ProjectTemplate() {
               flexDirection: 'row',
               alignItems: 'center',
               padding: 0,
-              gap: '20px',
+              gap: '2rem',
               width: '100%',
-              height: '580px',
+              height: '58rem',
             }}
           >
             <div
               className="project-gallery-pair-img"
               style={{
                 flex: '1 1 0',
-                height: '580px',
+                height: '58rem',
                 background: '#232222',
                 overflow: 'hidden',
               }}
@@ -642,7 +642,7 @@ export default function ProjectTemplate() {
               className="project-gallery-pair-img"
               style={{
                 flex: '1 1 0',
-                height: '580px',
+                height: '58rem',
                 background: '#232222',
                 overflow: 'hidden',
               }}
@@ -659,7 +659,7 @@ export default function ProjectTemplate() {
             className="project-gallery-bottom"
             style={{
               width: '100%',
-              height: '580px',
+              height: '58rem',
               background: '#232222',
               flexShrink: 0,
               overflow: 'hidden',
@@ -680,9 +680,9 @@ export default function ProjectTemplate() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'flex-start',
-              padding: '0 0 0 108px',
-              gap: '12px',
-              width: '799px',
+              padding: '0 0 0 10.8rem',
+              gap: '1.2rem',
+              width: '79.9rem',
               maxWidth: '100%',
               boxSizing: 'border-box',
             }}
@@ -694,7 +694,7 @@ export default function ProjectTemplate() {
                 fontFamily: 'var(--font-britti)',
                 fontStyle: 'italic',
                 fontWeight: 400,
-                fontSize: '22px',
+                fontSize: '2.2rem',
                 lineHeight: '125%',
                 display: 'flex',
                 alignItems: 'center',
@@ -713,12 +713,12 @@ export default function ProjectTemplate() {
                 fontFamily: 'var(--font-britti)',
                 fontStyle: 'normal',
                 fontWeight: 400,
-                fontSize: '22px',
+                fontSize: '2.2rem',
                 lineHeight: '140%',
                 letterSpacing: '-0.02em',
                 color: '#C0C0C0',
                 margin: 0,
-                width: '691px',
+                width: '69.1rem',
                 maxWidth: '100%',
               }}
             >
@@ -732,15 +732,15 @@ export default function ProjectTemplate() {
                 flexDirection: 'row',
                 alignItems: 'center',
                 padding: 0,
-                gap: '12px',
-                marginTop: '12px',
+                gap: '1.2rem',
+                marginTop: '1.2rem',
               }}
             >
               {/* Author avatar — 32×32 circle */}
               <div
                 style={{
-                  width: '32px',
-                  height: '32px',
+                  width: '3.2rem',
+                  height: '3.2rem',
                   borderRadius: '100px',
                   overflow: 'hidden',
                   background: '#3A3A3A',
@@ -787,12 +787,12 @@ export default function ProjectTemplate() {
                     fontFamily: 'var(--font-britti)',
                     fontStyle: 'normal',
                     fontWeight: 500,
-                    fontSize: '16px',
+                    fontSize: '1.6rem',
                     lineHeight: '150%',
                     display: 'flex',
                     alignItems: 'center',
                     textAlign: 'center',
-                    letterSpacing: '-0.3px',
+                    letterSpacing: '-0.03rem',
                     color: '#FFFFFF',
                   }}
                 >
@@ -805,12 +805,12 @@ export default function ProjectTemplate() {
                     fontFamily: 'var(--font-britti)',
                     fontStyle: 'normal',
                     fontWeight: 400,
-                    fontSize: '14px',
+                    fontSize: '1.4rem',
                     lineHeight: '150%',
                     display: 'flex',
                     alignItems: 'center',
                     textAlign: 'center',
-                    letterSpacing: '-0.2px',
+                    letterSpacing: '-0.02rem',
                     color: '#7C7C7C',
                   }}
                 >
@@ -831,8 +831,8 @@ export default function ProjectTemplate() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'flex-start',
-          padding: '0 40px 328px',
-          gap: '36px',
+          padding: '0 4rem 32.8rem',
+          gap: '3.6rem',
           width: '100%',
           background: '#020202',
           boxSizing: 'border-box',
@@ -844,7 +844,7 @@ export default function ProjectTemplate() {
             fontFamily: 'var(--font-britti)',
             fontStyle: 'italic',
             fontWeight: 300,
-            fontSize: '32px',
+            fontSize: '3.2rem',
             lineHeight: '125%',
             display: 'flex',
             alignItems: 'center',
@@ -865,7 +865,7 @@ export default function ProjectTemplate() {
             justifyContent: 'space-between',
             alignItems: 'flex-start',
             padding: 0,
-            gap: '122px',
+            gap: '12.2rem',
             width: '100%',
           }}
           className="related-cards-row"
@@ -889,10 +889,10 @@ export default function ProjectTemplate() {
 
       {/* ── Responsive overrides ──────────────────────────────────── */}
       <style>{`
-        @media (max-width: 1200px) {
+        @media (max-width: 75em) {
           .project-main-content {
             flex-direction: column !important;
-            gap: 64px !important;
+            gap: 6.4rem !important;
           }
           .project-main-content > div {
             width: 100% !important;
@@ -900,118 +900,118 @@ export default function ProjectTemplate() {
           }
           .related-cards-row {
             flex-direction: column !important;
-            gap: 64px !important;
+            gap: 6.4rem !important;
           }
           .related-cards-row > a > div {
             width: 100% !important;
           }
         }
-        @media (max-width: 768px) {
+        @media (max-width: 48em) {
           #project-hero {
-            height: 420px !important;
+            height: 42rem !important;
           }
           #project-content {
-            padding: 48px 16px 120px !important;
-            gap: 64px !important;
+            padding: 4.8rem 1.6rem 12rem !important;
+            gap: 6.4rem !important;
           }
           .project-main-content {
             flex-direction: column !important;
-            gap: 48px !important;
+            gap: 4.8rem !important;
           }
           .project-col-left {
             order: 2 !important;
             width: 100% !important;
-            gap: 24px !important;
+            gap: 2.4rem !important;
           }
           .project-col-right {
             order: 1 !important;
             width: 100% !important;
-            gap: 12px !important;
+            gap: 1.2rem !important;
           }
           .project-logo-text {
-            font-size: 32px !important;
+            font-size: 3.2rem !important;
             line-height: 100% !important;
           }
           .project-skillset {
-            font-size: 16px !important;
+            font-size: 1.6rem !important;
             line-height: 140% !important;
           }
           .project-date {
-            font-size: 14px !important;
+            font-size: 1.4rem !important;
           }
           .project-tagline {
-            font-size: 22px !important;
+            font-size: 2.2rem !important;
           }
           .project-intro-text {
-            font-size: 16px !important;
+            font-size: 1.6rem !important;
           }
           .project-banner-img {
-            height: 220px !important;
+            height: 22rem !important;
           }
           .project-pain-point-block {
             padding: 0 !important;
-            gap: 24px !important;
+            gap: 2.4rem !important;
           }
           .project-pain-point-title {
-            font-size: 20px !important;
+            font-size: 2rem !important;
             width: 100% !important;
           }
           .project-pain-point-text {
-            font-size: 16px !important;
+            font-size: 1.6rem !important;
             width: 100% !important;
           }
           .project-pain-point-img {
-            height: 220px !important;
+            height: 22rem !important;
           }
           .project-gallery-full {
-            height: 220px !important;
+            height: 22rem !important;
           }
           .project-gallery-pair {
             flex-direction: column !important;
             height: auto !important;
-            gap: 12px !important;
+            gap: 1.2rem !important;
           }
           .project-gallery-pair-img {
             width: 100% !important;
-            height: 380px !important;
+            height: 38rem !important;
             flex: none !important;
           }
           .project-gallery-bottom {
-            height: 220px !important;
+            height: 22rem !important;
           }
           .project-testimonial-block {
             padding: 0 !important;
             width: 100% !important;
-            gap: 24px !important;
+            gap: 2.4rem !important;
           }
           .project-testimonial-title {
-            font-size: 20px !important;
+            font-size: 2rem !important;
           }
           .project-testimonial-text {
-            font-size: 16px !important;
+            font-size: 1.6rem !important;
             width: 100% !important;
           }
           .project-testimonial-author-name {
-            font-size: 16px !important;
+            font-size: 1.6rem !important;
           }
           .project-testimonial-author-role {
-            font-size: 14px !important;
+            font-size: 1.4rem !important;
           }
           
           /* Related Case Study Section */
           #related-case-study {
-            padding: 40px 16px 64px !important;
-            gap: 10px !important;
+            padding: 4rem 1.6rem 6.4rem !important;
+            gap: 1rem !important;
           }
           #related-case-study h2 {
-            font-size: 20px !important;
+            font-size: 2rem !important;
           }
           .related-cards-row {
             flex-direction: row !important;
-            gap: 32px !important;
+            gap: 3.2rem !important;
             overflow-x: auto !important;
             flex-wrap: nowrap !important;
-            padding-bottom: 20px !important;
+            padding-bottom: 2rem !important;
             scroll-snap-type: x mandatory !important;
             width: 100% !important;
           }
@@ -1022,38 +1022,38 @@ export default function ProjectTemplate() {
             scroll-snap-align: start !important;
           }
           .related-case-card {
-            width: 292px !important;
-            gap: 17px !important;
+            width: 29.2rem !important;
+            gap: 1.7rem !important;
           }
           .related-case-img {
-            width: 292px !important;
-            height: 250px !important;
+            width: 29.2rem !important;
+            height: 25rem !important;
           }
           .related-case-info {
-            width: 292px !important;
-            gap: 14px !important;
+            width: 29.2rem !important;
+            gap: 1.4rem !important;
           }
           .related-case-header {
-            width: 292px !important;
+            width: 29.2rem !important;
             flex-direction: column !important;
             align-items: flex-start !important;
             height: auto !important;
-            gap: 12px !important;
+            gap: 1.2rem !important;
           }
           .related-case-title {
-            font-size: 18px !important;
-            line-height: 28px !important;
+            font-size: 1.8rem !important;
+            line-height: 1.75 !important;
           }
           .related-case-tags {
             flex-wrap: wrap !important;
-            gap: 3px !important;
+            gap: 0.3rem !important;
           }
           .related-case-tag-wrapper > div {
-            padding: 4px 10px !important;
-            height: 28px !important;
+            padding: 0.4rem 1rem !important;
+            height: 2.8rem !important;
           }
           .related-case-tag-wrapper span {
-            font-size: 14px !important;
+            font-size: 1.4rem !important;
           }
           .related-case-desc {
             display: none !important; /* Seems missing in mobile design or implicitly hidden */

@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import HeroImage from '../assets/Hero Image.png'
-import HeroImage2 from '../assets/Hero Image-1.png'
-import AboutImage from '../assets/Studio Image.png'
-import CTABillboard from '../assets/Hero Image-2.png'
+import HeroImage from '../assets/Image/HeroImage.mp4'
+import AboutImage from '../assets/Image/AboutImage.mp4'
+import CTABillboard from '../assets/Studio Image.png'
 import Project1 from '../assets/project-1.png'
 import Project2 from '../assets/project-2.png'
 import Project3 from '../assets/project-3.png'
@@ -63,7 +62,7 @@ function CardDescription({ children, style = {} }) {
 const WORK_CARDS = [
   {
     id: 'card-1',
-    title: 'Website Builder',
+    title: 'Locusverse',
     tags: ['Brand Identity', 'Strategy'],
     desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
     // image: '/images/work-1.jpg',   ← replace with real asset path
@@ -71,17 +70,17 @@ const WORK_CARDS = [
   },
   {
     id: 'card-2',
-    title: 'Website Builder',
-    tags: ['Design System'],
-    desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
+    title: 'Você Fala',
+    tags: ['Brand & Campaign'],
+    desc: "A bold brand and campaign system for a Brazilian consumer platform centred on honest conversation. The identity leans into high-contrast typography and direct language — designed to stand out in a crowded digital feed and say what competitors won't.",
     // image: '/images/work-2.jpg',
     image: Project2
   },
   {
     id: 'card-3',
-    title: 'Website Builder',
+    title: 'Pausa',
     tags: ['Brand Identity', 'Production Design'],
-    desc: 'Lorem ipsum dolor sit amet consectetur. Mollis metus eget quam hendrerit. Nec malesuada massa in porta proin quisque facilisi. Risus morbi dolor libero velit scelerisque enim.',
+    desc: 'Brand identity for a boutique retail concept built around the idea of intentional consumption — slow, considered, and joyful. The visual system balances a refined typographic mark with expressive illustration, brought together across packaging, bags, and in-store materials.',
     // image: '/images/work-3.jpg',
     image: Project3,
     wide: true,   // card-3 is wider (793px in spec → spans full row)
@@ -99,11 +98,34 @@ const BRAND_ITEMS = [
   { id: 'brand-5', image: Brand1 },
 ]
 
+const isVideoAsset = (url) => typeof url === 'string' && /\.(mp4|webm|ogg|mov)($|\?)/i.test(url);
+
 // ─────────────────────────────────────────────────────────────────
 // Reusable image placeholder (swapped out when real assets arrive)
 // ─────────────────────────────────────────────────────────────────
 function ImagePlaceholder({ width, height, src, alt = '', style = {}, className = '' }) {
   if (src) {
+    const isVideo = isVideoAsset(src);
+    if (isVideo) {
+      return (
+        <video
+          src={src}
+          autoPlay
+          loop
+          muted
+          playsInline
+          style={{
+            width,
+            height,
+            objectFit: 'cover',
+            display: 'block',
+            flexShrink: 0,
+            ...style,
+          }}
+          className={className}
+        />
+      )
+    }
     return (
       <img
         src={src}
@@ -157,7 +179,7 @@ function WorkCard({ card, imageWidth, imageHeight, style = {} }) {
         flexDirection: 'column',
         alignItems: 'flex-start',
         padding: 0,
-        gap: '20px',
+        gap: '2rem',
         ...style,
       }}
     >
@@ -175,14 +197,14 @@ function WorkCard({ card, imageWidth, imageHeight, style = {} }) {
           className="card-category-badge"
           style={{
             position: 'absolute',
-            top: '18px',
-            left: '18px',
+            top: '1.8rem',
+            left: '1.8rem',
             display: 'flex',
             flexDirection: 'row',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: '12px 24px',
-            gap: '10px',
+            padding: '1.2rem 2.4rem',
+            gap: '1rem',
             background: '#1B1B1B',
             borderRadius: '32px',
             opacity: 0,
@@ -192,9 +214,9 @@ function WorkCard({ card, imageWidth, imageHeight, style = {} }) {
         >
           <span style={{
             fontFamily: "'Inter Tight', system-ui, sans-serif",
-            fontSize: '12.6px',
-            lineHeight: '20px',
-            letterSpacing: '0.28px',
+            fontSize: '1.26rem',
+            lineHeight: '1.25',
+            letterSpacing: '0.028rem',
             color: '#FFFFFF',
           }}>
             {card.tags[0]}
@@ -209,7 +231,7 @@ function WorkCard({ card, imageWidth, imageHeight, style = {} }) {
           flexDirection: 'column',
           alignItems: 'flex-start',
           padding: 0,
-          gap: '16px',
+          gap: '1.6rem',
           width: '100%',
         }}
       >
@@ -222,7 +244,7 @@ function WorkCard({ card, imageWidth, imageHeight, style = {} }) {
             justifyContent: 'space-between',
             alignItems: 'center',
             padding: 0,
-            gap: '16px',
+            gap: '1.6rem',
             width: '100%',
           }}
         >
@@ -235,7 +257,7 @@ function WorkCard({ card, imageWidth, imageHeight, style = {} }) {
               display: 'flex',
               flexDirection: 'row',
               alignItems: 'center',
-              gap: '16px',
+              gap: '1.6rem',
               flexShrink: 0,
             }}
           >
@@ -306,26 +328,26 @@ export default function Home() {
     <div style={{ background: '#020202' }}>
       <style>{`
         /* ── Responsive Architecture ── */
-        .home-section { padding-left: 40px; padding-right: 40px; }
-        .hero-section { padding-top: 214px; }
+        .home-section { padding-left: 4rem; padding-right: 4rem; }
+        .hero-section { padding-top: 21.4rem; }
         
         /* Desktop base styles */
         .see-more-link {
           position: absolute;
-          right: 40px;
-          bottom: 126px;
+          right: 4rem;
+          bottom: 12.6rem;
         }
         .see-more-text {
           font-family: var(--font-britti);
           font-weight: 400;
-          font-size: 24px;
+          font-size: 2.4rem;
           line-height: 140%;
           text-decoration: underline;
           text-transform: capitalize;
           color: #FFFFFF;
           display: flex;
           align-items: center;
-          gap: 15px;
+          gap: 1.5rem;
         }
         .brand-gallery::-webkit-scrollbar {
           display: none;
@@ -335,57 +357,57 @@ export default function Home() {
           scrollbar-width: none;  /* Firefox */
         }
 
-        @media (max-width: 1024px) {
-          .home-section { padding-left: 24px; padding-right: 24px; }
-          .see-more-link { position: static !important; margin-top: 40px; }
+        @media (max-width: 64em) {
+          .home-section { padding-left: 2.4rem; padding-right: 2.4rem; }
+          .see-more-link { position: static !important; margin-top: 4rem; }
         }
         
-        @media (max-width: 767px) {
-          .home-section { padding-left: 16px !important; padding-right: 16px !important; }
+        @media (max-width: 47.938em) {
+          .home-section { padding-left: 1.6rem !important; padding-right: 1.6rem !important; }
           
           /* Hero Section */
-          .hero-section { padding-top: 152px !important; padding-bottom: 40px !important; gap: 40px !important; }
+          .hero-section { padding-top: 15.2rem !important; padding-bottom: 4rem !important; gap: 4rem !important; }
           .heading-hero { 
-            font-size: 36px !important; 
+            font-size: 3.6rem !important; 
             max-width: 100% !important;
           }
           .hero-image-card { flex-direction: column !important; }
           .hero-img-desktop-only { display: none !important; }
-          .hero-img-mobile { width: 100% !important; height: 250px !important; }
+          .hero-img-mobile { width: 100% !important; height: 25rem !important; }
 
           /* About Section */
-          .about-section { padding-top: 72px !important; padding-bottom: 64px !important; gap: 48px !important; align-items: center !important; }
-          .about-text { font-size: 22px !important; align-self: center !important; text-align: left; }
-          .about-image { width: 100% !important; height: 220px !important; }
+          .about-section { padding-top: 7.2rem !important; padding-bottom: 6.4rem !important; gap: 4.8rem !important; align-items: center !important; }
+          .about-text { font-size: 2.2rem !important; align-self: center !important; text-align: left; }
+          .about-image { width: 100% !important; height: 22rem !important; }
 
           /* Work Section */
-          .work-section { padding-top: 64px !important; padding-bottom: 64px !important; display: flex !important; flex-direction: column !important; align-items: flex-start !important; gap: 48px !important; }
-          .work-container { gap: 40px !important; }
-          .heading-section { font-size: 24px !important; }
-          .work-grid { flex-direction: column !important; gap: 32px !important; }
-          .work-row { flex-direction: column !important; gap: 32px !important; }
+          .work-section { padding-top: 6.4rem !important; padding-bottom: 6.4rem !important; display: flex !important; flex-direction: column !important; align-items: flex-start !important; gap: 4.8rem !important; }
+          .work-container { gap: 4rem !important; }
+          .heading-section { font-size: 2.4rem !important; }
+          .work-grid { flex-direction: column !important; gap: 3.2rem !important; }
+          .work-row { flex-direction: column !important; gap: 3.2rem !important; }
           .work-card { width: 100% !important; flex: none !important; }
-          .work-card-img { height: 250px !important; }
-          .heading-card { font-size: 18px !important; }
-          .text-muted-studio { font-size: 16px !important; }
-          .work-tag-row { gap: 3px !important; flex-wrap: wrap; }
-          .work-tag { padding: 4px 10px !important; font-size: 14px !important; height: 28px !important; }
-          .work-card-header { flex-direction: column !important; align-items: flex-start !important; gap: 12px !important; }
+          .work-card-img { height: 25rem !important; }
+          .heading-card { font-size: 1.8rem !important; }
+          .text-muted-studio { font-size: 1.6rem !important; }
+          .work-tag-row { gap: 0.3rem !important; flex-wrap: wrap; }
+          .work-tag { padding: 0.4rem 10px !important; font-size: 1.4rem !important; height: 2.8rem !important; }
+          .work-card-header { flex-direction: column !important; align-items: flex-start !important; gap: 1.2rem !important; }
           .see-more-link { position: static !important; margin-top: 0; }
-          .see-more-text { font-size: 20px !important; align-items: center !important; height: 32px !important; gap: 12px !important; }
-          .see-more-text svg { width: 32px !important; height: 32px !important; }
+          .see-more-text { font-size: 2rem !important; align-items: center !important; height: 3.2rem !important; gap: 1.2rem !important; }
+          .see-more-text svg { width: 3.2rem !important; height: 3.2rem !important; }
 
           /* Brand Section */
-          .brand-section { padding-top: 96px !important; padding-bottom: 120px !important; min-height: auto !important; display: flex !important; flex-direction: column !important; gap: 40px !important; }
-          .brand-heading { position: relative !important; left: 0 !important; top: 0 !important; font-size: 20px !important; }
+          .brand-section { padding-top: 9.6rem !important; padding-bottom: 12rem !important; min-height: auto !important; display: flex !important; flex-direction: column !important; gap: 4rem !important; }
+          .brand-heading { position: relative !important; left: 0 !important; top: 0 !important; font-size: 2rem !important; }
           .brand-gallery { position: relative !important; left: 0 !important; top: 0 !important; }
-          .brand-img { width: 144px !important; height: 144px !important; }
+          .brand-img { width: 14.4rem !important; height: 14.4rem !important; }
 
           /* CTA Section */
           .cta-section { padding: 0 !important; gap: 0 !important; }
-          .cta-text { padding: 48px 16px 40px !important; gap: 10px !important; width: 100% !important; max-width: 100% !important; }
-          .cta-heading { font-size: 30.5px !important; line-height: 120% !important; width: 290px !important; }
-          .cta-img { height: 250.12px !important; width: 100% !important; }
+          .cta-text { padding: 4.8rem 16px 40px !important; gap: 1rem !important; width: 100% !important; max-width: 100% !important; }
+          .cta-heading { font-size: 3.05rem !important; line-height: 120% !important; width: 29rem !important; }
+          .cta-img { height: 25.012rem !important; width: 100% !important; }
         }
       `}</style>
 
@@ -400,8 +422,8 @@ export default function Home() {
           flexDirection: 'column',
           justifyContent: 'flex-end',
           alignItems: 'flex-start',
-          padding: '214px 40px 0px',
-          gap: '64px',
+          padding: '21.4rem 4rem 0rem',
+          gap: '6.4rem',
           width: '100%',
           minHeight: '100vh',
           background: '#020202',
@@ -416,9 +438,9 @@ export default function Home() {
             flexDirection: 'column',
             alignItems: 'flex-start',
             padding: 0,
-            gap: '16px',
+            gap: '1.6rem',
             width: '100%',
-            maxWidth: '1082px',
+            maxWidth: '108.2rem',
           }}
         >
           {/*
@@ -428,15 +450,15 @@ export default function Home() {
             "It's"              → white
             "Understood."       → #767676
           */}
-          <h1 className="heading-hero" style={{ width: '100%', maxWidth: '998px', alignSelf: 'flex-start', textAlign: 'left' }}>
-            <span style={{ color: '#FFFFFF' }}>Design That Isn&#39;t </span>
-            <span style={{ color: '#767676' }}>Just Seen </span>
+          <h1 className="heading-hero" style={{ width: '100%', maxWidth: '99.8rem', alignSelf: 'flex-start', textAlign: 'left' }}>
+            <span style={{ color: '#FFFFFF' }}>Branding that withstands the test of time.</span>
+            {/* <span style={{ color: '#767676' }}>Just Seen </span>
             <span style={{ color: '#FFFFFF' }}>It&#39;s </span>
-            <span style={{ color: '#767676' }}>Understood.</span>
+            <span style={{ color: '#767676' }}>Understood.</span> */}
           </h1>
         </div>
 
-        {/* Hero image card row: two equal images, gap 12px */}
+        {/* Hero image card row: single full-width image */}
         <div
           id="hero-image-card"
           className="hero-image-card"
@@ -445,25 +467,17 @@ export default function Home() {
             flexDirection: 'row',
             alignItems: 'center',
             padding: 0,
-            gap: '12px',
+            gap: '1.2rem',
             width: '100%',
           }}
         >
           <ImagePlaceholder
-            width="50%"
+            width="100%"
             height="clamp(320px, 52vw, 657px)"
             src={HeroImage}
-            alt="Project showcase left"
+            alt="Project showcase"
             style={{ flexShrink: 1, minWidth: 0 }}
             className="hero-img-mobile"
-          />
-          <ImagePlaceholder
-            width="50%"
-            height="clamp(320px, 52vw, 657px)"
-            src={HeroImage2}
-            alt="Project showcase right"
-            style={{ flexShrink: 1, minWidth: 0 }}
-            className="hero-img-desktop-only hero-img-mobile"
           />
         </div>
       </section>
@@ -479,8 +493,8 @@ export default function Home() {
           flexDirection: 'column',
           justifyContent: 'flex-end',
           alignItems: 'flex-end',
-          padding: '120px 40px 0px',
-          gap: '120px',
+          padding: '12rem 4rem 0rem',
+          gap: '12rem',
           width: '100%',
           background: '#020202',
           boxSizing: 'border-box',
@@ -491,11 +505,11 @@ export default function Home() {
           id="studio-description"
           className="about-text"
           style={{
-            maxWidth: '791px',
+            maxWidth: '79.1rem',
             fontFamily: 'var(--font-britti)',
             fontStyle: 'normal',
             fontWeight: 300,
-            fontSize: 'clamp(22px, 2.6vw, 32px)',
+            fontSize: 'clamp(2.2rem, 2.6vw, 3.2rem)',
             lineHeight: '120%',
             display: 'flex',
             alignItems: 'center',
@@ -507,13 +521,10 @@ export default function Home() {
           {/* White = bold part, muted = lighter follow-up (matches snapshot) */}
           <span>
             <strong style={{ fontWeight: 400 }}>
-              We&#39;re A Creative Design And Strategy Studio Built For
-              Dreamers Who Dare To Launch Bold Ideas.
+              We are a creative and strategy studio working at the intersection of brand identity, design systems, and market positioning.
             </strong>
             <span style={{ color: '#767676', fontWeight: 300 }}>
-              {' '}From Brand Identity To Market-Ready Products, We Craft
-              Clarity, Ignite Momentum, And Help Your Business Thrive Where
-              Creativity Meets Commerce.
+              {' '}Our work is built for founders, operators, and growing businesses who understand that design is not decoration, it is direction.
             </span>
           </span>
         </p>
@@ -538,7 +549,7 @@ export default function Home() {
         style={{
           width: '100%',
           background: '#020202',
-          padding: '126px 40px 275px',
+          padding: '12.6rem 4rem 27.5rem',
           boxSizing: 'border-box',
           position: 'relative',
         }}
@@ -552,7 +563,7 @@ export default function Home() {
             flexDirection: 'column',
             alignItems: 'flex-start',
             padding: 0,
-            gap: '58px',
+            gap: '5.8rem',
             width: '100%',
           }}
         >
@@ -571,7 +582,7 @@ export default function Home() {
             style={{
               display: 'flex',
               flexDirection: 'column',
-              gap: '80px',
+              gap: '8rem',
               width: '100%',
             }}
           >
@@ -582,7 +593,7 @@ export default function Home() {
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'flex-start',
-                gap: '89px',
+                gap: '8.9rem',
                 width: '100%',
               }}
               className="work-row"
@@ -629,7 +640,7 @@ export default function Home() {
             display: 'flex',
             flexDirection: 'row',
             alignItems: 'center',
-            gap: '12px',
+            gap: '1.2rem',
           }}
         >
           <Link
@@ -655,7 +666,7 @@ export default function Home() {
         style={{
           position: 'relative',
           width: '100%',
-          minHeight: '758px',
+          minHeight: '75.8rem',
           background: '#020202',
           overflow: 'hidden',
         }}
@@ -665,8 +676,8 @@ export default function Home() {
           className="brand-heading"
           style={{
             position: 'absolute',
-            left: '39px',
-            top: '85px',
+            left: '3.9rem',
+            top: '8.5rem',
           }}
         >
           We&#39;ve progressed as a brand.
@@ -686,10 +697,10 @@ export default function Home() {
             flexDirection: 'row',
             alignItems: 'center',
             padding: 0,
-            gap: '12px',
+            gap: '1.2rem',
             position: 'absolute',
-            left: '262px',
-            top: '250px',
+            left: '26.2rem',
+            top: '25rem',
             /* spec has transform: matrix(-1,0,0,1,0,0) which mirrors X;
                omitting the mirror since images aren't provided yet */
           }}
@@ -718,8 +729,8 @@ export default function Home() {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          padding: '1px 0px',
-          gap: '80px',
+          padding: '0.1rem 0rem',
+          gap: '8rem',
           width: '100%',
           background: '#020202',
           boxSizing: 'border-box',
@@ -734,8 +745,8 @@ export default function Home() {
             flexDirection: 'column',
             alignItems: 'flex-start',
             padding: 0,
-            gap: '16px',
-            width: '584px',
+            gap: '1.6rem',
+            width: '58.4rem',
             maxWidth: '90%',
           }}
         >
@@ -745,7 +756,7 @@ export default function Home() {
               fontFamily: 'var(--font-britti)',
               fontStyle: 'normal',
               fontWeight: 300,
-              fontSize: 'clamp(36px, 4.5vw, 56px)',
+              fontSize: 'clamp(3.6rem, 4.5vw, 5.6rem)',
               lineHeight: '100%',
               display: 'flex',
               alignItems: 'center',
@@ -755,7 +766,7 @@ export default function Home() {
               alignSelf: 'stretch',
             }}
           >
-            Ready To Build Something Intentional?
+            Have a Project in Mind?
           </h2>
         </div>
 

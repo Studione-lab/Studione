@@ -35,8 +35,8 @@ export default function Services() {
       {/* ── Page Hero ───────────────────── */}
       <section id="services-hero" style={{ paddingTop: '10rem', paddingBottom: '5rem', background: 'var(--color-brand-black)', position: 'relative', overflow: 'hidden' }}>
         <div style={{
-          position: 'absolute', bottom: '-200px', left: '50%', transform: 'translateX(-50%)',
-          width: '800px', height: '400px',
+          position: 'absolute', bottom: '-20rem', left: '50%', transform: 'translateX(-50%)',
+          width: '80rem', height: '40rem',
           background: 'radial-gradient(ellipse, rgba(212,245,122,0.04) 0%, transparent 70%)',
           pointerEvents: 'none',
         }} />
@@ -46,7 +46,7 @@ export default function Services() {
             Everything you need<br />
             <span className="text-gradient-accent">to stand out</span>
           </h1>
-          <p style={{ fontSize: '1.1rem', color: 'var(--color-brand-text)', maxWidth: '520px', margin: '0 auto', lineHeight: 1.7 }}>
+          <p style={{ fontSize: '1.1rem', color: 'var(--color-brand-text)', maxWidth: '52rem', margin: '0 auto', lineHeight: 1.7 }}>
             From brand inception to digital execution, we offer an end-to-end creative service designed to grow your business.
           </p>
         </div>
@@ -55,17 +55,17 @@ export default function Services() {
       {/* ── Services List ────────────────── */}
       <section id="services-list" className="section-padding" style={{ background: 'var(--color-brand-black)' }}>
         <div className="container-custom">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0px' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '0rem' }}>
             {services.map((service, i) => (
               <div
                 key={service.num}
                 id={`service-${service.num}`}
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: '80px 1fr auto',
+                  gridTemplateColumns: '8rem 1fr auto',
                   gap: '2rem',
                   padding: '3rem 0',
-                  borderBottom: '1px solid var(--color-brand-border)',
+                  borderBottom: '0.1rem solid var(--color-brand-border)',
                   transition: 'background 0.3s ease',
                   borderRadius: '0',
                   cursor: 'default',
@@ -78,7 +78,7 @@ export default function Services() {
                 </div>
                 <div>
                   <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', fontWeight: 800, letterSpacing: '-0.03em', color: 'var(--color-brand-white)', marginBottom: '1rem', lineHeight: 1.2 }}>{service.title}</h2>
-                  <p style={{ fontSize: '0.9rem', color: 'var(--color-brand-text)', lineHeight: 1.8, maxWidth: '560px', marginBottom: '1.5rem' }}>{service.desc}</p>
+                  <p style={{ fontSize: '0.9rem', color: 'var(--color-brand-text)', lineHeight: 1.8, maxWidth: '56rem', marginBottom: '1.5rem' }}>{service.desc}</p>
                   <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
                     {service.deliverables.map(d => (
                       <span
@@ -100,11 +100,11 @@ export default function Services() {
                   </div>
                 </div>
                 <div style={{
-                  width: '48px', height: '48px', borderRadius: '50%',
+                  width: '4.8rem', height: '4.8rem', borderRadius: '50%',
                   background: `${service.accent}12`,
                   border: `1px solid ${service.accent}25`,
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  flexShrink: 0, marginTop: '4px',
+                  flexShrink: 0, marginTop: '0.4rem',
                 }}>
                   <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                     <path d="M3 8h10M8 3l5 5-5 5" stroke={service.accent} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
@@ -123,7 +123,7 @@ export default function Services() {
             <p style={{ fontSize: '0.8rem', color: 'var(--color-brand-accent)', fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: '0.75rem' }}>How We Work</p>
             <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', fontWeight: 800, letterSpacing: '-0.03em', color: 'var(--color-brand-white)', lineHeight: 1.1 }}>Our process</h2>
           </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 260px), 1fr))', gap: '1.5rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 26rem), 1fr))', gap: '1.5rem' }}>
             {[
               { step: '1', title: 'Discovery', desc: 'We dive deep into your business, goals, audience, and competitive landscape.' },
               { step: '2', title: 'Strategy', desc: 'We synthesize insights into a clear creative and strategic direction.' },
@@ -140,7 +140,7 @@ export default function Services() {
                 }}
               >
                 <div style={{
-                  width: '44px', height: '44px', borderRadius: '12px',
+                  width: '4.4rem', height: '4.4rem', borderRadius: '12px',
                   background: 'var(--color-brand-accent)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                   fontWeight: 800, fontSize: '1.1rem', color: 'var(--color-brand-black)',
