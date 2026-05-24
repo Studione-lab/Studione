@@ -156,7 +156,7 @@ export default function FooterV1() {
             min-height: auto !important;
           }
           #footer-v1-top {
-            padding-top: 6rem !important;
+            padding-top: 13.6rem !important;
             flex-direction: column !important;
             align-items: flex-start !important;
             gap: 1.4rem !important;

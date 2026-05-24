@@ -418,7 +418,7 @@ export default function Work() {
             alignItems: 'flex-start',
             paddingTop: '9.6rem',
             gap: '4rem',
-            width: '120rem',
+            width: '100%',
           }}
         >
           {/* "All Work" */}
@@ -498,7 +498,7 @@ export default function Work() {
             alignContent: 'flex-start',
             padding: 0,
             gap: '12rem 10.5rem',
-            width: '120rem',
+            width: '100%',
             background: '#020202',
           }}
         >
